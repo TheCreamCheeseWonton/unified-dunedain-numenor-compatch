@@ -2173,7 +2173,29 @@ decision_reunify_dunedain = {
 
 	# IS_SHOWN
 	is_shown = {
+		has_title = title:e_reunitedkingdom
 
+		highest_held_title_tier >= tier_empire
+		
+		is_target_in_global_variable_list = {
+			name = unavailable_unique_decisions
+			target = flag:decision_solidify_reunited_kingdom
+		}
+		culture = { has_cultural_pillar = heritage_dunedain }
+		NOT = {
+			is_target_in_global_variable_list = {
+				name = unavailable_unique_decisions
+				target = flag:decision_reunify_dunedain
+			}
+		}
+		
+		NOT = { 
+			OR = {
+				this = culture:numenorean
+				this = culture:adunaic
+				culture = { any_parent_culture_or_above = { this = culture:adunaic } }
+			}
+		}
 	}
 	
 	# IS_VALID
