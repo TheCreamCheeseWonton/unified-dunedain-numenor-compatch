@@ -1,0 +1,51 @@
+﻿tradition_adunaim_pride = { # Adunaim traditions
+	category = societal
+
+	layers = {
+		0 = diplo
+		1 = western
+		4 = adunaim2.dds
+	}
+	
+	is_shown = {
+		has_cultural_pillar = heritage_unified_adunaic
+	}
+	
+	can_pick = {
+		NOT = { has_cultural_tradition = tradition_staunch_traditionalists }
+		NOT = { 
+			lotr_culture_has_adunaic_supremacy_tradition = yes
+		}
+		trigger_if = { #LotR
+            limit = {
+                scope:replacing ?= culture_tradition:tradition_variag_succession
+            }
+            custom_tooltip = {
+                text = cannot_replace_variag_succession
+                NOT = { has_cultural_tradition = tradition_variag_succession } #To prevent stacking after hybridization
+            }
+        }
+	}
+
+	parameters = { 
+		values_numenorean_blood = yes 
+		courtiers_less_likely_to_leave_same_culture_court = yes
+		
+		# tradition_staunch_traditionalists like parameters
+		expensive_convert_to_local_culture = yes
+		harder_to_hybridize = yes
+		less_likely_to_promote_culture = yes # These 2 parameters need to be merged to avoid text bloat
+		less_likely_to_culture_convert = yes
+
+		#Hereditary Hierechry replacements
+		poorly_educated_leaders_distrusted = yes
+	}
+
+	culture_modifier = {
+		cultural_acceptance_gain_mult = -0.35
+	}
+
+	county_modifier = {
+		monthly_county_control_growth_factor = 0.5
+	}
+}

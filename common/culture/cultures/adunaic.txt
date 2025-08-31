@@ -1,0 +1,34 @@
+﻿adunaic = {
+	color = { 56 68 152 }
+#	color = hsv { 0.5 0.2 0.4 }
+	created = 4002.1.1
+	parents = { numenorean }
+	
+	ethos = ethos_communal
+	heritage = heritage_unified_adunaic
+	language = language_adunaic
+	martial_custom = martial_custom_male_only
+	head_determination = head_determination_domain
+	traditions = {
+		tradition_adunaim_pride
+		tradition_seafaring
+		tradition_martial_admiration
+		tradition_maritime_mercantilism
+		tradition_metal_craftsmanship
+		tradition_stand_and_fight
+	}
+	
+	name_list = name_list_adunaic
+	
+	coa_gfx = { numenorean_coa_gfx dunedain_group_coa_gfx }
+	building_gfx = { numenorean_building_gfx mediterranean_building_gfx }
+	clothing_gfx = { adunai_clothing_gfx numenorean_clothing_gfx }
+	unit_gfx = { dunedain_unit_gfx  }
+	
+	ethnicities = {
+		1 = adunaic_ethnicity
+		1 = adunaic_ethnicity_1
+		1 = adunaic_ethnicity_2
+		1 = adunaic_ethnicity_3
+	}
+}
