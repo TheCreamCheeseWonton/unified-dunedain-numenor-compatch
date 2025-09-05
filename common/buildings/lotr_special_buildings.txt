@@ -2671,12 +2671,22 @@ wonder_minas_ithil_03 = { #Cleansed Minas Ithil
 		name = "wonder_minas_ithil_mesh"
 	}
 
-	construction_time = very_slow_construction_time
+	construction_time = extremely_slow_construction_time
 	effect_desc = explore_history_cost_discount_max_desc
 	cost_gold = 1500
 	
 	can_construct = {
 		building_requirement_castle_city_church = { LEVEL = 03 }
+		##Quonton
+		custom_description = {
+			text = not_morgul_corrupted
+			title:c_minas_ithil = {
+				NOT = {
+					has_county_modifier = fading_morgul_corruption_modifier
+				}
+			}
+		}
+		##End Quonton
 		scope:holder ?= {
 			culture = {
 				has_innovation = innovation_hoardings
