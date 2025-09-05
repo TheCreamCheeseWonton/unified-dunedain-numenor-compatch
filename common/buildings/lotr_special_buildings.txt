@@ -2674,6 +2674,7 @@ wonder_minas_ithil_03 = { #Cleansed Minas Ithil
 	construction_time = very_slow_construction_time
 	effect_desc = explore_history_cost_discount_max_desc
 	cost_gold = 1500
+	
 	can_construct = {
 		building_requirement_castle_city_church = { LEVEL = 03 }
 		scope:holder ?= {

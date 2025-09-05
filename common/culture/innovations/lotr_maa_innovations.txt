@@ -344,9 +344,13 @@ innovation_numenorean_warriors = {
 	icon = @special_maa_02
 
 	potential = {
-		AND = {
-			has_cultural_pillar = heritage_dunedain
-			this = culture:numenorean
+		OR = { 
+			AND = { 
+				has_cultural_pillar = heritage_dunedain
+				this = culture:numenorean
+			}
+			this = culture:adunaic
+			any_parent_culture_or_above = { this = culture:adunaic }
 		}
 	}
 
@@ -356,8 +360,6 @@ innovation_numenorean_warriors = {
 	custom = unlock_numenorean_soldiers_custom
 	custom = unlock_numenorean_pikemen
 	custom = unlock_numenorean_archers_custom
-	custom = unlock_numenorean_reformed_outriders
-	custom = unlock_numenorean_knights_custom
 	##End Quonton
 }
 
@@ -379,8 +381,8 @@ innovation_numenorean_warriors_custom = {
 	custom = unlock_numenorean_soldiers_custom
 	custom = unlock_numenorean_pikemen
 	custom = unlock_numenorean_archers_custom
-	custom = unlock_numenorean_reformed_outriders
 	custom = unlock_numenorean_knights_custom
+	custom = unlock_numenorean_reformed_outriders
 }
 
 innovation_numenorean_warriors_adunaic = {
@@ -389,13 +391,9 @@ innovation_numenorean_warriors_adunaic = {
 	icon = @special_maa_02
 
 	potential = {
-		OR = { 
-			AND = { 
-				has_cultural_pillar = heritage_unified_adunaic
-				has_cultural_tradition = tradition_new_numenor
-			}
-			this = culture:adunaic
-			any_parent_culture_or_above = { this = culture:adunaic }
+		AND = { 
+			has_cultural_pillar = heritage_unified_adunaic
+			has_cultural_tradition = tradition_new_numenor
 		}
 	}
 
@@ -404,8 +402,8 @@ innovation_numenorean_warriors_adunaic = {
 	custom = unlock_numenorean_soldiers_adunaic
 	custom = unlock_numenorean_pikemen_adunaic
 	custom = unlock_numenorean_archers_adunaic
-	custom = unlock_numenorean_reformed_outriders_adunaic
 	custom = unlock_numenorean_knights_adunaic
+	custom = unlock_numenorean_reformed_outriders_adunaic
 }
 ##End Quonton
 
@@ -422,6 +420,7 @@ innovation_dunedain_warriors = {
 		}
 	}
 	##Quonton
+	custom = unlock_dunedain_elites
 	custom = unlock_dunedain_marines
 	custom = unlock_dunedain_soldiers
 	custom = unlock_dunedain_archers
