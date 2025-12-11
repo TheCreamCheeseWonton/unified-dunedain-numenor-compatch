@@ -11,10 +11,10 @@ decision_gondor_regnal_names = {
 	ai_goal = no
 	ai_check_interval = 12
 	ai_potential = {
-		always = yes
+		always = no
 	}
 	ai_will_do = {
-		base = 100
+		base = 0
 	}
 	selection_tooltip = decision_gondor_regnal_names_tooltip
 	desc = decision_gondor_regnal_names_desc
@@ -31,6 +31,7 @@ decision_gondor_regnal_names = {
 		OR = { 
 			has_title = title:e_gondor
 			has_title = title:e_reunitedkingdom
+			has_title = title:e_castamir
 		}
 		##End Quonton
 		##Quonton - Women should be able to too
@@ -38,6 +39,7 @@ decision_gondor_regnal_names = {
 		NOT = {
 			has_character_flag = has_regnal_name
 		}
+		NOT = { has_character_flag = is_aragorn }
 	}
 	
 	is_valid_showing_failures_only = {
@@ -331,7 +333,7 @@ decision_claim_gondor_kingship = { # Allows native Gondorians to restore the Kin
 	
 		### Dynamic Requirements
 		# by Juke
-		# Must aquire a certain amount of "Points
+		# Must acquire a certain amount of "Points
 		# Some requirements count as multiple points and are duplicate
 		
 		custom_tooltip = gondor_kingship_tt_points
@@ -375,7 +377,7 @@ decision_claim_gondor_kingship = { # Allows native Gondorians to restore the Kin
 					house = { has_house_modifier = heirs_of_anarion_modifier }
 				}
 			}
-			# These need to be seperate because it wasn't counting them when as one trigger_if
+			# These need to be separate because it wasn't counting them when as one trigger_if
 			trigger_if = {
 				limit = { 
 					has_dlc_feature = legends
@@ -1040,6 +1042,7 @@ decision_destroy_mordor = {
 			has_primary_title = title:e_reunitedkingdom
 			any_neighboring_top_liege_realm_owner = { this = title:e_mordor.holder }
 		}	
+		faith_is_good = yes
 		# lotr_has_numenorean_culture_trigger = yes
 		NOR = {
 			is_target_in_global_variable_list = {
@@ -1086,6 +1089,17 @@ decision_destroy_mordor = {
 				}
 				completely_controls_region = custom_gondorian_heartlands
 			}
+			trigger_else = { # Must border Mordor to destroy it
+				custom_tooltip = {
+					text = you_border_mordor
+					any_realm_county = {
+						any_neighboring_county = {
+							empire = title:e_mordor
+						}
+					}
+				}
+				
+			}
 			trigger_if = {
 				limit = { is_elf = yes }
 				custom_tooltip = {
@@ -1126,22 +1140,47 @@ decision_destroy_mordor = {
 		} 
 		else = {
 			if = {
-				limit = { exists = title:e_mordor.holder }
-				start_war = {
-					casus_belli = final_battle_gondor_cb
-					target = title:e_mordor.holder
-					target_title = title:e_mordor
-				}
-
-				title:e_mordor.holder = {
-					random_character_war = {
-						limit = {
-							using_cb = final_battle_gondor_cb
-						}
-						save_scope_as = destroy_mordor_war
+				limit = { game_start_date = 6787.1.1 } #LW start date gets easy version of Destroy Mordor
+				if = {
+					limit = { exists = title:e_mordor.holder }
+					start_war = {
+						casus_belli = final_battle_gondor_for_babies_cb
+						target = title:e_mordor.holder
+						target_title = title:e_mordor
 					}
-					every_tributary = {
-						scope:destroy_mordor_war = { add_defender = prev }
+
+					title:e_mordor.holder = {
+						random_character_war = {
+							limit = {
+								using_cb = final_battle_gondor_for_babies_cb
+							}
+							save_scope_as = destroy_mordor_war
+						}
+						every_tributary = {
+							scope:destroy_mordor_war = { add_defender = prev }
+						}
+					}
+				}
+			}
+			else = {
+				if = {
+					limit = { exists = title:e_mordor.holder }
+					start_war = {
+						casus_belli = final_battle_gondor_cb
+						target = title:e_mordor.holder
+						target_title = title:e_mordor
+					}
+
+					title:e_mordor.holder = {
+						random_character_war = {
+							limit = {
+								using_cb = final_battle_gondor_cb
+							}
+							save_scope_as = destroy_mordor_war
+						}
+						every_tributary = {
+							scope:destroy_mordor_war = { add_defender = prev }
+						}
 					}
 				}
 			}
@@ -1429,6 +1468,92 @@ decision_emyn_arnen_capital = {
 	}
 }
 
+##Quonton
+decision_take_back_minas_ithil = {
+	sort_order = 85
+	title = decision_take_back_minas_ithil
+	picture = {
+		reference = "gfx/interface/illustrations/decisions/decision_minas_tirith_01.dds"
+	}
+
+	decision_group_type = realms_in_exile_minor
+	
+	ai_goal = yes
+	ai_potential = {
+		always = yes
+	}
+	ai_will_do = {
+		base = 100
+	}
+	selection_tooltip = decision_take_back_minas_ithil_tt
+	desc = decision_take_back_minas_ithil_desc
+	confirm_text = decision_take_back_minas_ithil_confirm
+	is_shown = {
+		is_target_in_global_variable_list = {
+			name = unavailable_unique_decisions
+			target = flag:decision_emyn_arnen_capital
+		}
+		is_ruler = yes
+		is_landed = yes
+		OR = {
+			has_primary_title = title:e_gondor
+			has_primary_title = title:e_castamir
+			has_primary_title = title:e_reunitedkingdom
+			has_primary_title = title:e_numenor_in_exile
+			has_primary_title = title:e_numenor_colonies
+			has_primary_title = title:e_numenor #Submod Numenor
+		}
+		
+		NOT = { has_title = title:c_minas_ithil }
+		any_vassal = {
+			has_title = title:c_minas_ithil
+		}
+		
+		##Quonton
+		culture = { 
+			OR = { 
+				has_cultural_pillar = heritage_dunedain 
+				has_cultural_tradition = tradition_new_numenor
+			}	
+		}
+		##End Quonton
+		NOT = {
+			is_target_in_global_variable_list = {
+				name = unavailable_unique_decisions
+				target = flag:decision_take_back_minas_ithil
+			}
+		}
+	}
+	is_valid = {
+		province:226 = { has_building = wonder_minas_ithil_03 }
+		title:c_minas_ithil.holder = {
+			opinion = {
+				target = root
+				value > 90
+			}
+		}
+	}
+	is_valid_showing_failures_only = {
+		is_imprisoned = no
+		is_available_adult = yes
+		is_at_war = no
+	}
+	cost = {
+		gold = 100
+		prestige = 250
+	}
+	effect = {
+		custom_tooltip = decision_take_back_minas_ithil_tooltip
+		trigger_event = dunedain_identity.6 
+		title:c_minas_ithil.holder = { add_gold = 100 add_prestige = 250 }
+		add_to_global_variable_list = {
+			name = unavailable_unique_decisions
+			target = flag:decision_take_back_minas_ithil
+		}
+	}
+}
+
+
 decision_calenardhon_claim = {
 	sort_order = 81
 	title = decision_calenardhon_claim
@@ -1442,8 +1567,20 @@ decision_calenardhon_claim = {
 	ai_potential = {
 		always = yes
 	}
-	ai_will_do = {
-		base = 100
+	ai_will_do = { # Don't attack good people holding it
+		base = 0
+		modifier = {
+			add = 100
+			title:k_rohan.holder ?= {
+				faith_is_evil = yes
+			}
+		}
+		modifier = { # You can attack neutrals if you feel like it
+			add = 25
+			title:k_rohan.holder ?= {
+				faith_is_good = no
+			}
+		}
 	}
 
 	selection_tooltip = decision_calenardhon_claim_tooltip
@@ -1458,13 +1595,8 @@ decision_calenardhon_claim = {
 			is_gondor = yes
 			has_primary_title = title:e_reunitedkingdom
 		}
-		
-		# OR = {
-		# 	has_title = title:e_gondor
-		# 	has_title = title:e_gondor_steward
-		# 	has_title = title:e_castamir
-		# }	
 		exists = title:k_rohan.holder
+
 		title:k_rohan.holder ?= {
 			NOT = { 
 				any_liege_or_above = {
@@ -1528,18 +1660,18 @@ decision_calenardhon_claim = {
 
 	is_valid = {
 		is_independent_ruler = yes
-		# completely_controls = title:e_gondor
+		completely_controls = title:k_anorien # You need to border Rohan
 		# prestige_level >= very_high_prestige_level
 		OR = {
 			is_gondor = yes
 			has_primary_title = title:e_reunitedkingdom
 		}
-		# OR = {
-		# 	has_title = title:e_gondor
-		# 	has_title = title:e_gondor_steward
-		# 	has_title = title:e_castamir
-		# }
-	}	
+	}
+
+	cost = {
+		prestige = 500
+		piety = 250
+	}
 
 	effect = {
 		custom_tooltip = press_calenardhon_claim_tooltip
@@ -1703,6 +1835,7 @@ decision_elevate_edhellond = { # Aragorn decides to elevate Edhellond into a kin
 
 	# IS VALID
 	is_valid = {
+		##Quonton
 		faith.religion = religion:dunedain_religion #juke note: dont bully heretics
 		prestige_level >= 4
 		knows_language = language_sindarin
@@ -2203,7 +2336,7 @@ decision_reunify_dunedain = {
 		prestige_level >= 5
 		piety_level >= 4
 		completely_controls_region = custom_gondorian_heartlands
-		completely_controls_region = custom_arnor_minus_shire
+		completely_controls_region = custom_arnor_minus_shire #middleearth_west_arnor
 	}
 	is_valid_showing_failures_only = {
 		is_imprisoned = no
@@ -2213,20 +2346,7 @@ decision_reunify_dunedain = {
 	
 	# EFFECT 
 	effect = {
-		if = { # Last King of the Elder Days | Achievement
-			limit = { 
-				is_ai = no
-				NOT = { exists = global_var:lotr_achievement_26 }
-				realms_achievements_enabled = yes
-				root = character:lineisildur42
-				age < 151
-				is_target_in_global_variable_list = {
-					name = unavailable_unique_decisions
-					target = flag:decision_destroy_mordor
-				}
-			}
-			set_global_variable = lotr_achievement_26
-		}
+		lotr_achievement_26_effect = yes
 		##Quonton
 		culture:new_dunedain = {
 			culture:new_dunedain = { save_temporary_scope_as = dunedain_culture }
@@ -2275,6 +2395,77 @@ decision_reunify_dunedain = {
 	cost = { 
 		piety = { value = 750 }
 		prestige = { value = 750 }
+		gold = { value = 500 }
+	}
+
+	# AI
+	ai_goal = yes
+	ai_potential = { always = yes }
+	ai_will_do = { base = 100 }
+}
+
+##Quonton
+decision_reintroduce_steelbows = {
+	sort_order = 97
+	# TEXT
+	title = decision_reintroduce_steelbows
+	picture = {
+		reference = "gfx/interface/illustrations/decisions/decision_amon_sul.dds"
+	}
+	selection_tooltip = decision_reintroduce_steelbows_tt
+	desc = decision_reintroduce_steelbows_desc
+	confirm_text = decision_reintroduce_steelbows_confirm
+
+	decision_group_type = realms_in_exile_minor
+	
+
+	# IS_SHOWN
+	is_shown = {
+		has_title = title:e_reunitedkingdom
+
+		highest_held_title_tier >= tier_empire
+
+		culture = culture:new_dunedain
+		NOT = {
+			is_target_in_global_variable_list = {
+				name = unavailable_unique_decisions
+				target = flag:decision_reintroduce_steelbows
+			}
+		}
+	}
+	
+	# IS_VALID
+	is_valid = {
+		OR = { 
+			martial >=26
+			prowess >=32
+			learning >= 22
+		}
+		has_trait = lifestyle_archivist
+	}
+	
+	is_valid_showing_failures_only = {
+		is_imprisoned = no
+		is_available_adult = yes
+		is_at_war = no
+	}
+	
+	# EFFECT 
+	effect = {
+		custom_tooltip = reintroduce_steelbows_tooltip
+		hidden_effect = { 
+			culture:new_dunedain = {
+				add_innovation = innovation_dunedain_warriors_steelbow
+				remove_innovation = innovation_dunedain_warriors
+			}
+		}
+		add_to_global_variable_list = {
+			name = unavailable_unique_decisions
+			target = flag:decision_reintroduce_steelbows
+		}
+	}
+
+	cost = { 
 		gold = { value = 500 }
 	}
 
@@ -2462,6 +2653,7 @@ decision_reunify_numenor_culture = {
 						remove_innovation = innovation_lesser_numenorean_heritage
 						remove_innovation = innovation_unified_adunai_warfare
 						remove_innovation = innovation_dunedain_warriors
+						remove_innovation = innovation_dunedain_warriors_steelbow
 						remove_innovation = innovation_arnorian_soldiers
 						remove_innovation = innovation_gondorian_soldiers
 						remove_innovation = innovation_dunedain_ranger_warfare
@@ -2476,75 +2668,22 @@ decision_reunify_numenor_culture = {
 
 			set_culture = culture:new_numenorean
 			custom_tooltip = decision_reunify_numenor_culture_vassals_custom
-			custom_tooltip = decision_gain_numenor_blood_culture_self
-			custom_tooltip = decision_gain_numenor_blood_culture
-			hidden_effect = {		
-				if = { 
-					limit = { has_trait = blood_of_numenor_10 }	
-					add_piety = 1000
-				}
-				else_if = { 
-					limit = { has_trait = blood_of_numenor_9 }	
-					remove_trait = blood_of_numenor_9
-					add_trait = blood_of_numenor_10
-				}
-				else_if = { 
-					limit = { has_trait = blood_of_numenor_8 }	
-					remove_trait = blood_of_numenor_8
-					add_trait = blood_of_numenor_10
-				}
-				else_if = { 
-					limit = { has_trait = blood_of_numenor_7 }	
-					remove_trait = blood_of_numenor_7
-					add_trait = blood_of_numenor_10
-				}
-				else_if = { 
-					limit = { has_trait = blood_of_numenor_6 }	
-					remove_trait = blood_of_numenor_6
-					add_trait = blood_of_numenor_10
-				}
-				else_if = { 
-					limit = { has_trait = blood_of_numenor_5 }	
-					remove_trait = blood_of_numenor_5
-					add_trait = blood_of_numenor_10
-				}
-				else_if = { 
-					limit = { has_trait = blood_of_numenor_4 }	
-					remove_trait = blood_of_numenor_4
-					add_trait = blood_of_numenor_10
-				}
-				else_if = { 
-					limit = { has_trait = blood_of_numenor_3 }	
-					remove_trait = blood_of_numenor_3
-					add_trait = blood_of_numenor_10
-				}
-				else_if = { 
-					limit = { has_trait = blood_of_numenor_2 }	
-					remove_trait = blood_of_numenor_2
-					add_trait = blood_of_numenor_10
-				}
-				else_if = { 
-					limit = { has_trait = blood_of_numenor_1 }	
-					remove_trait = blood_of_numenor_1
-					add_trait = blood_of_numenor_10
-				}
-				else = { 
-					add_trait = blood_of_numenor_10
-				}
-				every_living_character = { 
-					limit = { 
-						OR = { 
-							culture = { has_cultural_pillar = heritage_dunedain }
-							AND = { 
-								culture = { has_cultural_pillar = heritage_bellakari }
-								NOT = { culture = { this = culture:bellanarud } }
-							}
-							culture = { has_cultural_pillar = heritage_northern_adunaic }
-							culture = { has_cultural_pillar = heritage_southern_adunaic }
-							culture = { has_cultural_pillar = heritage_unified_adunaic }
-						}
-					}
-					set_culture = culture:new_numenorean
+			if = { 
+				limit = { has_game_rule = default_bon }
+				custom_tooltip = decision_gain_numenor_blood_culture_self
+				custom_tooltip = decision_gain_numenor_blood_culture
+			}
+			else_if = { 
+				limit = { has_game_rule = half_bon }
+				custom_tooltip = decision_gain_numenor_blood_culture_lesser
+			}
+			else = { 
+				limit = { has_game_rule = lore_accurate_bon }
+				custom_tooltip = decision_gain_numenor_blood_culture_none
+			}
+			if = { 
+				limit = { has_game_rule = default_bon }
+				hidden_effect = {		
 					if = { 
 						limit = { has_trait = blood_of_numenor_10 }	
 						add_piety = 1000
@@ -2572,30 +2711,191 @@ decision_reunify_numenor_culture = {
 					else_if = { 
 						limit = { has_trait = blood_of_numenor_5 }	
 						remove_trait = blood_of_numenor_5
-						add_trait = blood_of_numenor_9
+						add_trait = blood_of_numenor_10
 					}
 					else_if = { 
 						limit = { has_trait = blood_of_numenor_4 }	
 						remove_trait = blood_of_numenor_4
-						add_trait = blood_of_numenor_8
+						add_trait = blood_of_numenor_10
 					}
 					else_if = { 
 						limit = { has_trait = blood_of_numenor_3 }	
 						remove_trait = blood_of_numenor_3
-						add_trait = blood_of_numenor_7
+						add_trait = blood_of_numenor_10
 					}
 					else_if = { 
 						limit = { has_trait = blood_of_numenor_2 }	
 						remove_trait = blood_of_numenor_2
-						add_trait = blood_of_numenor_6
+						add_trait = blood_of_numenor_10
 					}
 					else_if = { 
 						limit = { has_trait = blood_of_numenor_1 }	
 						remove_trait = blood_of_numenor_1
-						add_trait = blood_of_numenor_5
+						add_trait = blood_of_numenor_10
 					}
 					else = { 
-						add_trait = blood_of_numenor_4
+						add_trait = blood_of_numenor_10
+					}
+					every_living_character = { 
+						limit = { 
+							OR = { 
+								culture = { has_cultural_pillar = heritage_dunedain }
+								AND = { 
+									culture = { has_cultural_pillar = heritage_bellakari }
+									NOT = { culture = { this = culture:bellanarud } }
+								}
+								culture = { has_cultural_pillar = heritage_northern_adunaic }
+								culture = { has_cultural_pillar = heritage_southern_adunaic }
+								culture = { has_cultural_pillar = heritage_eastern_adunaic }
+								culture = { has_cultural_pillar = heritage_unified_adunaic }
+							}
+						}
+						set_culture = culture:new_numenorean
+						if = { 
+							limit = { has_trait = blood_of_numenor_10 }	
+							add_piety = 1000
+						}
+						else_if = { 
+							limit = { has_trait = blood_of_numenor_9 }	
+							remove_trait = blood_of_numenor_9
+							add_trait = blood_of_numenor_10
+						}
+						else_if = { 
+							limit = { has_trait = blood_of_numenor_8 }	
+							remove_trait = blood_of_numenor_8
+							add_trait = blood_of_numenor_10
+						}
+						else_if = { 
+							limit = { has_trait = blood_of_numenor_7 }	
+							remove_trait = blood_of_numenor_7
+							add_trait = blood_of_numenor_10
+						}
+						else_if = { 
+							limit = { has_trait = blood_of_numenor_6 }	
+							remove_trait = blood_of_numenor_6
+							add_trait = blood_of_numenor_10
+						}
+						else_if = { 
+							limit = { has_trait = blood_of_numenor_5 }	
+							remove_trait = blood_of_numenor_5
+							add_trait = blood_of_numenor_9
+						}
+						else_if = { 
+							limit = { has_trait = blood_of_numenor_4 }	
+							remove_trait = blood_of_numenor_4
+							add_trait = blood_of_numenor_8
+						}
+						else_if = { 
+							limit = { has_trait = blood_of_numenor_3 }	
+							remove_trait = blood_of_numenor_3
+							add_trait = blood_of_numenor_7
+						}
+						else_if = { 
+							limit = { has_trait = blood_of_numenor_2 }	
+							remove_trait = blood_of_numenor_2
+							add_trait = blood_of_numenor_6
+						}
+						else_if = { 
+							limit = { has_trait = blood_of_numenor_1 }	
+							remove_trait = blood_of_numenor_1
+							add_trait = blood_of_numenor_5
+						}
+						else = { 
+							add_trait = blood_of_numenor_4
+						}
+					}
+				}
+			}
+			else_if = { 
+				limit = { has_game_rule = half_bon }
+				hidden_effect = {	
+					every_living_character = { 
+						limit = { 
+							OR = { 
+								culture = { has_cultural_pillar = heritage_dunedain }
+								AND = { 
+									culture = { has_cultural_pillar = heritage_bellakari }
+									NOT = { culture = { this = culture:bellanarud } }
+								}
+								culture = { has_cultural_pillar = heritage_northern_adunaic }
+								culture = { has_cultural_pillar = heritage_southern_adunaic }
+								culture = { has_cultural_pillar = heritage_eastern_adunaic }
+								culture = { has_cultural_pillar = heritage_unified_adunaic }
+							}
+						}
+						set_culture = culture:new_numenorean
+						if = { 
+							limit = { has_trait = blood_of_numenor_10 }	
+							add_piety = 1000
+						}
+						else_if = { 
+							limit = { has_trait = blood_of_numenor_9 }	
+							remove_trait = blood_of_numenor_9
+							add_trait = blood_of_numenor_10
+						}
+						else_if = { 
+							limit = { has_trait = blood_of_numenor_8 }	
+							remove_trait = blood_of_numenor_8
+							add_trait = blood_of_numenor_10
+						}
+						else_if = { 
+							limit = { has_trait = blood_of_numenor_7 }	
+							remove_trait = blood_of_numenor_7
+							add_trait = blood_of_numenor_9
+						}
+						else_if = { 
+							limit = { has_trait = blood_of_numenor_6 }	
+							remove_trait = blood_of_numenor_6
+							add_trait = blood_of_numenor_8
+						}
+						else_if = { 
+							limit = { has_trait = blood_of_numenor_5 }	
+							remove_trait = blood_of_numenor_5
+							add_trait = blood_of_numenor_7
+						}
+						else_if = { 
+							limit = { has_trait = blood_of_numenor_4 }	
+							remove_trait = blood_of_numenor_4
+							add_trait = blood_of_numenor_6
+						}
+						else_if = { 
+							limit = { has_trait = blood_of_numenor_3 }	
+							remove_trait = blood_of_numenor_3
+							add_trait = blood_of_numenor_5
+						}
+						else_if = { 
+							limit = { has_trait = blood_of_numenor_2 }	
+							remove_trait = blood_of_numenor_2
+							add_trait = blood_of_numenor_4
+						}
+						else_if = { 
+							limit = { has_trait = blood_of_numenor_1 }	
+							remove_trait = blood_of_numenor_1
+							add_trait = blood_of_numenor_3
+						}
+						else = { 
+							add_trait = blood_of_numenor_2
+						}
+					}
+				}
+			}
+			else = { 
+				hidden_effect = {	
+					every_living_character = { 
+						limit = { 
+							OR = { 
+								culture = { has_cultural_pillar = heritage_dunedain }
+								AND = { 
+									culture = { has_cultural_pillar = heritage_bellakari }
+									NOT = { culture = { this = culture:bellanarud } }
+								}
+								culture = { has_cultural_pillar = heritage_northern_adunaic }
+								culture = { has_cultural_pillar = heritage_southern_adunaic }
+								culture = { has_cultural_pillar = heritage_eastern_adunaic }
+								culture = { has_cultural_pillar = heritage_unified_adunaic }
+							}
+						}
+						set_culture = culture:new_numenorean
 					}
 				}
 			}
@@ -2665,6 +2965,7 @@ decision_reunify_numenor_culture = {
 						remove_innovation = innovation_numenorean_warriors
 						remove_innovation = innovation_unified_adunai_warfare
 						remove_innovation = innovation_dunedain_warriors
+						remove_innovation = innovation_dunedain_warriors_steelbow
 						remove_innovation = innovation_arnorian_soldiers
 						remove_innovation = innovation_gondorian_soldiers
 						remove_innovation = innovation_dunedain_ranger_warfare
@@ -3354,6 +3655,7 @@ decision_numenor_in_exile = {
 					add_innovation = innovation_numenorean_warriors_custom
 					remove_innovation = innovation_numenorean_warriors
 					remove_innovation = innovation_dunedain_warriors
+					remove_innovation = innovation_dunedain_warriors_steelbow
 					remove_innovation = innovation_arnorian_soldiers
 					remove_innovation = innovation_gondorian_soldiers
 					remove_innovation = innovation_dunedain_ranger_warfare
@@ -3371,61 +3673,10 @@ decision_numenor_in_exile = {
 				}
 			}
 		}
-		custom_tooltip = decision_gain_numenor_blood_culture_self_family
-		hidden_effect = {
-			if = { 
-				limit = { has_trait = blood_of_numenor_10 }	
-				add_piety = 1000
-			}
-			else_if = { 
-				limit = { has_trait = blood_of_numenor_9 }	
-				remove_trait = blood_of_numenor_9
-				add_trait = blood_of_numenor_10
-			}
-			else_if = { 
-				limit = { has_trait = blood_of_numenor_8 }	
-				remove_trait = blood_of_numenor_8
-				add_trait = blood_of_numenor_9
-			}
-			else_if = { 
-				limit = { has_trait = blood_of_numenor_7 }	
-				remove_trait = blood_of_numenor_7
-				add_trait = blood_of_numenor_8
-			}
-			else_if = { 
-				limit = { has_trait = blood_of_numenor_6 }	
-				remove_trait = blood_of_numenor_6
-				add_trait = blood_of_numenor_7
-			}
-			else_if = { 
-				limit = { has_trait = blood_of_numenor_5 }	
-				remove_trait = blood_of_numenor_5
-				add_trait = blood_of_numenor_6
-			}
-			else_if = { 
-				limit = { has_trait = blood_of_numenor_4 }	
-				remove_trait = blood_of_numenor_4
-				add_trait = blood_of_numenor_5
-			}
-			else_if = { 
-				limit = { has_trait = blood_of_numenor_3 }	
-				remove_trait = blood_of_numenor_3
-				add_trait = blood_of_numenor_4
-			}
-			else_if = { 
-				limit = { has_trait = blood_of_numenor_2 }	
-				remove_trait = blood_of_numenor_2
-				add_trait = blood_of_numenor_3
-			}
-			else_if = { 
-				limit = { has_trait = blood_of_numenor_1 }	
-				remove_trait = blood_of_numenor_1
-				add_trait = blood_of_numenor_2
-			}
-			else = { 
-				add_trait = blood_of_numenor_1
-			}
-			every_spouse = {
+		if = { 
+			limit = { has_game_rule = default_bon }
+			custom_tooltip = decision_gain_numenor_blood_culture_self_family
+			hidden_effect = {
 				if = { 
 					limit = { has_trait = blood_of_numenor_10 }	
 					add_piety = 1000
@@ -3478,113 +3729,167 @@ decision_numenor_in_exile = {
 				else = { 
 					add_trait = blood_of_numenor_1
 				}
-			}
-			every_close_family_member = {
-				if = { 
-					limit = { has_trait = blood_of_numenor_10 }	
-					add_piety = 1000
+				every_spouse = {
+					if = { 
+						limit = { has_trait = blood_of_numenor_10 }	
+						add_piety = 1000
+					}
+					else_if = { 
+						limit = { has_trait = blood_of_numenor_9 }	
+						remove_trait = blood_of_numenor_9
+						add_trait = blood_of_numenor_10
+					}
+					else_if = { 
+						limit = { has_trait = blood_of_numenor_8 }	
+						remove_trait = blood_of_numenor_8
+						add_trait = blood_of_numenor_9
+					}
+					else_if = { 
+						limit = { has_trait = blood_of_numenor_7 }	
+						remove_trait = blood_of_numenor_7
+						add_trait = blood_of_numenor_8
+					}
+					else_if = { 
+						limit = { has_trait = blood_of_numenor_6 }	
+						remove_trait = blood_of_numenor_6
+						add_trait = blood_of_numenor_7
+					}
+					else_if = { 
+						limit = { has_trait = blood_of_numenor_5 }	
+						remove_trait = blood_of_numenor_5
+						add_trait = blood_of_numenor_6
+					}
+					else_if = { 
+						limit = { has_trait = blood_of_numenor_4 }	
+						remove_trait = blood_of_numenor_4
+						add_trait = blood_of_numenor_5
+					}
+					else_if = { 
+						limit = { has_trait = blood_of_numenor_3 }	
+						remove_trait = blood_of_numenor_3
+						add_trait = blood_of_numenor_4
+					}
+					else_if = { 
+						limit = { has_trait = blood_of_numenor_2 }	
+						remove_trait = blood_of_numenor_2
+						add_trait = blood_of_numenor_3
+					}
+					else_if = { 
+						limit = { has_trait = blood_of_numenor_1 }	
+						remove_trait = blood_of_numenor_1
+						add_trait = blood_of_numenor_2
+					}
+					else = { 
+						add_trait = blood_of_numenor_1
+					}
 				}
-				else_if = { 
-					limit = { has_trait = blood_of_numenor_9 }	
-					remove_trait = blood_of_numenor_9
-					add_trait = blood_of_numenor_10
+				every_close_family_member = {
+					if = { 
+						limit = { has_trait = blood_of_numenor_10 }	
+						add_piety = 1000
+					}
+					else_if = { 
+						limit = { has_trait = blood_of_numenor_9 }	
+						remove_trait = blood_of_numenor_9
+						add_trait = blood_of_numenor_10
+					}
+					else_if = { 
+						limit = { has_trait = blood_of_numenor_8 }	
+						remove_trait = blood_of_numenor_8
+						add_trait = blood_of_numenor_9
+					}
+					else_if = { 
+						limit = { has_trait = blood_of_numenor_7 }	
+						remove_trait = blood_of_numenor_7
+						add_trait = blood_of_numenor_8
+					}
+					else_if = { 
+						limit = { has_trait = blood_of_numenor_6 }	
+						remove_trait = blood_of_numenor_6
+						add_trait = blood_of_numenor_7
+					}
+					else_if = { 
+						limit = { has_trait = blood_of_numenor_5 }	
+						remove_trait = blood_of_numenor_5
+						add_trait = blood_of_numenor_6
+					}
+					else_if = { 
+						limit = { has_trait = blood_of_numenor_4 }	
+						remove_trait = blood_of_numenor_4
+						add_trait = blood_of_numenor_5
+					}
+					else_if = { 
+						limit = { has_trait = blood_of_numenor_3 }	
+						remove_trait = blood_of_numenor_3
+						add_trait = blood_of_numenor_4
+					}
+					else_if = { 
+						limit = { has_trait = blood_of_numenor_2 }	
+						remove_trait = blood_of_numenor_2
+						add_trait = blood_of_numenor_3
+					}
+					else_if = { 
+						limit = { has_trait = blood_of_numenor_1 }	
+						remove_trait = blood_of_numenor_1
+						add_trait = blood_of_numenor_2
+					}
+					else = { 
+						add_trait = blood_of_numenor_1
+					}
 				}
-				else_if = { 
-					limit = { has_trait = blood_of_numenor_8 }	
-					remove_trait = blood_of_numenor_8
-					add_trait = blood_of_numenor_9
-				}
-				else_if = { 
-					limit = { has_trait = blood_of_numenor_7 }	
-					remove_trait = blood_of_numenor_7
-					add_trait = blood_of_numenor_8
-				}
-				else_if = { 
-					limit = { has_trait = blood_of_numenor_6 }	
-					remove_trait = blood_of_numenor_6
-					add_trait = blood_of_numenor_7
-				}
-				else_if = { 
-					limit = { has_trait = blood_of_numenor_5 }	
-					remove_trait = blood_of_numenor_5
-					add_trait = blood_of_numenor_6
-				}
-				else_if = { 
-					limit = { has_trait = blood_of_numenor_4 }	
-					remove_trait = blood_of_numenor_4
-					add_trait = blood_of_numenor_5
-				}
-				else_if = { 
-					limit = { has_trait = blood_of_numenor_3 }	
-					remove_trait = blood_of_numenor_3
-					add_trait = blood_of_numenor_4
-				}
-				else_if = { 
-					limit = { has_trait = blood_of_numenor_2 }	
-					remove_trait = blood_of_numenor_2
-					add_trait = blood_of_numenor_3
-				}
-				else_if = { 
-					limit = { has_trait = blood_of_numenor_1 }	
-					remove_trait = blood_of_numenor_1
-					add_trait = blood_of_numenor_2
-				}
-				else = { 
-					add_trait = blood_of_numenor_1
-				}
-			}
-			every_child = {
-				if = { 
-					limit = { has_trait = blood_of_numenor_10 }	
-					add_piety = 1000
-				}
-				else_if = { 
-					limit = { has_trait = blood_of_numenor_9 }	
-					remove_trait = blood_of_numenor_9
-					add_trait = blood_of_numenor_10
-				}
-				else_if = { 
-					limit = { has_trait = blood_of_numenor_8 }	
-					remove_trait = blood_of_numenor_8
-					add_trait = blood_of_numenor_9
-				}
-				else_if = { 
-					limit = { has_trait = blood_of_numenor_7 }	
-					remove_trait = blood_of_numenor_7
-					add_trait = blood_of_numenor_8
-				}
-				else_if = { 
-					limit = { has_trait = blood_of_numenor_6 }	
-					remove_trait = blood_of_numenor_6
-					add_trait = blood_of_numenor_7
-				}
-				else_if = { 
-					limit = { has_trait = blood_of_numenor_5 }	
-					remove_trait = blood_of_numenor_5
-					add_trait = blood_of_numenor_6
-				}
-				else_if = { 
-					limit = { has_trait = blood_of_numenor_4 }	
-					remove_trait = blood_of_numenor_4
-					add_trait = blood_of_numenor_5
-				}
-				else_if = { 
-					limit = { has_trait = blood_of_numenor_3 }	
-					remove_trait = blood_of_numenor_3
-					add_trait = blood_of_numenor_4
-				}
-				else_if = { 
-					limit = { has_trait = blood_of_numenor_2 }	
-					remove_trait = blood_of_numenor_2
-					add_trait = blood_of_numenor_3
-				}
-				else_if = { 
-					limit = { has_trait = blood_of_numenor_1 }	
-					remove_trait = blood_of_numenor_1
-					add_trait = blood_of_numenor_2
-				}
-				else = { 
-					add_trait = blood_of_numenor_1
+				every_child = {
+					if = { 
+						limit = { has_trait = blood_of_numenor_10 }	
+						add_piety = 1000
+					}
+					else_if = { 
+						limit = { has_trait = blood_of_numenor_9 }	
+						remove_trait = blood_of_numenor_9
+						add_trait = blood_of_numenor_10
+					}
+					else_if = { 
+						limit = { has_trait = blood_of_numenor_8 }	
+						remove_trait = blood_of_numenor_8
+						add_trait = blood_of_numenor_9
+					}
+					else_if = { 
+						limit = { has_trait = blood_of_numenor_7 }	
+						remove_trait = blood_of_numenor_7
+						add_trait = blood_of_numenor_8
+					}
+					else_if = { 
+						limit = { has_trait = blood_of_numenor_6 }	
+						remove_trait = blood_of_numenor_6
+						add_trait = blood_of_numenor_7
+					}
+					else_if = { 
+						limit = { has_trait = blood_of_numenor_5 }	
+						remove_trait = blood_of_numenor_5
+						add_trait = blood_of_numenor_6
+					}
+					else_if = { 
+						limit = { has_trait = blood_of_numenor_4 }	
+						remove_trait = blood_of_numenor_4
+						add_trait = blood_of_numenor_5
+					}
+					else_if = { 
+						limit = { has_trait = blood_of_numenor_3 }	
+						remove_trait = blood_of_numenor_3
+						add_trait = blood_of_numenor_4
+					}
+					else_if = { 
+						limit = { has_trait = blood_of_numenor_2 }	
+						remove_trait = blood_of_numenor_2
+						add_trait = blood_of_numenor_3
+					}
+					else_if = { 
+						limit = { has_trait = blood_of_numenor_1 }	
+						remove_trait = blood_of_numenor_1
+						add_trait = blood_of_numenor_2
+					}
+					else = { 
+						add_trait = blood_of_numenor_1
+					}
 				}
 			}
 		}
@@ -3626,7 +3931,7 @@ decision_new_capital = {
 			triggered_desc = {
 				trigger = {
 					has_primary_title = title:e_numenor_in_exile
-					has_primary_title = title:e_numenor #Submod Numenor
+					NOT = { has_title = title:e_numenor } #Numenor Submod
 				}
 				desc = decision_new_capital.t.nie
 			}
@@ -3682,7 +3987,7 @@ decision_new_capital = {
 			triggered_desc = {
 				trigger = {
 					has_primary_title = title:e_numenor_in_exile
-					has_primary_title = title:e_numenor #Submod Numenor
+					NOT = { has_title = title:e_numenor } #Numenor Submod
 				}
 				desc = decision_new_capital.desc.nie
 			}
@@ -4352,7 +4657,7 @@ decision_restore_gondor_province = {
 			has_title = title:e_gondor
 			has_title = title:e_castamir
 			has_title = title:e_numenor_in_exile
-			has_title = title:e_numenor #Submod Numenor
+			NOT = { has_title = title:e_numenor } #Numenor Submod
 			AND = {
 				has_title = title:e_reunitedkingdom
 				is_target_in_global_variable_list = {
@@ -4392,6 +4697,7 @@ decision_restore_gondor_province = {
 			show_tumag_trigger = yes
 			show_usakan_trigger = yes
 			show_tanturak_trigger = yes
+			show_anarike_trigger = yes
 			##End Quonton
 		}
 	}
@@ -4487,6 +4793,10 @@ decision_restore_gondor_province = {
 			trigger_if = { # Tanturak - Pharazain/NiE Only
 				limit = { show_tanturak_trigger = yes }
 				completely_controls = title:k_tanturak
+			}
+			trigger_if = { # Anarike - NiE Only
+				limit = { show_anarike_trigger = yes }
+				completely_controls = title:k_anarike
 			}
 			##End Quonton
 		}
@@ -4773,6 +5083,19 @@ decision_restore_gondor_province = {
 			is_shown = { show_tanturak_trigger = yes }
 			is_valid = {
 				completely_controls = title:k_tanturak
+			}
+			ai_chance = {
+				value = 100
+			}
+		}
+		item = {	# Anarike		- NiE Only
+			value = reintegrate_province_anarike
+			current_description = decision_restore_gondor_province.tt.anarike_desc
+			localization = decision_restore_gondor_province.tt.anarike_desc
+			icon = "gfx/interface/icons/message_feed/diarch.dds"
+			is_shown = { show_anarike_trigger = yes }
+			is_valid = {
+				completely_controls = title:k_anarike
 			}
 			ai_chance = {
 				value = 100
@@ -5211,6 +5534,23 @@ decision_restore_gondor_province = {
 				target = flag:decision_integrate_tanturak
 			}
 		}	
+		else_if = {	# Anarike		- NiE Only
+			limit = {
+				scope:reintegrate_province_anarike = yes
+			}
+			custom_tooltip = integrate_anarike_decision
+			root = { save_scope_as = new_ruler }
+			title:k_anarike = {
+				set_appropriate_de_jure_liege = yes
+			}
+			title:k_anarike = {
+				change_development_level = 2
+			}
+			add_to_global_variable_list = {
+				name = unavailable_unique_decisions
+				target = flag:decision_integrate_anarike
+			}
+		}	
 		##End Quonton
 		
 		else = {
@@ -5350,7 +5690,7 @@ decision_recreate_watch_on_mordor = {
 			has_primary_title = title:e_reunitedkingdom
 			has_primary_title = title:e_bellakar
 			has_primary_title = title:e_castamir
-			has_primary_title = title:e_numenor #Submod Numenor
+			NOT = { has_title = title:e_numenor } #Numenor Submod
 			AND = {
 				is_elf = yes
 				highest_held_title_tier >= tier_kingdom
@@ -5446,7 +5786,7 @@ decision_abandon_watch_on_mordor = {
 			has_primary_title = title:e_reunitedkingdom
 			has_primary_title = title:e_bellakar
 			has_primary_title = title:e_castamir
-			has_primary_title = title:e_numenor #Submod Numenor
+			NOT = { has_title = title:e_numenor } #Numenor Submod
 			AND = {
 				is_elf = yes
 				highest_held_title_tier >= tier_kingdom
@@ -5518,7 +5858,7 @@ decision_restore_defeated_gondor = {
 		faith_is_good = yes
 
 		NAND = { # Do not show while another liberation war is ongoing
-            title:e_mordor.holder = { has_character_flag = attacked_in_gondor_liberation }
+            title:c_minas_tirith.holder.top_liege = { has_character_flag = attacked_in_gondor_liberation }
 			any_ruler = { has_character_flag = liberating_gondor }
 		}
 		
@@ -5567,6 +5907,29 @@ decision_restore_defeated_gondor = {
 			NAND = {
 				is_tributary = yes
 				suzerain = { is_maiar_fallen = yes }
+			}
+		}
+		trigger_if = {
+			limit = { is_ai = yes }
+			trigger_if = {
+				limit = { is_elf = yes }
+				custom_tooltip = {
+					text = destroy_mordor_decision_current_military_strength_elven_tt
+					root.script_current_military_strength >= title:e_mordor.holder.lotr_twenty_five_percent_of_current_military_strength
+				}
+			} 
+			trigger_else_if = {
+				limit = { is_dwarf = yes }
+				custom_tooltip = {
+					text = destroy_mordor_decision_current_military_strength_dwarven_tt
+					root.script_current_military_strength >= title:e_mordor.holder.a_third_of_current_military_strength
+				}
+			} 
+			trigger_else = {
+				custom_tooltip = {
+					text = destroy_mordor_decision_current_military_strength_default_tt
+					root.script_current_military_strength >= title:e_mordor.holder.fifty_percent_of_current_military_strength
+				}
 			}
 		}
 	}
@@ -5645,7 +6008,7 @@ decision_join_gondor_liberation = {
 	is_valid = {
 		custom_tooltip = {
 			text = decision_join_gondor_liberation_tt
-			title:e_mordor.holder = { has_character_flag = attacked_in_gondor_liberation }
+			title:c_minas_tirith.holder.top_liege = { has_character_flag = attacked_in_gondor_liberation }
 			any_ruler = { has_character_flag = liberating_gondor }
 		}
 		custom_tooltip = {
@@ -5708,7 +6071,13 @@ decision_calenardhon_calemmir = {
 	# IS_SHOWN
 	is_shown = {
 		current_year >= 6580 # Only after the founding of Rohan
-		has_title = title:k_rohan
+		is_independent_ruler = yes
+		OR = { 
+			has_title = title:k_rohan
+			any_vassal ?= {
+				has_title = title:k_rohan
+			}
+		}
 		##Quonton
 		culture = { 
 			OR = { 
@@ -5727,7 +6096,18 @@ decision_calenardhon_calemmir = {
 	
 	# IS_VALID
 	is_valid = {
-		has_title = title:k_rohan
+		OR = { 
+			has_title = title:k_rohan
+			any_vassal ?= {
+				has_title = title:k_rohan
+				culture = { 
+					OR = { 
+						has_cultural_pillar = heritage_dunedain 
+						has_cultural_tradition = tradition_new_numenor
+					}
+				}
+			}
+		}
 		##Quonton
 		culture = { 
 			OR = { 
@@ -5747,18 +6127,138 @@ decision_calenardhon_calemmir = {
 	
 	# EFFECT 
 	effect = {
+		title:c_aldburg.holder = { save_scope_as = aldburg_holder }
 		custom_tooltip = decision_calenardhon_calemmir.tt
 		title:k_rohan = {
+ 			set_capital_county = title:c_aldburg
+		}
+		title:e_calenardhon = {
  			set_capital_county = title:c_aldburg
 		}
 		add_to_global_variable_list = {
 			name = unavailable_unique_decisions
 			target = flag:decision_calenardhon_calemmir
 		}
+		if = { 
+			limit = { title:k_rohan.holder = { NOT = { has_title = title:c_aldburg } } } 
+			title:k_rohan.holder = { add_pressed_claim = title:c_aldburg }
+			custom_tooltip = decision_calenardhon_calemmir_aldburg_claim.tt
+			trigger_event = dunedain_identity.7
+		}
 	}
 
 	cost = { # 
-		prestige = medium_prestige_value
+		prestige = 250
+	}
+
+	# AI value
+	ai_goal = yes
+	ai_potential = { always = yes }
+	ai_will_do = { base = 100 }
+}
+
+##Quonton
+decision_calenardhon_calemmir_special_building = {
+	sort_order = 50
+	title = decision_calenardhon_calemmir_special_building
+	picture = {
+		reference ="gfx/interface/illustrations/decisions/decision_stone_gate.dds"
+	}
+	selection_tooltip = decision_calenardhon_calemmir_special_building_tooltip
+	desc = decision_calenardhon_calemmir_special_building_desc
+	confirm_text = decision_calenardhon_calemmir_special_building_confirm
+
+	decision_group_type = realms_in_exile_minor
+
+	# IS_SHOWN
+	is_shown = {
+		current_year >= 6580 # Only after the founding of Rohan
+		is_independent_ruler = yes
+		OR = { 
+			has_title = title:k_rohan
+			any_vassal ?= {
+				has_title = title:k_rohan
+			}
+		}
+		culture = { 
+			OR = { 
+				has_cultural_pillar = heritage_dunedain 
+				has_cultural_tradition = tradition_new_numenor
+			}
+		}
+		is_target_in_global_variable_list = {
+			name = unavailable_unique_decisions
+			target = flag:decision_calenardhon_calemmir
+		}
+		NOT = {
+			is_target_in_global_variable_list = {
+				name = unavailable_unique_decisions
+				target = flag:decision_calenardhon_calemmir_special_building
+			}
+		}
+	}
+	
+	# IS_VALID
+	is_valid = {
+		OR = { 
+			AND = { 
+				has_title = title:k_rohan
+				has_title = title:c_aldburg
+			}
+			any_vassal ?= {
+				has_title = title:k_rohan
+				has_title = title:c_aldburg
+				culture = { 
+					OR = { 
+						has_cultural_pillar = heritage_dunedain 
+						has_cultural_tradition = tradition_new_numenor
+					}
+				}
+			}
+		}
+		culture = { 
+			OR = { 
+				has_cultural_pillar = heritage_dunedain 
+				has_cultural_tradition = tradition_new_numenor
+			}
+		}
+	}
+	
+	is_valid_showing_failures_only = {
+		is_imprisoned = no
+		is_lotr_adult = yes
+		is_at_war = no
+	}
+	
+	
+	# EFFECT 
+	effect = {
+		custom_tooltip = decision_calenardhon_calemmir_special_building.tt
+		hidden_effect = { 
+			title:c_aldburg = { 
+				title_province = {
+					remove_building = wonder_aldburg_01
+					remove_building = wonder_aldburg_02
+					remove_building = wonder_aldburg_03
+				}
+			}
+		}
+		title:c_aldburg = { 
+			title_province = {
+				remove_building = wonder_aldburg_02
+				add_special_building = wonder_calemmanc_00
+			}
+			change_development_progress = 250 
+		}
+		add_to_global_variable_list = {
+			name = unavailable_unique_decisions
+			target = flag:decision_calenardhon_calemmir_special_building
+		}
+	}
+
+	cost = { # 
+		gold = 100
+		prestige = 250
 	}
 
 	# AI value
@@ -6331,6 +6831,84 @@ decision_invite_northron_settlers = {
 	}
 }
 
+decision_restore_guild_of_venturers = {
+	sort_order = 0
+	title = decision_restore_guild_of_venturers
+	picture = {
+		reference = "gfx/interface/illustrations/decisions/decision_set_sail.dds"
+	}
+
+	decision_group_type = realms_in_exile_minor
+	
+	ai_goal = no
+	ai_check_interval = 40
+	ai_potential = {
+		always = yes
+	}
+	ai_will_do = {
+		base = 100
+	}
+	selection_tooltip = decision_restore_guild_of_venturers_tooltip
+	desc = decision_restore_guild_of_venturers_desc
+	confirm_text = decision_restore_guild_of_venturers_confirm
+	
+	is_shown = {
+		has_trait = lifestyle_mariner
+		capital_county = {
+			is_coastal_county = yes
+		}
+		lotr_has_numenorean_culture_trigger = yes
+		NOT = {
+			is_target_in_global_variable_list = {
+			name = unavailable_unique_decisions
+			target = flag:decision_restore_guild_of_venturers
+			}
+		}
+	}
+	
+	is_valid_showing_failures_only = {
+		is_imprisoned = no
+		is_available_adult = yes
+		is_at_war = no
+	}
+	
+	is_valid = {
+		prestige_level >= 5
+		custom_tooltip = {
+			text = has_100_mariner_xp
+			has_trait_xp = {
+				trait = lifestyle_mariner
+				value = 100
+			}
+		}
+		
+		house ?= { has_house_modifier = owns_big_ship }
+		capital_province = { 
+			has_building_or_higher = common_tradeport_08
+		}
+	}
+
+	cost = {
+		prestige = 500
+		gold = 250
+	}
+	
+	effect = {
+		house = {
+			add_house_modifier = guild_of_venturers_modifier
+		}
+		give_nickname = nick_uinendil
+		dynasty = { 
+			add_dynasty_prestige = 500
+		}
+		add_to_global_variable_list = {
+			name = unavailable_unique_decisions
+			target = flag:decision_restore_guild_of_venturers
+		}
+	}
+}
+
+
 ##Quonton Rohan 
 decision_integrate_rohan = {
 	sort_order = 81
@@ -6382,9 +6960,9 @@ decision_integrate_rohan = {
 				name = unavailable_unique_decisions
 				target = flag:decision_integrate_rohan
 			}
-			title:k_rohan.holder = {
-				faith_is_evil = yes
-				is_independent_ruler = no
+			is_target_in_global_variable_list = {
+				name = unavailable_unique_decisions
+				target = flag:decision_calenardhon_claim
 			}
 		}
 	}
@@ -6401,7 +6979,7 @@ decision_integrate_rohan = {
 	is_valid = {
 		is_independent_ruler = yes
 		# completely_controls = title:e_gondor
-		# prestige_level >= very_high_prestige_level
+		prestige_level >= very_high_prestige_level
 		OR = {
 			has_primary_title = title:e_reunitedkingdom
 			has_primary_title = title:e_numenor_in_exile
@@ -6412,42 +6990,22 @@ decision_integrate_rohan = {
 				faith_is_evil = no
 			}
 			OR = { 
-				custom_tooltip = {
-					text = rohan_ruler_is_dunedain
-					culture = { 
-						OR = { 
-							has_cultural_pillar = heritage_dunedain 
-							has_cultural_tradition = tradition_new_numenor
-						}	
-					}
-				}
 				AND = { 
-					dynasty = dynasty:dynasty_eorl # The House of Eorl still holds Rohan		 
+					custom_tooltip = {
+						text = rohan_ruler_is_dunedain
+						culture = { 
+							OR = { 
+								has_cultural_pillar = heritage_dunedain 
+								has_cultural_tradition = tradition_new_numenor
+							}	
+						}
+					}
 					title:k_rohan.holder = {
 						opinion = {
 							target = root
 							value >= 100
 						}
-						trigger_if = {
-							limit = {
-								exists = title:e_reunitedkingdom.holder
-							}
-							is_allied_to = title:e_reunitedkingdom.holder
-						}
-						trigger_else_if = {
-							limit = {
-								exists = title:e_gondor.holder
-							}
-							is_allied_to = title:e_gondor.holder
-						}
-						trigger_else = {
-							trigger_if = {
-								limit = {
-									exists = title:e_numenor_in_exile.holder
-								}
-								is_allied_to = title:e_numenor_in_exile.holder
-							}
-						}
+						is_allied_to = root
 					}
 				}
 				AND = { 
@@ -6457,26 +7015,37 @@ decision_integrate_rohan = {
 							target = root
 							value >= 100
 						}
-						trigger_if = {
-							limit = {
-								exists = title:e_reunitedkingdom.holder
-							}
-							is_allied_to = title:e_reunitedkingdom.holder
+						is_allied_to = root
+					}
+				}
+				AND = { 
+					dynasty = dynasty:dynasty_dol_amroth # The House of Dol Amroth has taken over		
+					title:k_rohan.holder = {
+						opinion = {
+							target = root
+							value >= 100
 						}
-						trigger_else_if = {
-							limit = {
-								exists = title:e_gondor.holder
-							}
-							is_allied_to = title:e_gondor.holder
+						is_allied_to = root
+					}
+				}
+				AND = { 
+					dynasty = dynasty:dynasty_lebennin # The House of Lebennin has taken over		
+					title:k_rohan.holder = {
+						opinion = {
+							target = root
+							value >= 100
 						}
-						trigger_else = {
-							trigger_if = {
-								limit = {
-									exists = title:e_numenor_in_exile.holder
-								}
-								is_allied_to = title:e_numenor_in_exile.holder
-							}
+						is_allied_to = root
+					}
+				}
+				AND = {
+					dynasty = dynasty:dynasty_elendil # The House of Elendil has taken over		
+					title:k_rohan.holder = {
+						opinion = {
+							target = root
+							value >= 100
 						}
+						is_allied_to = root
 					}
 				}				
 			}

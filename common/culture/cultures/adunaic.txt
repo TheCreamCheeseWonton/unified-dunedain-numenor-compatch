@@ -4,6 +4,8 @@
 	created = 4002.1.1
 	parents = { numenorean }
 	
+	history_loc_override = numenor_submod_loc
+	
 	ethos = ethos_communal
 	heritage = heritage_unified_adunaic
 	language = language_adunaic
@@ -15,10 +17,10 @@
 		tradition_martial_admiration
 		tradition_maritime_mercantilism
 		tradition_metal_craftsmanship
-		tradition_stand_and_fight
+		tradition_formation_fighting
 	}
 	
-	name_list = name_list_adunaic
+	name_list = name_list_adunaic_numenor
 	
 	coa_gfx = { numenorean_coa_gfx dunedain_group_coa_gfx }
 	building_gfx = { numenorean_building_gfx mediterranean_building_gfx }
@@ -30,5 +32,6 @@
 		1 = adunaic_ethnicity_1
 		1 = adunaic_ethnicity_2
 		1 = adunaic_ethnicity_3
+		1 = adunaic_ethnicity_4
 	}
 }

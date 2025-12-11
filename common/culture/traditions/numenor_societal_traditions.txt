@@ -2,9 +2,10 @@
 	category = societal
 
 	layers = {
-		0 = diplo
+		0 = learning
 		1 = western
-		4 = adunaim2.dds
+		2 = adunaim3support.dds
+		4 = adunaim4.dds
 	}
 	
 	is_shown = {

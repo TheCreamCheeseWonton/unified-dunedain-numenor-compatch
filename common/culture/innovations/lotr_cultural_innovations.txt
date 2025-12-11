@@ -31,6 +31,7 @@
 @dwarven_law = "gfx/interface/icons/culture_innovations/innovation_dwarven_law.dds"
 @numenorean_law = "gfx/interface/icons/culture_innovations/innovation_numenorean_law.dds"
 @namalo = "gfx/interface/icons/culture_innovations/innovation_namalo.dds"
+
 innovation_numenorean_heritage = {
 	group = culture_group_regional
 	culture_era = culture_era_tribal
@@ -93,6 +94,7 @@ innovation_lesser_numenorean_heritage = {
 	potential = {
 		OR = {
 			has_cultural_pillar = heritage_southern_adunaic
+			has_cultural_pillar = heritage_eastern_adunaic
 			AND = {
 				has_cultural_pillar = heritage_bellakari
 				NOT = { this = culture:bellanarud }
@@ -125,6 +127,7 @@ innovation_numenorean_architecture_01 = {
 			this = culture:isengard_dunlending
 			has_cultural_pillar = heritage_northern_adunaic
 			has_cultural_pillar = heritage_southern_adunaic
+			has_cultural_pillar = heritage_eastern_adunaic
 			has_cultural_pillar = heritage_dunedain
 			has_cultural_pillar = heritage_bellakari
 			##Quonton
@@ -203,6 +206,7 @@ innovation_lords_of_the_westlands = { # Rewards for a resurgent Dunedain
 	}
 	
 	flag = global_regional
+		culture_era = culture_era_late_medieval
 	flag = late_medieval_era_regional	
 }
 
@@ -285,6 +289,7 @@ innovation_elven_bowmaking = { # Duplicate of Crossbows without MAA unlock
 #	flag = global_regional
 #	flag = tribal_era_regional
 #}
+
 # innovation_wilderness_management_heritage = {
 # 	group = culture_group_regional
 # 	culture_era = culture_era_late_medieval
@@ -384,6 +389,7 @@ innovation_numenorean_law = {
 			has_cultural_pillar = heritage_dunedain
 			has_cultural_pillar = heritage_bellakari
 			has_cultural_pillar = heritage_eriadorim
+
 			this = culture:angmarrim
 			this = culture:breelander
 			this = culture:dalemen
@@ -418,6 +424,7 @@ innovation_numenorean_law = {
 	flag = global_regional
 	flag = tribal_era_regional
 }
+
 ### Haradrim ###
 innovation_namalo = {
 	group = culture_group_regional
@@ -466,4 +473,60 @@ innovation_namalo = {
 
 	flag = global_regional
 	flag = high_medieval_era_regional
+}
+
+
+##Quonton
+innovation_adunai_administration_feudal = {
+	group = culture_group_regional
+	culture_era = culture_era_late_medieval
+	icon = @numenorean_law
+
+	#can_progress = { #Unlocked by event.
+	#	custom_description = {
+	#		text = "innovation_unlocked_by_decision_trigger"
+	#		always = no
+	#	}
+	#}
+
+	potential = {
+		always = no
+	}
+
+	character_modifier = {
+		domain_limit = 1
+		vassal_limit = 60
+		vassal_tax_contribution_mult = 0.1
+		vassal_levy_contribution_mult = 0.1
+	}
+
+	flag = global_regional
+	flag = late_medieval_era_regional	
+}
+
+innovation_adunai_administration_admin = {
+	group = culture_group_regional
+	culture_era = culture_era_late_medieval
+	icon = @numenorean_law
+
+	#can_progress = { #Unlocked by event.
+	#	custom_description = {
+	#		text = "innovation_unlocked_by_decision_trigger"
+	#		always = no
+	#	}
+	#}
+
+	potential = {
+		always = no
+	}
+
+	character_modifier = {
+		domain_limit = 1
+		men_at_arms_cap = 1
+		men_at_arms_limit = 2
+		army_maintenance_mult = 0.5
+	}
+
+	flag = global_regional
+	flag = late_medieval_era_regional	
 }

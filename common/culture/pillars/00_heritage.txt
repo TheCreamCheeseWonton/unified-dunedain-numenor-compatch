@@ -1,4 +1,4 @@
-﻿##Quonton
+﻿### Numenor Submod Code ###
 heritage_unified_adunaic = {
 	type = heritage
 	parameters = {
@@ -8,7 +8,10 @@ heritage_unified_adunaic = {
 	}
 	character_modifier  = {
 		halls_advantage = -10
-		diplomatic_range_mult = 0.95
+		levy_attack = 5
+		levy_toughness = 5
+		epidemic_resistance = 10
+		diplomatic_range_mult = 1.25
 	}
 	is_shown = {
 		heritage_is_shown_trigger = {
@@ -77,6 +80,24 @@ heritage_atanatari = {
 	is_shown = {
 		heritage_is_shown_trigger = {
 			HERITAGE = heritage_atanatari
+		}
+	}
+	audio_parameter = european
+}
+
+heritage_mordorrim = {
+	type = heritage
+	parameters = {
+		heritage_family_edain = yes
+		is_human_heritage = yes
+	}
+	character_modifier  = {
+		halls_advantage = -10
+		rf_eruhini_opinion = -500
+	}
+	is_shown = {
+		heritage_is_shown_trigger = {
+			HERITAGE = heritage_mordorrim
 		}
 	}
 	audio_parameter = european
@@ -640,7 +661,7 @@ heritage_new_sirayni = {
 heritage_ioriag = {
 	type = heritage
 	parameters = {
-		heritage_group_talataerim = yes
+		heritage_group_talathrim = yes
 		heritage_family_easterling = yes
 		is_human_heritage = yes
 	}
@@ -655,10 +676,28 @@ heritage_ioriag = {
 	audio_parameter = mena
 }
 
+heritage_tedjin = {
+	type = heritage
+	parameters = {
+		heritage_group_talathrim = yes
+		heritage_family_easterling = yes
+		is_human_heritage = yes
+	}
+	character_modifier  = {
+		halls_advantage = -10
+	}
+	is_shown = {
+		heritage_is_shown_trigger = {
+			HERITAGE = heritage_tedjin
+		}
+	}
+	audio_parameter = mena
+}
+
 heritage_igath = {
 	type = heritage
 	parameters = {
-		heritage_group_talataerim = yes
+		heritage_group_talathrim = yes
 		heritage_family_easterling = yes
 		is_human_heritage = yes
 	}
@@ -673,23 +712,6 @@ heritage_igath = {
 	audio_parameter = mena
 }
 
-heritage_mumakani = {
-	type = heritage
-	parameters = {
-		heritage_group_mumakani = yes
-		heritage_family_haradrim = yes
-		is_human_heritage = yes
-	}
-	character_modifier  = {
-		halls_advantage = -10
-	}
-	is_shown = {
-		heritage_is_shown_trigger = {
-			HERITAGE = heritage_mumakani
-		}
-	}
-	audio_parameter = mena
-}
 heritage_nafarati = {
 	type = heritage
 	parameters = {
@@ -827,6 +849,8 @@ heritage_orc = {
 		more_likely_to_be_laamps = yes
 		can_recruit_halls_specialist = yes
 		murderers_are_prestigious_and_feared = yes
+		dislikes_marrying_outside_of_cultural_heritage = yes
+		ai_doesnt_marry_outside_cultural_heritage = yes
 	}
 	
 	culture_modifier = {
@@ -885,6 +909,8 @@ heritage_goblin = { #juke note: boni should be adjusted later
 		more_likely_to_be_laamps = yes
 		can_recruit_halls_specialist = yes
 		murderers_are_prestigious_and_feared = yes
+		dislikes_marrying_outside_of_cultural_heritage = yes
+		ai_doesnt_marry_outside_cultural_heritage = yes
 	}
 	culture_modifier = {
 		mercenary_count_mult = -10
@@ -1340,10 +1366,10 @@ heritage_stonefoot = {
 	audio_parameter = european
 }
 
-heritage_north_khailuza = { # Chey-Sart (alternatively: Khey Sârt in southern Khailuzan)
+heritage_north_khailuza = { # Chey-Sârt (alternatively: Khey Sârt in southern Khailuzan)
 	type = heritage
 	parameters = {
-		heritage_group_talataerim = yes
+		heritage_group_talathrim = yes
 		heritage_family_easterling = yes
 		is_human_heritage = yes
 	}
@@ -1361,7 +1387,7 @@ heritage_north_khailuza = { # Chey-Sart (alternatively: Khey Sârt in southern K
 heritage_south_khailuza = { # Bay of Ormal, encompassing Khy, Anarike, and some cultures of Sirayn
 	type = heritage
 	parameters = {
-		heritage_group_talataerim = yes
+		heritage_group_talathrim = yes
 		heritage_family_easterling = yes
 		is_human_heritage = yes
 	}

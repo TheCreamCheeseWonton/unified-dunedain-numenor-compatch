@@ -14,23 +14,25 @@ wonder_erendis_01 = {
 	can_construct = {
 		building_requirement_castle_city_church = { LEVEL = 03 }
 		scope:holder = {
-				culture = {
-					has_innovation = innovation_hoardings
-					}
-				culture = { OR = { has_cultural_pillar = heritage_unified_adunaic has_cultural_tradition = tradition_new_numenor } }
+			culture = {
+				has_innovation = innovation_hoardings
 			}
+			culture = { OR = { has_cultural_pillar = heritage_unified_adunaic has_cultural_tradition = tradition_new_numenor } }
 		}
-	province_modifier = {
-		tax_mult = 0.1
 	}
 	county_modifier = {
 		development_growth_factor = 0.1
 	}
 	character_modifier = {
+		monthly_prestige_gain_mult = 0.15
+		stress_loss_mult = 0.1
 		vassal_opinion = 5
+		owned_personal_scheme_success_chance_add = 25
 	}
 	is_enabled = {
-		culture = { OR = { has_cultural_pillar = heritage_unified_adunaic has_cultural_tradition = tradition_new_numenor } }
+		scope:holder = {
+			culture = { OR = { has_cultural_pillar = heritage_unified_adunaic has_cultural_tradition = tradition_new_numenor } }
+		}
 	}	
 	
 	ai_value = {
@@ -48,21 +50,21 @@ wonder_eldalonde_01 = { #Numenorean Port of Eldalonde
 	can_construct = {
 		building_requirement_castle_city_church = { LEVEL = 03 }
 		scope:holder = {
-				culture = {
-					has_innovation = innovation_hoardings
-					}
+			culture = {
+				has_innovation = innovation_hoardings
 			}
 		}
+	}
 	province_modifier = {
 		fort_level = good_building_fort_level_tier_1
-		supply_limit_mult = 0.2
-		tax_mult = 0.2
 	}
-	county_modifier = {
-		development_growth_factor = 0.1
+	character_modifier = {
+		monthly_piety = 0.5
 	}
 	is_enabled = {
-		culture = { OR = { has_cultural_pillar = heritage_unified_adunaic has_cultural_tradition = tradition_new_numenor } }
+		scope:holder = {
+			culture = { OR = { has_cultural_pillar = heritage_unified_adunaic has_cultural_tradition = tradition_new_numenor } }
+		}
 	}
 	ai_value = {
 		base = 100
@@ -80,24 +82,28 @@ wonder_eldalonde_02 = { #Eldalonde after the Akallabeth
 	can_construct = {
 		building_requirement_castle_city_church = { LEVEL = 03 }
 		scope:holder = {
-				culture = {
-					has_innovation = innovation_hoardings
-					}
+			culture = {
+				has_innovation = innovation_hoardings
 			}
 		}
-	province_modifier = {
-		fort_level = good_building_fort_level_tier_1
-		supply_limit_mult = 0.4
-		tax_mult = 0.3
 	}
-	county_modifier = {
-		development_growth_factor = 0.2
+	province_modifier = {
+		fort_level = good_building_fort_level_tier_2
+		supply_limit_mult = 0.5
+		tax_mult = 0.25
+	}
+	effect_desc = {
+		desc = explore_history_cost_discount_medium_desc
 	}
 	character_modifier = {
+		monthly_piety = 1
 		vassal_opinion = 5
+		embarkation_cost_mult = -0.2
 	}
 	is_enabled = {
-		culture = { OR = { has_cultural_pillar = heritage_unified_adunaic has_cultural_tradition = tradition_new_numenor } }
+		scope:holder = {
+			culture = { OR = { has_cultural_pillar = heritage_unified_adunaic has_cultural_tradition = tradition_new_numenor } }
+		}
 	}	
 	ai_value = {
 		base = 100
@@ -114,28 +120,39 @@ wonder_eldalonde_03 = {
 	can_construct = {
 		building_requirement_castle_city_church = { LEVEL = 03 }
 		scope:holder = {
-				culture = {
-					has_innovation = innovation_hoardings
-					}
-				culture = { OR = { has_cultural_pillar = heritage_unified_adunaic has_cultural_tradition = tradition_new_numenor } }
+			culture = {
+				has_innovation = innovation_hoardings
+				OR = { has_cultural_pillar = heritage_unified_adunaic has_cultural_tradition = tradition_new_numenor }
 			}
+			faith_is_evil = no
+			in_diplomatic_range = title:e_gondor.holder
+		}	
+		custom_tooltip = {
+			text = numenor_realm_size_limit_01
+			scope:holder.realm_size > 100
 		}
-	province_modifier = {
-		fort_level = good_building_fort_level_tier_1
-		supply_limit_mult = 0.6
-		tax_mult = 0.4
+		
 	}
-	county_modifier = {
-		development_growth_factor = 0.3
+	province_modifier = {
+		fort_level = good_building_fort_level_tier_3
+		supply_limit_mult = 1
+		tax_mult = 0.5
+	}
+	effect_desc = {
+		desc = explore_history_cost_discount_max_desc
 	}
 	character_modifier = {
-		vassal_opinion = 5
-		same_faith_opinion = 5
+		embarkation_cost_mult = -0.4
+		monthly_piety = 1.5
+		same_faith_opinion = 10
 		no_water_crossing_penalty = yes
 	}
 	is_enabled = {
-		culture = { OR = { has_cultural_pillar = heritage_unified_adunaic has_cultural_tradition = tradition_new_numenor } }
-	}	
+		scope:holder = {
+			culture = { OR = { has_cultural_pillar = heritage_unified_adunaic has_cultural_tradition = tradition_new_numenor } }
+		}
+		faith_is_evil = no
+	}
 	
 	ai_value = {
 		base = 100
@@ -161,13 +178,11 @@ wonder_andunie_01 = { #Andunie, haven of the faithful
 	province_modifier = {
 		fort_level = good_building_fort_level_tier_1
 		supply_limit_mult = 0.2
-		tax_mult = 0.2
-	}
-	county_modifier = {
-		development_growth_factor = 0.1
 	}
 	is_enabled = {
-		culture = { OR = { has_cultural_pillar = heritage_unified_adunaic has_cultural_tradition = tradition_new_numenor } }
+		scope:holder = {
+			culture = { OR = { has_cultural_pillar = heritage_unified_adunaic has_cultural_tradition = tradition_new_numenor } }
+		}
 	}
 	ai_value = {
 		base = 100
@@ -191,9 +206,13 @@ wonder_andunie_02 = { #Andunie after the Akallabeth
 			}
 		}
 	province_modifier = {
-		fort_level = good_building_fort_level_tier_1
-		supply_limit_mult = 0.4
+		fort_level = good_building_fort_level_tier_2
+		supply_limit_mult = 0.5
 		tax_mult = 0.3
+	}
+	effect_desc = {
+		desc = explore_history_cost_discount_medium_desc
+		desc = sailing_activity_cost_discount_medium_desc
 	}
 	county_modifier = {
 		development_growth_factor = 0.2
@@ -202,7 +221,9 @@ wonder_andunie_02 = { #Andunie after the Akallabeth
 		vassal_opinion = 5
 	}
 	is_enabled = {
-		culture = { OR = { has_cultural_pillar = heritage_unified_adunaic has_cultural_tradition = tradition_new_numenor } }
+		scope:holder = {
+			culture = { OR = { has_cultural_pillar = heritage_unified_adunaic has_cultural_tradition = tradition_new_numenor } }
+		}
 	}	
 	ai_value = {
 		base = 100
@@ -227,19 +248,25 @@ wonder_andunie_03 = {
 			}
 		}
 	province_modifier = {
-		fort_level = good_building_fort_level_tier_1
-		supply_limit_mult = 0.6
+		fort_level = good_building_fort_level_tier_3
+		supply_limit_mult = 1
 		tax_mult = 0.4
+	}
+	effect_desc = {
+		desc = explore_history_cost_discount_max_desc
+		desc = sailing_activity_cost_discount_minor_desc
 	}
 	county_modifier = {
 		development_growth_factor = 0.3
 	}
 	character_modifier = {
-		vassal_opinion = 5
-		same_faith_opinion = 5
+		stewardship_per_piety_level = 1
+		vassal_opinion = 10
 	}
 	is_enabled = {
-		culture = { OR = { has_cultural_pillar = heritage_unified_adunaic has_cultural_tradition = tradition_new_numenor } }
+		scope:holder = {
+			culture = { OR = { has_cultural_pillar = heritage_unified_adunaic has_cultural_tradition = tradition_new_numenor } }
+		}
 	}	
 	
 	ai_value = {
@@ -264,16 +291,22 @@ wonder_meneltarma_01 = { #Meneltarma, Holy mountain of Eru
 		}
 	}
 	province_modifier = {
-		fort_level = good_building_fort_level_tier_1
-		supply_limit_mult = 0.2
-		tax_mult = 0.2
 		building_slot_add = -10
+		build_gold_cost = 50 #No building on the Meneltarma, sorry
 	}
 	county_modifier = {
-		development_growth_factor = 0.1
+		monthly_county_control_growth_add = 1
+	}
+	character_modifier = {
+		monthly_piety = 1.0
+		learning_per_piety_level = 1
+		same_faith_opinion = 10
+		monthly_dynasty_prestige_mult = 0.25
 	}
 	is_enabled = {
-		culture = { OR = { has_cultural_pillar = heritage_unified_adunaic has_cultural_tradition = tradition_new_numenor } }
+		scope:holder = {
+			culture = { OR = { has_cultural_pillar = heritage_unified_adunaic has_cultural_tradition = tradition_new_numenor } }
+		}
 	}
 	ai_value = {
 		base = 100
@@ -298,20 +331,21 @@ wonder_meneltarma_02 = { #Meneltarma as a place to worship the Fallen
 			}
 		}
 	province_modifier = {
-		fort_level = good_building_fort_level_tier_1
-		supply_limit_mult = 0.6
-		tax_mult = 0.4
 		building_slot_add = -10
+		build_gold_cost = 50 #No building on the Meneltarma, sorry
 	}
 	county_modifier = {
-		development_growth_factor = 0.3
+		monthly_county_control_growth_add = 1
 	}
 	character_modifier = {
-		vassal_opinion = 5
-		same_faith_opinion = 5
+		monthly_piety = 1.0
+		same_faith_opinion = 10
+		monthly_dynasty_prestige_mult = 0.25
 	}
 	is_enabled = {
-		culture = { OR = { has_cultural_pillar = heritage_unified_adunaic has_cultural_tradition = tradition_new_numenor } }
+		scope:holder = {
+			culture = { OR = { has_cultural_pillar = heritage_unified_adunaic has_cultural_tradition = tradition_new_numenor } }
+		}
 	}	
 	
 	ai_value = {
@@ -335,15 +369,19 @@ wonder_ondosto_01 = { #No more quarrying, sad
 			}
 		}
 	province_modifier = {
-		fort_level = good_building_fort_level_tier_1
 		supply_limit_mult = 0.2
-		tax_mult = 0.2
+		tax_mult = 0.05
 	}
 	county_modifier = {
-		development_growth_factor = 0.1
+		development_growth_factor = 0.05
+	}
+	character_modifier = {
+		build_gold_cost = -0.05
 	}
 	is_enabled = {
-		culture = { OR = { has_cultural_pillar = heritage_unified_adunaic has_cultural_tradition = tradition_new_numenor } }
+		scope:holder = {
+			culture = { OR = { has_cultural_pillar = heritage_unified_adunaic has_cultural_tradition = tradition_new_numenor } }
+		}
 	}
 	ai_value = {
 		base = 100
@@ -363,20 +401,24 @@ wonder_ondosto_02 = { #New quarries, nice
 		scope:holder = {
 				culture = {
 					has_innovation = innovation_hoardings
-					}
+				}
 				culture = { OR = { has_cultural_pillar = heritage_unified_adunaic has_cultural_tradition = tradition_new_numenor } }
 			}
 		}
 	province_modifier = {
-		fort_level = good_building_fort_level_tier_1
 		supply_limit_mult = 0.6
-		tax_mult = 0.4
+		tax_mult = 0.2
 	}
 	county_modifier = {
-		development_growth_factor = 0.6
+		development_growth_factor = 0.4
+	}
+	character_modifier = {
+		build_gold_cost = -0.25
 	}
 	is_enabled = {
-		culture = { OR = { has_cultural_pillar = heritage_unified_adunaic has_cultural_tradition = tradition_new_numenor } }
+		scope:holder = {
+			culture = { OR = { has_cultural_pillar = heritage_unified_adunaic has_cultural_tradition = tradition_new_numenor } }
+		}
 	}	
 	
 	ai_value = {
@@ -394,21 +436,20 @@ wonder_nindamos_01 = { #fish
 	can_construct = {
 		building_requirement_castle_city_church = { LEVEL = 03 }
 		scope:holder = {
-				culture = {
-					has_innovation = innovation_hoardings
-					}
+			culture = {
+				has_innovation = innovation_hoardings
+				}
 			}
 		}
 	province_modifier = {
 		fort_level = good_building_fort_level_tier_1
 		supply_limit_mult = 0.2
-		tax_mult = 0.2
-	}
-	county_modifier = {
-		development_growth_factor = 0.1
+		tax_mult = 0.05
 	}
 	is_enabled = {
-		culture = { OR = { has_cultural_pillar = heritage_unified_adunaic has_cultural_tradition = tradition_new_numenor } }
+		scope:holder = {
+			culture = { OR = { has_cultural_pillar = heritage_unified_adunaic has_cultural_tradition = tradition_new_numenor } }
+		}
 	}
 	ai_value = {
 		base = 100
@@ -431,17 +472,23 @@ wonder_nindamos_02 = { #Fish and people
 					}
 				culture = { OR = { has_cultural_pillar = heritage_unified_adunaic has_cultural_tradition = tradition_new_numenor } }
 			}
+		custom_tooltip = {
+			text = numenor_realm_size_limit_01
+			scope:holder.realm_size > 100
 		}
+	}
 	province_modifier = {
-		fort_level = good_building_fort_level_tier_1
+		fort_level = good_building_fort_level_tier_3
 		supply_limit_mult = 0.6
 		tax_mult = 0.4
 	}
 	county_modifier = {
-		development_growth_factor = 0.3
+		development_growth_factor = 0.2
 	}
 	is_enabled = {
-		culture = { OR = { has_cultural_pillar = heritage_unified_adunaic has_cultural_tradition = tradition_new_numenor } }
+		scope:holder = {
+			culture = { OR = { has_cultural_pillar = heritage_unified_adunaic has_cultural_tradition = tradition_new_numenor } }
+		}
 	}	
 	
 	ai_value = {
@@ -461,7 +508,7 @@ wonder_oromet_01 = { #Tower destroyed during the Akallabeth
 		scope:holder = {
 				culture = {
 					has_innovation = innovation_hoardings
-					}
+				}
 			}
 		}
 	province_modifier = {
@@ -469,7 +516,9 @@ wonder_oromet_01 = { #Tower destroyed during the Akallabeth
 	county_modifier = {
 	}
 	is_enabled = {
-		culture = { OR = { has_cultural_pillar = heritage_unified_adunaic has_cultural_tradition = tradition_new_numenor } }
+		scope:holder = {
+			culture = { OR = { has_cultural_pillar = heritage_unified_adunaic has_cultural_tradition = tradition_new_numenor } }
+		}
 	}
 	ai_value = {
 		base = 100
@@ -495,17 +544,18 @@ wonder_oromet_02 = { #Tower restored
 		}
 	province_modifier = {
 		fort_level = good_building_fort_level_tier_1
-		supply_limit_mult = 0.6
-		tax_mult = 0.4
 	}
-	county_modifier = {
-		development_growth_factor = 0.3
+	effect_desc = {
+		desc = explore_history_cost_discount_medium_desc
 	}
 	character_modifier = {
-		vassal_opinion = 5
+		monthly_piety_gain_mult = 0.1
+		learning_per_piety_level = 1
 	}
 	is_enabled = {
-		culture = { OR = { has_cultural_pillar = heritage_unified_adunaic has_cultural_tradition = tradition_new_numenor } }
+		scope:holder = {
+			culture = { OR = { has_cultural_pillar = heritage_unified_adunaic has_cultural_tradition = tradition_new_numenor } }
+		}
 	}	
 	
 	ai_value = {
@@ -530,15 +580,22 @@ wonder_calmindon_01 = { #Tower of Calmindon
 			}
 		}
 	province_modifier = {
-		supply_limit_mult = 0.6
+		supply_limit_mult = 1
 		tax_mult = 0.4
+	}
+	effect_desc = {
+		desc = explore_history_cost_discount_max_desc
+		desc = sailing_activity_cost_discount_minor_desc
 	}
 	character_modifier = {
 		vassal_opinion = 5
 		same_faith_opinion = 5
+		embarkation_cost_mult = -0.2
 	}
 	is_enabled = {
-		culture = { OR = { has_cultural_pillar = heritage_unified_adunaic has_cultural_tradition = tradition_new_numenor } }
+		scope:holder = {
+			culture = { OR = { has_cultural_pillar = heritage_unified_adunaic has_cultural_tradition = tradition_new_numenor } }
+		}
 	}	
 	
 	ai_value = {
@@ -556,17 +613,23 @@ wonder_sorontil_01 = { #Tower destroyed during the Akallabeth
 	can_construct = {
 		building_requirement_castle_city_church = { LEVEL = 01 }
 		scope:holder = {
-				culture = {
-					has_innovation = innovation_hoardings
-					}
+			culture = {
+				has_innovation = innovation_hoardings
+				}
 			}
 		}
 	province_modifier = {
+		fort_level = good_building_fort_level_tier_1
+	}
+	effect_desc = {
+		desc = explore_history_cost_discount_min_desc
 	}
 	county_modifier = {
 	}
 	is_enabled = {
-		culture = { OR = { has_cultural_pillar = heritage_unified_adunaic has_cultural_tradition = tradition_new_numenor } }
+		scope:holder = {
+			culture = { OR = { has_cultural_pillar = heritage_unified_adunaic has_cultural_tradition = tradition_new_numenor } }
+		}
 	}
 	ai_value = {
 		base = 100
@@ -591,18 +654,20 @@ wonder_sorontil_02 = { #Tower restored
 			}
 		}
 	province_modifier = {
-		fort_level = good_building_fort_level_tier_1
-		supply_limit_mult = 0.6
-		tax_mult = 0.4
+		fort_level = good_building_fort_level_tier_3
 	}
-	county_modifier = {
-		development_growth_factor = 0.3
+	effect_desc = {
+		desc = explore_history_cost_discount_medium_desc
 	}
 	character_modifier = {
-		vassal_opinion = 5
+		learning_per_piety_level = 1
+		monthly_piety = 1
+		monthly_learning_lifestyle_xp_gain_mult = 0.1
 	}
 	is_enabled = {
-		culture = { OR = { has_cultural_pillar = heritage_unified_adunaic has_cultural_tradition = tradition_new_numenor } }
+		scope:holder = {
+			culture = { OR = { has_cultural_pillar = heritage_unified_adunaic has_cultural_tradition = tradition_new_numenor } }
+		}
 	}	
 	
 	ai_value = {
@@ -620,21 +685,20 @@ wonder_romenna_01 = { #Romenna, gratest haven of Númenor
 	can_construct = {
 		building_requirement_castle_city_church = { LEVEL = 03 }
 		scope:holder = {
-				culture = {
-					has_innovation = innovation_hoardings
-					}
+			culture = {
+				has_innovation = innovation_hoardings
+				}
 			}
 		}
 	province_modifier = {
 		fort_level = good_building_fort_level_tier_1
 		supply_limit_mult = 0.2
-		tax_mult = 0.2
-	}
-	county_modifier = {
-		development_growth_factor = 0.1
+		tax_mult = 0.1
 	}
 	is_enabled = {
-		culture = { OR = { has_cultural_pillar = heritage_unified_adunaic has_cultural_tradition = tradition_new_numenor } }
+		scope:holder = {
+			culture = { OR = { has_cultural_pillar = heritage_unified_adunaic has_cultural_tradition = tradition_new_numenor } }
+		}
 	}
 	ai_value = {
 		base = 100
@@ -652,24 +716,29 @@ wonder_romenna_02 = { #Haven being restored
 	can_construct = {
 		building_requirement_castle_city_church = { LEVEL = 03 }
 		scope:holder = {
-				culture = {
-					has_innovation = innovation_hoardings
-					}
+			culture = {
+				has_innovation = innovation_hoardings
+				}
 			}
 		}
 	province_modifier = {
 		fort_level = good_building_fort_level_tier_1
-		supply_limit_mult = 0.4
+		supply_limit_mult = 1
 		tax_mult = 0.3
+	}
+	effect_desc = {
+		desc = sailing_activity_cost_discount_medium_desc
 	}
 	county_modifier = {
 		development_growth_factor = 0.2
 	}
 	character_modifier = {
-		vassal_opinion = 5
+		embarkation_cost_mult = -0.2
 	}
 	is_enabled = {
-		culture = { OR = { has_cultural_pillar = heritage_unified_adunaic has_cultural_tradition = tradition_new_numenor } }
+		scope:holder = {
+			culture = { OR = { has_cultural_pillar = heritage_unified_adunaic has_cultural_tradition = tradition_new_numenor } }
+		}
 	}	
 	ai_value = {
 		base = 100
@@ -686,6 +755,10 @@ wonder_romenna_03 = { # Haven restored
 	cost_gold = 2000
 	can_construct = {
 		building_requirement_castle_city_church = { LEVEL = 03 }
+		custom_tooltip = {
+			text = numenor_realm_size_limit_01
+			scope:holder.realm_size > 100
+		}
 		scope:holder = {
 				culture = {
 					has_innovation = innovation_hoardings
@@ -695,8 +768,11 @@ wonder_romenna_03 = { # Haven restored
 		}
 	province_modifier = {
 		fort_level = good_building_fort_level_tier_1
-		supply_limit_mult = 0.6
+		supply_limit_mult = 2
 		tax_mult = 0.4
+	}
+	effect_desc = {
+		desc = sailing_activity_cost_discount_minor_desc
 	}
 	county_modifier = {
 		development_growth_factor = 0.3
@@ -704,9 +780,13 @@ wonder_romenna_03 = { # Haven restored
 	character_modifier = {
 		vassal_opinion = 5
 		no_water_crossing_penalty = yes
+		embarkation_cost_mult = -0.4
+		supply_duration = 0.25
 	}
 	is_enabled = {
-		culture = { OR = { has_cultural_pillar = heritage_unified_adunaic has_cultural_tradition = tradition_new_numenor } }
+		scope:holder = {
+			culture = { OR = { has_cultural_pillar = heritage_unified_adunaic has_cultural_tradition = tradition_new_numenor } }
+		}
 	}	
 	
 	ai_value = {
@@ -731,11 +811,13 @@ wonder_armenelos_01 = { # Armenelos
 	}
 	province_modifier = {
 #		defender_advantage = good_building_fort_level_tier_8 # Matt note: cannot be used in province/county modifier.
-		fort_level = 10
-		supply_limit_mult = 3
+		fort_level = 9
+		supply_limit_mult = 1
 	}
 	is_enabled = {
-		culture = { OR = { has_cultural_pillar = heritage_unified_adunaic has_cultural_tradition = tradition_new_numenor } }
+		scope:holder = {
+			culture = { OR = { has_cultural_pillar = heritage_unified_adunaic has_cultural_tradition = tradition_new_numenor } }
+		}
 	}
 	type = special
 	ai_value = {
@@ -761,14 +843,19 @@ wonder_armenelos_02 = { #Temple of the Fallen
 #		defender_advantage = good_building_fort_level_tier_8 # Matt note: cannot be used in province/county modifier.
 		fort_level = 10
 		supply_limit_mult = 3
+		stationed_maa_damage_mult = 0.1
+		stationed_maa_toughness_mult = 0.1
+	}
+	effect_desc = {
+		desc = explore_history_cost_discount_max_desc
 	}
 	character_modifier = {
 		knight_limit = 3
-		heavy_infantry_damage_mult = 0.05
-		pikemen_damage_mult = 0.05
 	}	
 	is_enabled = {
-		culture = { OR = { has_cultural_pillar = heritage_unified_adunaic has_cultural_tradition = tradition_new_numenor } }
+		scope:holder = {
+			culture = { OR = { has_cultural_pillar = heritage_unified_adunaic has_cultural_tradition = tradition_new_numenor } }
+		}
 	}	
 	ai_value = {
 		base = 100
@@ -788,21 +875,29 @@ wonder_armenelos_03 = { #Palace of the King
 		culture = {
 			has_innovation = innovation_hoardings
 		}
+		custom_tooltip = {
+			text = numenor_realm_size_limit_01
+			scope:holder.realm_size > 100
+		}
 	}
 	province_modifier = {
 #		defender_advantage = good_building_fort_level_tier_8 # Matt note: cannot be used in province/county modifier.
-		fort_level = 10
+		fort_level = 12
 		supply_limit_mult = 3
+		stationed_maa_damage_mult = 0.3
+		stationed_maa_toughness_mult = 0.3
 	}
-	
+	effect_desc = {
+		desc = explore_history_cost_discount_max_desc
+	}
 	character_modifier = {
 		knight_limit = 5
-		heavy_infantry_damage_mult = 0.05
-		pikemen_damage_mult = 0.05
 		health = 0.5
 	}
 	is_enabled = {
-		culture = { OR = { has_cultural_pillar = heritage_unified_adunaic has_cultural_tradition = tradition_new_numenor } }
+		scope:holder = {
+			culture = { OR = { has_cultural_pillar = heritage_unified_adunaic has_cultural_tradition = tradition_new_numenor } }
+		}
 	}
 	ai_value = {
 		base = 100
@@ -822,22 +917,30 @@ wonder_armenelos_04 = { #Armenelos: Flowering of Nimloth
 		culture = {
 			has_innovation = innovation_hoardings
 		}
+		custom_tooltip = {
+			text = numenor_realm_size_limit_02
+			scope:holder.realm_size > 300
+		}
 	}
 	province_modifier = {
 #		defender_advantage = good_building_fort_level_tier_8 # Matt note: cannot be used in province/county modifier.
-		fort_level = 10
+		fort_level = 15
 		supply_limit_mult = 3
+		stationed_maa_damage_mult = 0.5
+		stationed_maa_toughness_mult = 0.5
 	}
-	
+	effect_desc = {
+		desc = explore_history_cost_discount_max_desc
+	}
 	character_modifier = {
 		knight_limit = 5
-		heavy_infantry_damage_mult = 0.1
-		pikemen_damage_mult = 0.1
 		vassal_opinion = 10
 		health = 0.5
 	}
 	is_enabled = {
-		culture = { OR = { has_cultural_pillar = heritage_unified_adunaic has_cultural_tradition = tradition_new_numenor } }
+		scope:holder = {
+			culture = { OR = { has_cultural_pillar = heritage_unified_adunaic has_cultural_tradition = tradition_new_numenor } }
+		}
 	}
 	ai_value = {
 		base = 100

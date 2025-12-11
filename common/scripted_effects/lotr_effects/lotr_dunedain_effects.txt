@@ -605,8 +605,29 @@ reclaim_royal_lineage_effect = {
 }
 
 add_blood_of_numenor_effect = {
-	# Level 10
-	if = {
+	
+	if = { #Numenor Sub-mod
+		limit = {
+			AND = {
+				culture ?= {
+					OR = {
+						this = culture:adunaic
+						this = culture:new_numenorean_adunaic
+						this = culture:new_numenorean
+						any_parent_culture_or_above = { this = culture:adunaic }
+						any_parent_culture_or_above = { this = culture:new_numenorean_adunaic }
+						any_parent_culture_or_above = { this = culture:new_numenorean }
+					}
+				}
+				location ?= { geographical_region = middleearth_numenor }
+			}
+		}
+		random_list = {
+			90 = { add_trait = blood_of_numenor_7 }
+			10 = { add_trait = blood_of_numenor_6 }
+		}		
+	} 
+	else_if = {
 		limit = {
 			culture ?= {
 				OR = {
@@ -617,11 +638,19 @@ add_blood_of_numenor_effect = {
 					any_parent_culture_or_above = { this = culture:new_numenorean_adunaic }
 					any_parent_culture_or_above = { this = culture:new_numenorean }
 				}
-			}
-			location ?= { geographical_region = middleearth_numenor }
+			}	
 		}
-		add_trait = blood_of_numenor_7
-	} # Level 10 #Numenor Submod Change
+		random_list = {
+			50 = { add_trait = blood_of_numenor_7 }
+			30 = { add_trait = blood_of_numenor_6 }
+			10 = { add_trait = blood_of_numenor_5 }
+			7 = { add_trait = blood_of_numenor_4 }
+			1 = { add_trait = blood_of_numenor_3 }
+			1 = { add_trait = blood_of_numenor_2 }
+			1 = { add_trait = blood_of_numenor_1 }
+		}			
+	}
+	# Level 10 
 	##Quonton
 	else_if = {
 		limit = { 
@@ -659,10 +688,12 @@ add_blood_of_numenor_effect = {
 				OR = {
 					this = culture:arnorian
 					this = culture:gondorian
+					this = culture:belfalathrim
 					this = culture:dunedain
 					any_parent_culture_or_above = { this = culture:arnorian }
 					AND = {
 						any_parent_culture_or_above = { this = culture:gondorian }
+						any_parent_culture_or_above = { this = culture:belfalathrim }
 						NOT = {
 							OR = {
 								this = culture:umbaredain
@@ -711,9 +742,11 @@ add_blood_of_numenor_effect = {
 					culture ?= {
 						OR = {
 							this = culture:gondorian
+							this = culture:belfalathrim
 							this = culture:dunedain
 							AND = {
 								any_parent_culture_or_above = { this = culture:gondorian }
+								any_parent_culture_or_above = { this = culture:belfalathrim }
 								NOT = {
 									OR = {
 										this = culture:umbaredain
@@ -773,9 +806,11 @@ add_blood_of_numenor_effect = {
 					culture ?= {
 						OR = {
 							this = culture:gondorian
+							this = culture:belfalathrim
 							this = culture:dunedain
 							AND = {
 								any_parent_culture_or_above = { this = culture:gondorian }
+								any_parent_culture_or_above = { this = culture:belfalathrim }
 								NOT = {
 									OR = {
 										this = culture:umbaredain
@@ -842,10 +877,12 @@ add_blood_of_numenor_effect = {
 					culture ?= {
 						OR = {
 							this = culture:gondorian
+							this = culture:belfalathrim
 							this = culture:dunedain
 							this = culture:arnorian
 							AND = {
 								any_parent_culture_or_above = { this = culture:gondorian }
+								any_parent_culture_or_above = { this = culture:belfalathrim }
 								NOT = {
 									OR = {
 										this = culture:umbaredain
@@ -984,8 +1021,10 @@ add_blood_of_numenor_effect = {
 					culture ?= {
 						OR = {
 							this = culture:gondorian
+							this = culture:belfalathrim
 							AND = {
 								any_parent_culture_or_above = { this = culture:gondorian }
+								any_parent_culture_or_above = { this = culture:belfalathrim }
 								NOT = {
 									any_parent_culture_or_above = { this = culture:umbaredain }
 								}
@@ -1050,8 +1089,10 @@ add_blood_of_numenor_effect = {
 					culture ?= {
 						OR = {
 							this = culture:gondorian
+							this = culture:belfalathrim
 							AND = {
 								any_parent_culture_or_above = { this = culture:gondorian }
+								any_parent_culture_or_above = { this = culture:belfalathrim }
 								NOT = {
 									any_parent_culture_or_above = { this = culture:umbaredain }
 								}
@@ -1076,8 +1117,10 @@ add_blood_of_numenor_effect = {
 					culture ?= {
 						OR = {
 							this = culture:gondorian
+							this = culture:belfalathrim
 							AND = {
 								any_parent_culture_or_above = { this = culture:gondorian }
+								any_parent_culture_or_above = { this = culture:belfalathrim }
 								NOT = {
 									any_parent_culture_or_above = { this = culture:umbaredain }
 								}
@@ -1190,8 +1233,10 @@ add_blood_of_numenor_effect = {
 					culture ?= {
 						OR = {
 							this = culture:gondorian
+							this = culture:belfalathrim
 							AND = {
 								any_parent_culture_or_above = { this = culture:gondorian }
+								any_parent_culture_or_above = { this = culture:belfalathrim }
 							}
 						}
 					}

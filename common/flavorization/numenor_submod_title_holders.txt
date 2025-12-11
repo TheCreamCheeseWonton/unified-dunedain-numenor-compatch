@@ -1,22 +1,72 @@
-﻿count_feudal_numenor = {
+﻿count_feudal_male_numenorean = {
 	type = character
+	gender = male
 	special = holder
 	tier = county
-	priority = 20
+	priority = 202
 	flavourization_rules = { 
 		top_liege = no
-		only_holder = yes
+		only_holder = no
 	}
 	heritages = { heritage_unified_adunaic }
+	name_lists = { name_list_adunaic_numenor }
+}
+count_feudal_female_numenorean = {
+	type = character
+	gender = female
+	special = holder
+	tier = county
+	priority = 202
+	flavourization_rules = { 
+		top_liege = no
+		only_holder = no
+	}
+	heritages = { heritage_unified_adunaic }
+	name_lists = { name_list_adunaic_numenor }
 }
 county_feudal_numenor = {
 	type = title
 	tier = county
 	heritages = { heritage_unified_adunaic }
-	priority = 20
+	name_lists = { name_list_adunaic_numenor }
+	priority = 202
 }
 
-duke_feudal_male_numenor = {
+duke_feudal_colony_male_numenor = {
+	type = character
+	gender = male
+	special = holder
+	tier = duchy
+	priority = 32
+	flavourization_rules = { 
+		top_liege = no
+		only_holder = no
+	}
+	heritages = { heritage_unified_adunaic }
+	name_lists = { name_list_adunaic_numenor }
+}
+duke_feudal_colony_female_numenor = {
+	type = character
+	gender = female
+	special = holder
+	tier = duchy
+	priority = 32
+	flavourization_rules = { 
+		top_liege = no
+		only_holder = no
+	}
+	heritages = { heritage_unified_adunaic }
+	name_lists = { name_list_adunaic_numenor }
+}
+duchy_feudal_colony_numenor = {
+	type = title
+	tier = duchy
+	heritages = { heritage_unified_adunaic }
+	name_lists = { name_list_adunaic_numenor }
+	priority = 32
+}
+
+duke_feudal_male_numenorean = {
 	type = character
 	gender = male
 	special = holder
@@ -26,35 +76,11 @@ duke_feudal_male_numenor = {
 		top_liege = no
 		only_holder = no
 	}
+	titles = { d_adunai d_sorontil d_ondosto d_arialome d_andunie d_erest d_nisimaldar d_zimrayan d_hyarnudore d_erelonde d_nindamos d_aruwanai d_hyarnore d_formenore d_ciryanore d_khorandor d_elenore d_arandor d_emerie d_forpende d_nunduine d_sirinore d_meneltarma }
 	heritages = { heritage_unified_adunaic }
+	name_lists = { name_list_adunaic_numenor }
 }
-
-king_feudal_male_numenor = {
-	type = character
-	gender = male
-	special = holder
-	tier = kingdom
-	priority = 300
-	flavourization_rules = { 
-		top_liege = no
-		only_holder = no
-	}
-	heritages = { heritage_unified_adunaic }
-}
-
-king_feudal_female_numenor = {
-	type = character
-	gender = female
-	special = holder
-	tier = duchy
-	priority = 300
-	flavourization_rules = { 
-		top_liege = no
-		only_holder = no
-	}
-	heritages = { heritage_unified_adunaic }
-}
-duke_feudal_female_numenor = {
+duke_feudal_female_numenorean = {
 	type = character
 	gender = female
 	special = holder
@@ -64,18 +90,86 @@ duke_feudal_female_numenor = {
 		top_liege = no
 		only_holder = no
 	}
+	titles = { d_adunai d_sorontil d_ondosto d_arialome d_andunie d_erest d_nisimaldar d_zimrayan d_hyarnudore d_erelonde d_nindamos d_aruwanai d_hyarnore d_formenore d_ciryanore d_khorandor d_elenore d_arandor d_emerie d_forpende d_nunduine d_sirinore d_meneltarma }
 	heritages = { heritage_unified_adunaic }
+	name_lists = { name_list_adunaic_numenor }
 }
 duchy_feudal_numenor = {
 	type = title
 	tier = duchy
+	titles = { d_adunai d_sorontil d_ondosto d_arialome d_andunie d_erest d_nisimaldar d_zimrayan d_hyarnudore d_erelonde d_nindamos d_aruwanai d_hyarnore d_formenore d_ciryanore d_khorandor d_elenore d_arandor d_emerie d_forpende d_nunduine d_sirinore d_meneltarma }
 	heritages = { heritage_unified_adunaic }
+	name_lists = { name_list_adunaic_numenor }
 	priority = 33
+}
+
+king_feudal_colony_male_numenor = {
+	type = character
+	gender = male
+	special = holder
+	tier = kingdom
+	priority = 300
+	flavourization_rules = { 
+		top_liege = no
+		only_holder = no
+	}
+	heritages = { heritage_unified_adunaic }
+	name_lists = { name_list_adunaic_numenor }
+}
+king_feudal_colony_female_numenor = {
+	type = character
+	gender = female
+	special = holder
+	tier = kingdom
+	priority = 300
+	flavourization_rules = { 
+		top_liege = no
+		only_holder = no
+	}
+	heritages = { heritage_unified_adunaic }
+	name_lists = { name_list_adunaic_numenor }
+}
+kingdom_feudal_colony_numenor = {
+	type = title
+	tier = kingdom
+	heritages = { heritage_unified_adunaic }
+	name_lists = { name_list_adunaic_numenor }
+	priority = 300
+}
+king_feudal_male_numenorean = {
+	type = character
+	gender = male
+	special = holder
+	tier = kingdom
+	priority = 300
+	flavourization_rules = { 
+		top_liege = no
+		only_holder = no
+	}
+	titles = { k_forostar k_andustar k_hyarnustar k_hyarrostar k_orrostar k_mittalmar }
+	heritages = { heritage_unified_adunaic }
+	name_lists = { name_list_adunaic_numenor }
+}
+king_feudal_female_numenorean = {
+	type = character
+	gender = female
+	special = holder
+	tier = kingdom
+	priority = 300
+	flavourization_rules = { 
+		top_liege = no
+		only_holder = no
+	}
+	titles = { k_forostar k_andustar k_hyarnustar k_hyarrostar k_orrostar k_mittalmar }
+	heritages = { heritage_unified_adunaic }
+	name_lists = { name_list_adunaic_numenor }
 }
 kingdom_feudal_numenor = {
 	type = title
 	tier = kingdom
+	titles = { k_forostar k_andustar k_hyarnustar k_hyarrostar k_orrostar k_mittalmar }
 	heritages = { heritage_unified_adunaic }
+	name_lists = { name_list_adunaic_numenor }
 	priority = 300
 }
 emperor_feudal_male_numenorean = {
@@ -102,6 +196,13 @@ emperor_feudal_female_numenorean = {
 	}
 	heritages = { heritage_unified_adunaic }
 }
+empire_feudal_numenor = {
+	type = title
+	tier = empire
+	heritages = { heritage_unified_adunaic }
+	name_lists = { name_list_adunaic_numenor }
+	priority = 1000
+}
 
 emperor_feudal_female_numenor_nonholder = {
 	type = character
@@ -114,4 +215,27 @@ emperor_feudal_female_numenor_nonholder = {
 		only_holder = no
 	}
 	heritages = { heritage_unified_adunaic }
+}
+
+prince_emperor_feudal_numenor = {
+	type = character
+	gender = male
+	special = ruler_child
+	priority = 250
+	heritages = { heritage_unified_adunaic }
+	titles = { e_numenor }
+	flavourization_rules = { 
+		top_liege = no
+	}
+}
+princess_emperor_feudal_numenor = {
+	type = character
+	gender = female
+	special = ruler_child
+	priority = 250
+	heritages = { heritage_unified_adunaic }
+	titles = { e_numenor }
+	flavourization_rules = { 
+		top_liege = no
+	}
 }
