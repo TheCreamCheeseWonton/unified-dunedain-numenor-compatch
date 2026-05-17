@@ -12,14 +12,14 @@ create_numenor_in_exile_effect = {
 		set_global_variable = lotr_achievement_62
 	}
 	# Copy previous Kings
-	title:e_numenor_in_exile = { copy_title_history = title:e_numenor }
+	title:h_numenor_in_exile = { copy_title_history = title:e_numenor }
 	#Create the title and make it primary
 	create_title_and_vassal_change = {
 		type = created
 		save_scope_as = title_change
 		add_claim_on_loss = no
 	}
-	title:e_numenor_in_exile = {
+	title:h_numenor_in_exile = {
 		change_title_holder = {
 			holder = root
 			change = scope:title_change
@@ -27,14 +27,14 @@ create_numenor_in_exile_effect = {
 		set_capital_county = ROOT.primary_title.title_capital_county
 	}
 	resolve_title_and_vassal_change = scope:title_change
-	set_primary_title_to = title:e_numenor_in_exile
-	title:e_numenor_in_exile = { save_scope_as = empire_nie } #For localisation
+	set_primary_title_to = title:h_numenor_in_exile
+	title:h_numenor_in_exile = { save_scope_as = empire_nie } #For localisation
 	#If the Mundburgians exist, transfer them to NiE
 	if = {
 		limit = {
 			any_held_title = { has_variable = founded_mundburgian_eored	}
 		}
-		title:e_numenor_in_exile = { set_variable = founded_mundburgian_eored }
+		title:h_numenor_in_exile = { set_variable = founded_mundburgian_eored }
 	}
 	
 	# Juke note: rewrote the dejure code to be cleaner
@@ -44,52 +44,80 @@ create_numenor_in_exile_effect = {
 	title:e_gondor_steward		= { add_to_list = nie_empires_list }
 	title:e_castamir			= { add_to_list = nie_empires_list }
 	title:e_arnor				= { add_to_list = nie_empires_list }
-	title:e_reunitedkingdom		= { add_to_list = nie_empires_list }
+	#title:h_reunited_kingdom	= { add_to_list = nie_empires_list }
 	title:e_numenor_colonies	= { add_to_list = nie_empires_list }
-	# title:e_adunaim				= { add_to_list = nie_empires_list } # Trig note - Don't destroy the title, so the special building still works
+	title:e_adunaim				= { add_to_list = nie_empires_list } 
 	title:e_umbar				= { add_to_list = nie_empires_list }
 	title:e_bellakar			= { add_to_list = nie_empires_list }
-	title:e_pharazain			= { add_to_list = nie_empires_list }
+	#title:h_pharazain			= { add_to_list = nie_empires_list }
 	title:e_thon_an_kharlokh	= { add_to_list = nie_empires_list }
 	title:e_anbalkumagan		= { add_to_list = nie_empires_list }
 	title:e_thani_hazad			= { add_to_list = nie_empires_list }
 	title:e_sakal_an_khar    	= { add_to_list = nie_empires_list }
-	scope:old_primary_title	= { # If player has a custom empire on the coast, it will also be accounted for. This isnt 100% safe but itll work
-		if = {
-			limit = {
-				NOT = { is_in_list = nie_empires_list }
-				title_capital_county.title_province = { geographical_region = special_nie }
-			}
-			add_to_list = nie_empires_list
-		}
-	}
-	# Destroy em
+	#scope:old_primary_title	= { # If player has a custom empire on the coast, it will also be accounted for. This isnt 100% safe but itll work
+	#	if = {
+	#		limit = {
+	#			NOT = { is_in_list = nie_empires_list }
+	#			title_capital_county.title_province = { geographical_region = special_nie }
+	#		}
+	#		add_to_list = nie_empires_list
+	#	}
+	#}
+	# Make the empires de jure
 	every_in_list = {
 		list = nie_empires_list
-		limit = { holder = scope:founder }
-		scope:founder = { destroy_title = prev }
+		#limit = { exists = holder }
+		set_de_jure_liege_title = title:h_numenor_in_exile
 	}
 	
-	# Then get rid of em
-	hidden_effect = {
-		every_kingdom = {
-			limit = {
-				empire ?= { is_in_list = nie_empires_list }
+	# Destroy existing hegemonies
+	if = {
+		limit = { has_title = title:h_reunited_kingdom }
+		title:h_reunited_kingdom = {
+			every_in_de_jure_hierarchy = {
+				limit = { tier = tier_empire }
+				set_de_jure_liege_title = title:h_numenor_in_exile 
 			}
-			set_de_jure_liege_title = title:e_numenor_in_exile
 		}
-		##Quonton
-		title:k_tulwang = {
-			set_de_jure_liege_title = title:e_numenor_in_exile
-		}
-		##End Quonton
+		destroy_title = title:h_reunited_kingdom
 	}
-	# And add a flavor desc
-	title:e_numenor_in_exile = { custom_tooltip = numenor_in_exile_titles_tt } #Scope change for tooltip formatting.
+	if = {
+		limit = { has_title = title:h_pharazain }
+		title:h_reunited_kingdom = {
+			every_in_de_jure_hierarchy = {
+				limit = { tier = tier_empire }
+				set_de_jure_liege_title = title:h_numenor_in_exile 
+			}
+		}
+		destroy_title = title:h_pharazain
+	}
+	##Quonton
+	if = {
+		limit = { has_title = title:h_sakal_an_khar }
+		title:h_sakal_an_khar = {
+			every_in_de_jure_hierarchy = {
+				limit = { tier = tier_empire }
+				set_de_jure_liege_title = title:h_numenor_in_exile 
+			}
+		}
+		destroy_title = title:h_sakal_an_khar
+	}
+	if = {
+		limit = { has_title = title:h_azraphel_an_khar }
+		title:h_azraphel_an_khar = {
+			every_in_de_jure_hierarchy = {
+				limit = { tier = tier_empire }
+				set_de_jure_liege_title = title:h_numenor_in_exile 
+			}
+		}
+		destroy_title = title:h_azraphel_an_khar
+	}
+	##End Quonton
 	
+	# And add a flavor desc
+	#title:h_numenor_in_exile = { custom_tooltip = numenor_in_exile_titles_tt } #Scope change for tooltip formatting.
 	
 	# Culture stuff
-	
 	##Quonton
 	custom_tooltip = numenor_in_exile_acceptance_tt_custum # Mutual acceptance between Num cultures in realm
 	custom_tooltip = numenor_in_exile_innovation_tt # Rediscover ancient architecture innovations
@@ -422,7 +450,6 @@ stewards_claim_gondor_kingship_effect = { # Stewards crowned kings via decision
 			}
 		}
 	}
-	set_primary_title_to = title:e_gondor
 	resolve_title_and_vassal_change = scope:change
 	custom_tooltip = claim_gondor_kingship_effect_absorb_dejure.tt
 	destroy_title = title:e_gondor_steward
@@ -447,6 +474,8 @@ stewards_claim_gondor_kingship_effect = { # Stewards crowned kings via decision
 	else = {
 		add_piety_level = -1
 	}
+
+	set_primary_title_to = title:e_gondor
 
 	# decrease opinion with parochial and courtly vassals
 	every_vassal = {
@@ -483,35 +512,22 @@ stewards_claim_gondor_kingship_effect = { # Stewards crowned kings via decision
 }
 
 set_appropriate_de_jure_liege = {
+	#if = {
+	#	limit = { scope:new_ruler = { has_title = title:h_numenor_in_exile } }
+	#	set_de_jure_liege_title = title:h_numenor_in_exile
+	#}
+	#else_if = {
+	#	limit = {
+	#		is_target_in_global_variable_list = {
+	#			name = unavailable_unique_decisions
+	#			target = flag:decision_solidify_reunited_kingdom
+	#		}
+	#		scope:new_ruler = { has_title = title:h_reunited_kingdom }
+	#	}
+	#	set_de_jure_liege_title = title:h_reunited_kingdom
+	#
+	#}
 	if = {
-		limit = { scope:new_ruler = { has_title = title:e_numenor_in_exile } }
-		set_de_jure_liege_title = title:e_numenor_in_exile
-	}
-	else_if = {
-		limit = {
-			is_target_in_global_variable_list = {
-				name = unavailable_unique_decisions
-				target = flag:decision_solidify_reunited_kingdom
-			}
-			scope:new_ruler = { has_title = title:e_reunitedkingdom }
-		}
-		set_de_jure_liege_title = title:e_reunitedkingdom
-
-	}
-	##Quonton
-	else_if = {
-		limit = {
-			is_target_in_global_variable_list = {
-				name = unavailable_unique_decisions
-				target = flag:decision_solidify_pharazain
-			}
-			scope:new_ruler = { has_title = title:e_pharazain }
-		}
-		set_de_jure_liege_title = title:e_pharazain
-
-	}
-	##End Quonton
-	else_if = {
 		limit = {
 			scope:new_ruler = { has_title = title:e_gondor }
 		}
@@ -525,10 +541,10 @@ set_appropriate_de_jure_liege = {
 		limit = { scope:new_ruler = { has_title = title:e_castamir } }
 		set_de_jure_liege_title = title:e_castamir
 	}
-	#else_if = {
-	#	limit = { scope:new_ruler = { has_title = title:e_umbar } }
-	#	set_de_jure_liege_title = title:e_umbar
-	#}
+	else_if = {
+		limit = { scope:new_ruler = { has_title = title:e_umbar } }
+		set_de_jure_liege_title = title:e_umbar
+	}
 	else = { set_de_jure_liege_title = this.primary_title }	# Fallback
 }
 
@@ -612,11 +628,7 @@ add_blood_of_numenor_effect = {
 				culture ?= {
 					OR = {
 						this = culture:adunaic
-						this = culture:new_numenorean_adunaic
-						this = culture:new_numenorean
 						any_parent_culture_or_above = { this = culture:adunaic }
-						any_parent_culture_or_above = { this = culture:new_numenorean_adunaic }
-						any_parent_culture_or_above = { this = culture:new_numenorean }
 					}
 				}
 				location ?= { geographical_region = middleearth_numenor }
@@ -632,11 +644,7 @@ add_blood_of_numenor_effect = {
 			culture ?= {
 				OR = {
 					this = culture:adunaic
-					this = culture:new_numenorean_adunaic
-					this = culture:new_numenorean
 					any_parent_culture_or_above = { this = culture:adunaic }
-					any_parent_culture_or_above = { this = culture:new_numenorean_adunaic }
-					any_parent_culture_or_above = { this = culture:new_numenorean }
 				}
 			}	
 		}
@@ -650,10 +658,25 @@ add_blood_of_numenor_effect = {
 			1 = { add_trait = blood_of_numenor_1 }
 		}			
 	}
+	else_if = { #Numenor Sub-mod
+		limit = {
+			AND = {
+				culture ?= {
+					any_parent_culture_or_above = { this = culture:numenorean }
+				}
+				location ?= { geographical_region = middleearth_numenor }
+			}
+		}
+		random_list = {
+			90 = { add_trait = blood_of_numenor_7 }
+			10 = { add_trait = blood_of_numenor_6 }
+		}		
+	} 
 	# Level 10 
 	##Quonton
-	else_if = {
+	if = {
 		limit = { 
+			current_year >= 6543
 			has_game_rule = default_bon 
 			culture ?= {
 				OR = {
@@ -664,10 +687,14 @@ add_blood_of_numenor_effect = {
 				}
 			}
 		}
-		add_trait = blood_of_numenor_4
+		random_list = {
+			20 = { add_trait = blood_of_numenor_5 }
+			80 = { add_trait = blood_of_numenor_4 }
+		}
 	}
 	else_if = {
 		limit = {
+			current_year >= 6543
 			has_game_rule = half_bon 
 			culture ?= {
 				OR = {
@@ -678,7 +705,11 @@ add_blood_of_numenor_effect = {
 				}
 			}
 		}
-		add_trait = blood_of_numenor_2
+		random_list = {
+			20 = { add_trait = blood_of_numenor_4 }
+			35 = { add_trait = blood_of_numenor_3 }
+			40 = { add_trait = blood_of_numenor_2 }
+		}
 	}
 	##End Quonton
 	else_if = {
@@ -690,6 +721,12 @@ add_blood_of_numenor_effect = {
 					this = culture:gondorian
 					this = culture:belfalathrim
 					this = culture:dunedain
+					##Quonton
+					this = culture:new_numenorean
+					this = culture:new_dunedain
+					this = culture:new_numenorean_adunaic
+					this = culture:pharazaini_culture
+					this = culture:gimilarani
 					any_parent_culture_or_above = { this = culture:arnorian }
 					AND = {
 						any_parent_culture_or_above = { this = culture:gondorian }
@@ -744,6 +781,12 @@ add_blood_of_numenor_effect = {
 							this = culture:gondorian
 							this = culture:belfalathrim
 							this = culture:dunedain
+							##Quonton
+							this = culture:new_numenorean
+							this = culture:new_dunedain
+							this = culture:new_numenorean_adunaic
+							this = culture:gimilarani
+							this = culture:pharazaini_culture
 							AND = {
 								any_parent_culture_or_above = { this = culture:gondorian }
 								any_parent_culture_or_above = { this = culture:belfalathrim }
@@ -808,6 +851,12 @@ add_blood_of_numenor_effect = {
 							this = culture:gondorian
 							this = culture:belfalathrim
 							this = culture:dunedain
+							##Quonton
+							this = culture:new_numenorean
+							this = culture:new_dunedain
+							this = culture:new_numenorean_adunaic
+							this = culture:gimilarani
+							this = culture:pharazaini_culture
 							AND = {
 								any_parent_culture_or_above = { this = culture:gondorian }
 								any_parent_culture_or_above = { this = culture:belfalathrim }
@@ -841,12 +890,17 @@ add_blood_of_numenor_effect = {
 					culture ?= {
 						OR = {
 							this = culture:anbalukkhori
-							#this = culture:anarikean
+							this = culture:anarikean
 							this = culture:tanturaki
 							this = culture:old_umbarean
 							this = culture:black_numenorean
+							##Quonton
+							this = culture:eothedain
+							this = culture:azralai
+							this = culture:kharatakhori
+							this = culture:ar_adunaim_numenorean
 							any_parent_culture_or_above = { this = culture:anbalukkhori }
-							#any_parent_culture_or_above = { this = culture:anarikean }
+							any_parent_culture_or_above = { this = culture:anarikean }
 							any_parent_culture_or_above = { this = culture:tanturaki}
 							any_parent_culture_or_above = { this = culture:old_umbarean }
 						}
@@ -880,6 +934,12 @@ add_blood_of_numenor_effect = {
 							this = culture:belfalathrim
 							this = culture:dunedain
 							this = culture:arnorian
+							##Quonton
+							this = culture:new_numenorean
+							this = culture:new_dunedain
+							this = culture:new_numenorean_adunaic
+							this = culture:gimilarani
+							this = culture:pharazaini_culture
 							AND = {
 								any_parent_culture_or_above = { this = culture:gondorian }
 								any_parent_culture_or_above = { this = culture:belfalathrim }
@@ -924,6 +984,11 @@ add_blood_of_numenor_effect = {
 							this = culture:bellakarani
 							this = culture:kharadunaim
 							this = culture:black_numenorean
+							##Quonton
+							this = culture:eothedain
+							this = culture:azralai
+							this = culture:kharatakhori
+							this = culture:ar_adunaim_numenorean
 							any_parent_culture_or_above = { this = culture:kharadunaim }
 							AND = {
 								any_parent_culture_or_above = { this = culture:bellakarani }
@@ -952,6 +1017,10 @@ add_blood_of_numenor_effect = {
 						OR = {
 							this = culture:dunedain
 							this = culture:arnorian
+							##Quonton
+							this = culture:new_numenorean
+							this = culture:new_dunedain
+							this = culture:new_numenorean_adunaic
 							any_parent_culture_or_above = { this = culture:arnorian }
 						}
 					}
@@ -974,9 +1043,9 @@ add_blood_of_numenor_effect = {
 					culture ?= {
 						OR = {
 							this = culture:old_umbarean
-							#this = culture:anarikean
+							this = culture:anarikean
 							this = culture:tanturaki
-							#any_parent_culture_or_above = { this = culture:anarikean }
+							any_parent_culture_or_above = { this = culture:anarikean }
 							any_parent_culture_or_above = { this = culture:tanturaki}
 							AND = {
 								any_parent_culture_or_above = { this = culture:old_umbarean }
@@ -1022,6 +1091,9 @@ add_blood_of_numenor_effect = {
 						OR = {
 							this = culture:gondorian
 							this = culture:belfalathrim
+							##Quonton
+							this = culture:gimilarani
+							this = culture:pharazaini_culture
 							AND = {
 								any_parent_culture_or_above = { this = culture:gondorian }
 								any_parent_culture_or_above = { this = culture:belfalathrim }
@@ -1038,6 +1110,10 @@ add_blood_of_numenor_effect = {
 						OR = {
 							this = culture:dunedain
 							this = culture:arnorian
+							##Quonton
+							this = culture:new_numenorean
+							this = culture:new_dunedain
+							this = culture:new_numenorean_adunaic
 							any_parent_culture_or_above = { this = culture:arnorian }
 						}
 					}
@@ -1070,6 +1146,11 @@ add_blood_of_numenor_effect = {
 						OR = {
 							this = culture:bellakarani
 							this = culture:kharadunaim
+							##Quonton
+							this = culture:eothedain
+							this = culture:azralai
+							this = culture:kharatakhori
+							this = culture:ar_adunaim_numenorean
 							any_parent_culture_or_above = { this = culture:umbaredain }
 							any_parent_culture_or_above = { this = culture:kharadunaim }
 							AND = {
@@ -1090,6 +1171,9 @@ add_blood_of_numenor_effect = {
 						OR = {
 							this = culture:gondorian
 							this = culture:belfalathrim
+							##Quonton
+							this = culture:gimilarani
+							this = culture:pharazaini_culture
 							AND = {
 								any_parent_culture_or_above = { this = culture:gondorian }
 								any_parent_culture_or_above = { this = culture:belfalathrim }
@@ -1097,6 +1181,16 @@ add_blood_of_numenor_effect = {
 									any_parent_culture_or_above = { this = culture:umbaredain }
 								}
 							}
+						}
+					}
+				}
+				##Quonton
+				AND = {
+					current_year >= 6787
+					culture ?= {
+						OR = { 
+							this = culture:gimilarani
+							this = culture:pharazaini_culture
 						}
 					}
 				}
@@ -1132,9 +1226,9 @@ add_blood_of_numenor_effect = {
 					current_year < 5667
 					culture ?= {
 						OR = {
-							#this = culture:anarikean
+							this = culture:anarikean
 							this = culture:tanturaki
-							#any_parent_culture_or_above = { this = culture:anarikean }
+							any_parent_culture_or_above = { this = culture:anarikean }
 							any_parent_culture_or_above = { this = culture:tanturaki}
 						}
 					}
@@ -1164,6 +1258,11 @@ add_blood_of_numenor_effect = {
 						OR = {
 							this = culture:bellakarani
 							this = culture:kharadunaim
+							##Quonton
+							this = culture:eothedain
+							this = culture:azralai
+							this = culture:kharatakhori
+							this = culture:ar_adunaim_numenorean
 							any_parent_culture_or_above = { this = culture:umbaredain }
 							AND = {
 								any_parent_culture_or_above = { this = culture:bellakarani }
@@ -1204,6 +1303,11 @@ add_blood_of_numenor_effect = {
 						OR = {
 							this = culture:bellakarani
 							this = culture:kharadunaim
+							##Quonton
+							this = culture:eothedain
+							this = culture:azralai
+							this = culture:kharatakhori
+							this = culture:ar_adunaim_numenorean
 							any_parent_culture_or_above = { this = culture:umbaredain }
 							AND = {
 								any_parent_culture_or_above = { this = culture:bellakarani }
@@ -1234,6 +1338,11 @@ add_blood_of_numenor_effect = {
 						OR = {
 							this = culture:gondorian
 							this = culture:belfalathrim
+							##Quonton
+							this = culture:eothedain
+							this = culture:azralai
+							this = culture:kharatakhori
+							this = culture:ar_adunaim_numenorean
 							AND = {
 								any_parent_culture_or_above = { this = culture:gondorian }
 								any_parent_culture_or_above = { this = culture:belfalathrim }
@@ -1256,9 +1365,9 @@ add_blood_of_numenor_effect = {
 					current_year < 5977
 					culture ?= {
 						OR = {
-							#this = culture:anarikean
+							this = culture:anarikean
 							this = culture:tanturaki
-							#any_parent_culture_or_above = { this = culture:anarikean }
+							any_parent_culture_or_above = { this = culture:anarikean }
 							any_parent_culture_or_above = { this = culture:tanturaki}
 						}
 					}
@@ -1309,9 +1418,9 @@ add_blood_of_numenor_effect = {
 					current_year > 5977
 					culture ?= {
 						OR = {
-							#this = culture:anarikean
+							this = culture:anarikean
 							this = culture:tanturaki
-							#any_parent_culture_or_above = { this = culture:anarikean }
+							any_parent_culture_or_above = { this = culture:anarikean }
 							any_parent_culture_or_above = { this = culture:tanturaki}
 							AND = {
 								any_parent_culture_or_above = { this = culture:old_umbarean }
@@ -1873,6 +1982,81 @@ lotr_northron_warriors_spawn_effect = {
 				inheritable = no
 				name = lotr_northron_settlers_troops
 			}
+		}
+	}
+}
+
+reinstitute_grain_dole_decision_effect_anbalkumagan = {
+	every_county_in_region = {
+		region = custom_anbalkumagan
+		limit = {
+			any_county_province = {
+				has_building_or_higher = cereal_fields_05
+			}
+		}
+		add_county_modifier = {
+			modifier = grain_anbalkumagan_providers_county_modifier
+			years = 25
+		}
+	}
+	capital_county = {
+		add_county_modifier = {
+			modifier = bread_and_circuses_anbalkumagan_county_modifier
+			years = 25
+		}
+	}
+	add_legitimacy = medium_legitimacy_gain
+	if = {
+		limit = {
+			NOT = { capital_county = { has_variable = unlocked_grain_dole_anbalkumagan } }
+		}
+		add_prestige = {
+			value = 500
+			multiply = 3
+		}
+		change_influence = {
+			value = 500
+			multiply = 3
+		}
+		capital_county = { set_variable = unlocked_grain_dole_anbalkumagan }
+	}
+	else = {
+		add_prestige = 300
+		change_influence = 300
+	}
+}
+
+lotr_grant_gondor_strength_game_rule_buff = {
+	$CHARACTER$ ?= {
+		if = {
+			limit = {
+				is_alive = yes
+				is_landed = yes
+			}
+			if = {
+				limit = { has_game_rule = apocalyptic_gondor_strength }
+				add_character_modifier = gondor_strengthened_4_modifier
+				if = {
+					limit = { is_elf = yes }
+					create_story = story_conqueror
+				}
+			}
+		}
+	}
+}
+
+gondor_strength_gamerule_buffs = {
+	every_independent_ruler = {
+		limit = {
+			is_gondor = yes
+			NOT = { has_character_modifier = gondor_strengthened_4_modifier }
+		}
+		switch = {
+			trigger = has_game_rule
+			weakened_gondor_strength = { add_character_modifier = gondor_weakened_modifier }
+			strong_gondor_strength = { add_character_modifier = gondor_strengthened_1_modifier }
+			very_strong_gondor_strength = { add_character_modifier = gondor_strengthened_2_modifier }
+			apocalyptic_gondor_strength = { add_character_modifier = gondor_strengthened_3_modifier }
 		}
 	}
 }

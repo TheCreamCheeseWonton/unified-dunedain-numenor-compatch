@@ -129,6 +129,8 @@
 			##Quonton
 			culture:new_numenorean = { custom_tooltip = new_numenorean_desc }
 			culture:new_dunedain = { custom_tooltip = new_dunedain_desc }
+			culture:eothedain = { custom_tooltip = eothedain_desc }
+			##Quonton ENDDDDSSSS
 			culture:dunedain = { custom_tooltip = dunedain_desc }
 			culture:gondorian = { custom_tooltip = gondorian_desc }
 			culture:arnorian = { custom_tooltip = arnorian_desc }
@@ -136,7 +138,7 @@
 			culture:belfalathrim = { custom_tooltip = belfalathrim_desc }
 			culture:orodbedhrim = { custom_tooltip = orodbedhrim_desc }
 			culture:dunedain_ranger = { custom_tooltip = dunedain_ranger_desc }
-			# culture:new_arnorian = { custom_tooltip = new_arnorian_desc }
+			culture:new_arnorian = { custom_tooltip = new_arnorian_desc }
 			culture:uialedain = { custom_tooltip = uialedain_desc }
 			culture:caledhrim = { custom_tooltip = caledhrim_desc }
 			
@@ -158,6 +160,9 @@
 			culture:south_adunai_colonial = { custom_tooltip = south_adunai_colonial_desc }
 			culture:tanturaki = { custom_tooltip = tanturaki_desc }
 			culture:east_adunai_colonial = { custom_tooltip = east_adunai_colonial_desc }
+			##Quonton
+			culture:azralai = { custom_tooltip = azralai_desc }
+			culture:gimilarani = { custom_tooltip = gimilarani_desc }
 			
 			# Northron
 			culture:northron = { custom_tooltip = northron_desc }
@@ -173,6 +178,8 @@
 			culture:estarewas = { custom_tooltip = estarewas_desc }
 			culture:gramas = { custom_tooltip = gramas_desc }
 			culture:ebnathiuda = { custom_tooltip = ebnathiuda_desc }
+			culture:dwergwine = { custom_tooltip = dwergwine_desc }
+			culture:flodufulka = { custom_tooltip = flodufulka_desc }
 			
 			# Bellakar
 			#culture:bellakarean = { custom_tooltip = bellakarean_desc }
@@ -230,7 +237,6 @@
 			culture:tyari = { custom_tooltip = tyari_desc}
 			culture:nuari = { custom_tooltip = nuari_desc}
 			culture:harani = { custom_tooltip = harani_desc}
-			culture:danak = {custom_tooltip = danak_desc}
 
 			# Harshandatt
 			culture:muranian = { custom_tooltip = muranian_desc }
@@ -238,6 +244,16 @@
 
 			# Shayn
 			culture:lynerian = { custom_tooltip = lynerian_desc }
+			culture:danak = {custom_tooltip = danak_desc}
+			culture:drenim = {custom_tooltip = drenim_desc}
+			culture:ganim = {custom_tooltip = ganim_desc}
+			culture:sekak = {custom_tooltip = sekak_desc}
+			culture:ahava = {custom_tooltip = ahava_desc}
+			culture:ambason = {custom_tooltip = ambason_desc}
+
+			# Sare
+			culture:sengani = {custom_tooltip = sengani_desc}
+			culture:sare = { custom_tooltip = sare_desc}
 
 			# Elinse
 			culture:elinse = { custom_tooltip = elinse_desc }
@@ -249,10 +265,21 @@
 
 			# Kirani
 			culture:kirani = { custom_tooltip = kirani_desc }
-			culture:sederi = { custom_tooltip = sederi_desc }
-			culture:mulamburil = { custom_tooltip = mulamburil_desc }
 			culture:usakani = { custom_tooltip = usakani_desc }
+			culture:sederi = { custom_tooltip = sederi_desc }
+
+			# Mumakani
+			culture:akanali = { custom_tooltip = akanali_desc }
+			culture:mumakanil = { custom_tooltip = mumakanil_desc }
+			culture:inkamakil = { custom_tooltip = inkamakil_desc }
 			culture:nafarati = { custom_tooltip = nafarati_desc }
+			culture:mulamburil = { custom_tooltip = mulamburil_desc }
+			culture:koronandi = { custom_tooltip = koronandi_desc }
+			culture:hathorim = { custom_tooltip = hathorim_desc }
+			culture:geshani = { custom_tooltip = geshani_desc }
+			culture:dusherae = { custom_tooltip = dusherae_desc }
+			culture:sharaeke = { custom_tooltip = sharaeke_desc }
+			culture:tuktani = { custom_tooltip = tuktani_desc }
 
 			# Magrin
 			culture:mag = { custom_tooltip = mag_desc }

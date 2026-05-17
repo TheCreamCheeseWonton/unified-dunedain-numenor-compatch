@@ -14,7 +14,6 @@ numenoreanblood.1000 = { #Check for dead character
 				NOT = { this = root }
 				##Quonton
 				culture = { OR = { has_cultural_pillar = heritage_dunedain has_cultural_tradition = tradition_new_numenor } }
-				# any_child = { count > 0 }
 			}
 			trigger_event = numenoreanblood.1001
 				
@@ -43,7 +42,23 @@ numenoreanblood.1001 = { #Widow event for widow
 	content_source = realms_dlc
 	type = character_event
 	title = numenoreanblood.1001.t
-	desc = numenoreanblood.1001.desc
+	desc = {
+		desc = numenoreanblood.1001.desc
+		first_valid = {
+			triggered_desc = {
+				trigger = {
+					any_child = { count > 0 }
+				}
+				desc = numenoreanblood.1001.desc.child
+			}
+			triggered_desc = {
+				trigger = {
+					NOT = { any_child = { count > 0 } }
+				}
+				desc = numenoreanblood.1001.desc.childless
+			}
+		}
+	}
 	theme = unfriendly
 	left_portrait = {
 		character = root
@@ -84,7 +99,12 @@ numenoreanblood.1001 = { #Widow event for widow
 	}
 	option = { # I will find another
 		name = numenoreanblood.1001.b
-		add_piety_level = -1
+		if = { # Only loose devotion if you already have kids
+			limit = {
+				NOT = { any_child = { count > 0 } }
+			}
+			add_piety_level = -1
+		}
 		add_character_modifier = refused_widowhood_modifier
 		stress_impact = {
 			chaste = major_stress_impact_gain
@@ -522,6 +542,18 @@ numenoreanblood.0001 = {
 					}						
 					add = -8
 				}		
+				modifier = {
+					scope:real_father = {
+						has_trait = kidnapper
+					}						
+					add = -24
+				}
+				modifier = {
+					scope:mother = {
+						has_trait = kidnapper
+					}						
+					add = -24
+				}
 				modifier = {
 					scope:real_father = {
 						any_secret = { secret_type = secret_deviant }
@@ -1047,6 +1079,18 @@ numenoreanblood.0001 = {
 						has_trait = drunkard
 					}						
 					add = 8
+				}
+				modifier = {
+					scope:real_father = {
+						has_trait = kidnapper
+					}						
+					add = 24
+				}
+				modifier = {
+					scope:mother = {
+						has_trait = kidnapper
+					}						
+					add = 24
 				}
 				modifier = {
 					scope:real_father = {
@@ -1619,6 +1663,18 @@ numenoreanblood.0001 = {
 						has_trait = drunkard
 					}						
 					add = -4
+				}
+				modifier = {
+					scope:real_father = {
+						has_trait = kidnapper
+					}						
+					add = -12
+				}
+				modifier = {
+					scope:mother = {
+						has_trait = kidnapper
+					}						
+					add = -12
 				}
 				modifier = {
 					scope:real_father = {
@@ -2325,6 +2381,18 @@ numenoreanblood.0001 = {
 				}	
 				modifier = {
 					scope:real_father = {
+						has_trait = kidnapper
+					}						
+					add = 24
+				}
+				modifier = {
+					scope:mother = {
+						has_trait = kidnapper
+					}						
+					add = 24
+				}
+				modifier = {
+					scope:real_father = {
 						any_secret = { secret_type = secret_deviant }
 					}						
 					add = 4
@@ -2858,8 +2926,31 @@ numenoreanblood.0001 = {
 	}
 	
 	##Quonton
-	after = {
+	after = { #Numenor Sub-mod
+	# Alrain Note: There is definitely a better way to check if people end up under BoN 7
 		if = {
+			limit = {
+				scope:mother.location ?= { geographical_region = middleearth_numenor }
+				OR = {
+					scope:mother.get_numenorean_blood_tier = 7
+					AND = {
+						scope:real_father.get_numenorean_blood_tier >= 7
+						scope:mother.get_numenorean_blood_tier < 7
+					}
+				}
+			}
+			scope:child ?= {
+				remove_trait = blood_of_numenor_1
+				remove_trait = blood_of_numenor_2
+				remove_trait = blood_of_numenor_3
+				remove_trait = blood_of_numenor_4
+				remove_trait = blood_of_numenor_5
+				remove_trait = blood_of_numenor_6
+				remove_trait = blood_of_numenor_7
+			}
+			scope:child ?= { add_trait = blood_of_numenor_7 }
+		}
+		else_if = {
 			limit = { has_game_rule = default_bon }
 			limit = {
 				OR = { 
@@ -2890,12 +2981,6 @@ numenoreanblood.0001 = {
 				remove_trait = blood_of_numenor_2
 				remove_trait = blood_of_numenor_3
 				remove_trait = blood_of_numenor_4
-				remove_trait = blood_of_numenor_5
-				remove_trait = blood_of_numenor_6
-				remove_trait = blood_of_numenor_7
-				remove_trait = blood_of_numenor_8
-				remove_trait = blood_of_numenor_9
-				remove_trait = blood_of_numenor_10
 			}
 			scope:child ?= { add_trait = blood_of_numenor_4 }
 		}
@@ -2928,43 +3013,10 @@ numenoreanblood.0001 = {
 			scope:child ?= {
 				remove_trait = blood_of_numenor_1
 				remove_trait = blood_of_numenor_2
-				remove_trait = blood_of_numenor_3
-				remove_trait = blood_of_numenor_4
-				remove_trait = blood_of_numenor_5
-				remove_trait = blood_of_numenor_6
-				remove_trait = blood_of_numenor_7
-				remove_trait = blood_of_numenor_8
-				remove_trait = blood_of_numenor_9
-				remove_trait = blood_of_numenor_10
 			}
 			scope:child ?= { add_trait = blood_of_numenor_2 }
 		}
-		##End Quonton
-		# Alrain Note: There is definitely a better way to check if people end up under BoN 7
-		if = {
-			limit = {
-				scope:mother.location ?= { geographical_region = middleearth_numenor }
-				OR = {
-					scope:mother.get_numenorean_blood_tier = 7
-					AND = {
-						scope:real_father.get_numenorean_blood_tier >= 7
-						scope:mother.get_numenorean_blood_tier < 7
-					}
-				}
-			}
-			scope:child ?= {
-				remove_trait = blood_of_numenor_1
-				remove_trait = blood_of_numenor_2
-				remove_trait = blood_of_numenor_3
-				remove_trait = blood_of_numenor_4
-				remove_trait = blood_of_numenor_5
-				remove_trait = blood_of_numenor_6
-				remove_trait = blood_of_numenor_7
-				remove_trait = blood_of_numenor_8
-				remove_trait = blood_of_numenor_9
-				remove_trait = blood_of_numenor_10
-			}
-			scope:child ?= { add_trait = blood_of_numenor_7 }
-		}
 	}
+	##End Quonton
+
 }

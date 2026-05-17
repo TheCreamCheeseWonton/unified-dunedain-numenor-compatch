@@ -920,6 +920,12 @@ wonder_armenelos_04 = { #Armenelos: Flowering of Nimloth
 		custom_tooltip = {
 			text = numenor_realm_size_limit_02
 			scope:holder.realm_size > 300
+			title:c_minas_tirith.holder = {
+				OR = {
+					is_allied_to = scope:holder
+					top_liege = scope:holder
+				}
+			}
 		}
 	}
 	province_modifier = {
