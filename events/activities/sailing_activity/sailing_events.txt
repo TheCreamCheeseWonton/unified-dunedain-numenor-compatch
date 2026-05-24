@@ -6342,7 +6342,7 @@ sailing.3202 = {
 					}
 				}
 				custom_tooltip = sailing.3202.a.failure.tt
-				hidden_effect = { death = { death_reason = death_perished_at_sea } }
+				hidden_effect = { death = { death_reason = death_drowned } }
 			}
 		}
 	}
@@ -6398,7 +6398,7 @@ sailing.3202 = {
 					}
 				}
 				custom_tooltip = sailing.3202.a.failure.tt
-				hidden_effect = { death = { death_reason = death_perished_at_sea } }
+				hidden_effect = { death = { death_reason = death_drowned } }
 			}
 		}
 	}

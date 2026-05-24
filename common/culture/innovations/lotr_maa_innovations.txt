@@ -56,8 +56,6 @@ innovation_unified_adunai_warfare = {
 	custom = unlock_adunaic_spearmen
 	custom = unlock_adunic_steelbowmen
 	custom = unlock_knights_of_the_adunai
-	
-	flag = global_maa
 }
 
 innovation_tanturak_rangers_warfare = {
@@ -86,8 +84,6 @@ innovation_tanturak_rangers_warfare = {
 	}
 
 	custom = unlock_tanturak_rangers
-	
-	flag = global_maa
 }
 ##End Quonton
 
@@ -106,6 +102,30 @@ innovation_dunlending_warriors = {
 	custom = unlock_dunlending_huscarl
 	custom = unlock_dunlending_outriders
 	custom = unlock_dunlending_axe_hunters
+}
+
+innovation_armored_dunmen_warfare = {
+	group = culture_group_regional
+	culture_era = culture_era_tribal
+	icon = @special_maa_02
+
+	potential = {
+		OR = {
+			has_cultural_pillar = heritage_daen_lintis
+		}
+	}
+
+	can_progress = { #Unlocked by decision
+		custom_description = {
+			text = "innovation_unlocked_by_decision_trigger"
+			is_target_in_global_variable_list = {
+				name = unavailable_unique_decisions
+				target = flag:decision_eira_dwarven_armor 
+			}
+		}
+	}
+
+	custom = unlock_dunmen_heavy_infantry
 }
 
 ### Hillmen ###
@@ -1004,16 +1024,21 @@ innovation_talon_knights = {
 	group = culture_group_regional
 	culture_era = culture_era_tribal
 	icon = @special_maa_01
+
+	potential = {
+		this = culture:belfalathrim
+	}
 	
-	potential = { #Unlocked by decision
+	can_progress = { #Unlocked by decision
 		custom_description = {
 			text = "innovation_unlocked_by_decision_trigger"
 			is_target_in_global_variable_list = {
 				name = unavailable_unique_decisions
-				target = flag:decision_dol_amroth_swan_guard
+				target = flag:decision_dol_amroth_swan_guard 
 			}
 		}
 	}
+	
 	custom = unlock_talon_knights
 	flag = global_maa
 }
@@ -1023,12 +1048,16 @@ innovation_nimrodel_rangers = {
 	culture_era = culture_era_tribal
 	icon = @special_maa_02
 	
-	potential = { #Unlocked by decision
+	potential = {
+		this = culture:belfalathrim
+	}
+	
+	can_progress = { #Unlocked by decision
 		custom_description = {
 			text = "innovation_unlocked_by_decision_trigger"
 			is_target_in_global_variable_list = {
 				name = unavailable_unique_decisions
-				target = flag:decision_dol_amroth_swan_guard
+				target = flag:decision_dol_amroth_swan_guard 
 			}
 		}
 	}
@@ -1358,12 +1387,6 @@ innovation_volcanic_metallurgy = {	#Yellow Mountain Orc decision reward
 	flag = global_maa
 }
 
-
-
-
-
-
-
 innovation_yellow_mountain_warfare = {
 	group = culture_group_regional
 	culture_era = culture_era_tribal
@@ -1526,7 +1549,12 @@ innovation_knights_of_kharadune_warfare = {
 			this = culture:kharadunaim
 			any_parent_culture_or_above = { this = culture:kharadunaim }
 		}
-		NOT = { this = culture:gimilarani }
+		any_culture_county = {
+			title_province = {
+				geographical_region = special_k_kharadune
+			}
+		}
+		#NOT = { this = culture:gimilarani }
 	}
 
 	custom = unlock_knights_of_kharadune
@@ -1534,31 +1562,25 @@ innovation_knights_of_kharadune_warfare = {
 	flag = global_maa
 }
 
-innovation_conscripts_warfare = {
-	group = culture_group_regional
-	culture_era = culture_era_tribal
-	icon = @special_maa_01
+# innovation_conscripts_warfare = {
+# 	group = culture_group_regional
+# 	culture_era = culture_era_tribal
+# 	icon = @special_maa_01
 
-	potential = {
-		has_cultural_pillar = heritage_southern_adunaic
-		OR = {
-			this = culture:anbalukkhori
-			any_parent_culture_or_above = { this = culture:anbalukkhori }
-			this = culture:south_adunai_colonial
-			this = culture:tanturaki
-		}
-		##Quonton
-		NOT = {  
-			any_parent_culture_or_above = {
-				this = culture:kharadunaim
-			}
-		}
-	}
+# 	potential = {
+# 		has_cultural_pillar = heritage_southern_adunaic
+# 		OR = {
+# 			this = culture:anbalukkhori
+# 			any_parent_culture_or_above = { this = culture:anbalukkhori }
+# 			this = culture:south_adunai_colonial
+# 			this = culture:tanturaki
+# 		}
+# 	}
 
-	custom = unlock_indentured_conscripts
+# 	custom = unlock_indentured_conscripts
 	
-	flag = global_maa
-}
+# 	flag = global_maa
+# }
 
 #Eastern Adunai
 innovation_eastern_adunai_warfare = {

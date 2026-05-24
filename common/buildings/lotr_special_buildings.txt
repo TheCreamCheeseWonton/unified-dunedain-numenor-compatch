@@ -1629,6 +1629,162 @@ wonder_south_undeep_02 = {
 	flag = travel_point_of_interest_martial_minor
 }
 
+# The Argonath
+wonder_argonath = {
+	type_icon = "icon_wonder_argonath.dds"
+	flag = fully_upgraded
+	construction_time = extremely_slow_construction_time
+	cost_gold = 2500
+	can_construct = {
+		building_requirement_castle_city_church = { LEVEL = 02 }
+		scope:holder ?= {
+			##Quonton
+			OR = {
+				culture = { has_cultural_pillar = heritage_dunedain }
+				culture = { has_cultural_tradition = tradition_new_numenor }
+				this = culture:adunaic
+			}
+			##End Quonton
+		}
+	}
+
+	character_modifier = {
+		monthly_dynasty_prestige = 0.2
+		knight_limit = 2
+		monthly_prestige = 0.2
+	}
+	county_modifier = {
+		monthly_county_control_growth_factor = 0.3
+	}	
+	
+	ai_value = {
+		base = 100
+	}
+	type = special
+	flag = travel_point_of_interest_diplomatic
+}
+
+
+# Amon Hen, Hill of Sight
+wonder_amon_hen = {
+	type_icon = "icon_structure_kassiopi_castle.dds"
+	flag = fully_upgraded
+	construction_time = extremely_slow_construction_time
+	cost_gold = 2500
+	can_construct = {
+		building_requirement_castle_city_church = { LEVEL = 02 }
+		scope:holder ?= {
+			OR = {
+				culture = { has_cultural_pillar = heritage_dunedain }
+				culture = { has_cultural_tradition = tradition_new_numenor }
+				this = culture:adunaic
+			}
+		}
+	}
+	
+	is_enabled = {
+		custom_tooltip = {
+			text = dunedain_or_has_ring_tt
+			scope:holder = {
+				OR = {
+					##Quonton
+					OR = {
+						culture = { has_cultural_pillar = heritage_dunedain }
+						culture = { has_cultural_tradition = tradition_new_numenor }
+						this = culture:adunaic
+					}
+					##End Quonton
+					any_character_artifact = {
+						has_variable = ring_of_power
+						is_equipped = yes
+					}
+				}
+			}
+		}
+	}
+
+	max_garrison = 250
+
+	province_modifier = {
+		fort_level = 6
+	}
+	character_modifier = {
+		intrigue_per_piety_level = 1
+	}
+	
+	fallback = {
+		province_modifier = {
+			fort_level = 6
+		}
+	}
+	
+	ai_value = {
+		base = 100
+	}
+	type = special
+	flag = travel_point_of_interest_intrigue
+}
+
+# Amon Lhaw, Hill of Hearing
+wonder_amon_lhaw = {
+	type_icon = "icon_structure_kassiopi_castle.dds"
+	flag = fully_upgraded
+	construction_time = extremely_slow_construction_time
+	cost_gold = 2500
+	can_construct = {
+		building_requirement_castle_city_church = { LEVEL = 02 }
+		scope:holder ?= {
+			OR = {
+				culture = { has_cultural_pillar = heritage_dunedain }
+				culture = { has_cultural_tradition = tradition_new_numenor }
+				this = culture:adunaic
+			}
+		}
+	}
+	
+	is_enabled = {
+		custom_tooltip = {
+			text = dunedain_or_has_ring_tt
+			scope:holder = {
+				OR = {
+					##Quonton
+					OR = {
+						culture = { has_cultural_pillar = heritage_dunedain }
+						culture = { has_cultural_tradition = tradition_new_numenor }
+						this = culture:adunaic
+					}
+					##End Quonton
+					any_character_artifact = {
+						has_variable = ring_of_power
+						is_equipped = yes
+					}
+				}
+			}
+		}
+	}
+
+	max_garrison = 250
+
+	province_modifier = {
+		fort_level = 6
+	}
+	character_modifier = {
+		learning_per_piety_level = 1
+	}
+	
+	fallback = {
+		province_modifier = {
+			fort_level = 6
+		}
+	}
+	
+	ai_value = {
+		base = 100
+	}
+	type = special
+	flag = travel_point_of_interest_learning
+}
+
 ### ENEDHWAITH ###
 
 # Hall of Wulfborg #
@@ -14772,13 +14928,17 @@ wonder_kinnlai_sanctum_of_the_valiant_02 = { # Sanctum of the Valiant - restored
 }
 wonder_kinnlai_sanctum_of_the_valiant_03 = { # Sanctum of the Valiant - thriving
 	type_icon = "wonder_kinnlai_sanctum_of_the_valiant.dds"
-
+	
+	effect_desc = {
+		desc = wonder_kinnlai_sanctum_of_the_valiant_training_desc
+	}
+	
 	construction_time = very_slow_construction_time
 
 	can_construct_potential = {
-			custom_tooltip = {
-				text = building_type_wonder_kinnlai_sanctum_of_the_valiant_02_tt
-				scope:holder.faith = {
+		custom_tooltip = {
+			text = building_type_wonder_kinnlai_sanctum_of_the_valiant_02_tt
+			scope:holder.faith = {
 				OR = {
 					has_doctrine = tenet_primacy_of_tulkas
 					has_doctrine = tenet_offbrand_tulkas

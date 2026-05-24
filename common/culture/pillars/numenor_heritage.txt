@@ -1,2 +1,22 @@
-﻿### Numenor Submod Code ###
-##No Need
+﻿##Quonton
+heritage_unified_adunaic = {
+	type = Heritage
+	parameters = {
+		heritage_group_numenorean = yes
+		heritage_family_edain = yes
+		is_human_heritage = yes
+	}
+	character_modifier  = {
+		halls_advantage = -10
+		levy_attack = 5
+		levy_toughness = 5
+		epidemic_resistance = 10
+	}
+	is_shown = {
+		heritage_is_shown_trigger = {
+			HERITAGE = heritage_unified_adunaic
+		}
+	}
+	audio_parameter = european
+}
+##End Quonton

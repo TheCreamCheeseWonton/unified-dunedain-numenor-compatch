@@ -668,11 +668,16 @@ add_blood_of_numenor_effect = {
 			}
 		}
 		random_list = {
-			90 = { add_trait = blood_of_numenor_7 }
-			10 = { add_trait = blood_of_numenor_6 }
-		}		
+			50 = { add_trait = blood_of_numenor_7 }
+			30 = { add_trait = blood_of_numenor_6 }
+			10 = { add_trait = blood_of_numenor_5 }
+			7 = { add_trait = blood_of_numenor_4 }
+			1 = { add_trait = blood_of_numenor_3 }
+			1 = { add_trait = blood_of_numenor_2 }
+			1 = { add_trait = blood_of_numenor_1 }
+		}				
 	} 
-	# Level 10 
+	# Level 10
 	##Quonton
 	if = {
 		limit = { 

@@ -1030,6 +1030,7 @@ decision_destroy_mordor = {
 						has_primary_title = title:h_numenor_in_exile
 						has_primary_title = title:h_reunited_kingdom
 						has_primary_title = title:e_numenor  #Numenor Submod
+						has_primary_title = title:h_numenor #Numenor Submod
 					}
 				}
 				desc = decision_destroy_mordor_desc
@@ -1053,7 +1054,8 @@ decision_destroy_mordor = {
 			is_gondor = yes
 			has_primary_title = title:h_numenor_in_exile
 			has_primary_title = title:h_reunited_kingdom
-			has_primary_title = title:e_numenor  #Numenor Submod
+			has_primary_title = title:e_numenor #Numenor Submod
+			has_primary_title = title:h_numenor #Numenor Submod
 			any_neighboring_top_liege_realm_owner = { this = title:e_mordor.holder }
 			AND = { #Custom Northward Bellakar Stuff
 				OR = {
@@ -1106,12 +1108,13 @@ decision_destroy_mordor = {
 						is_gondor = yes
 						has_primary_title = title:h_numenor_in_exile
 						has_primary_title = title:h_reunited_kingdom
-						has_primary_title = title:e_numenor  #Numenor Submod
+						has_primary_title = title:e_numenor #Numenor Submod
+						has_primary_title = title:h_numenor #Numenor Submod
 					}
 				}
 				completely_controls_region = custom_gondorian_heartlands
 			}
-trigger_else_if = { #Custom Northward Bellakar Stuff
+			trigger_else_if = { #Custom Northward Bellakar Stuff
 				limit = {
 					any_ruler = {
 						is_gondor = yes
@@ -1236,7 +1239,8 @@ trigger_else_if = { #Custom Northward Bellakar Stuff
 		if = {
 			limit = {
 				OR = {
-					has_primary_title = title:e_numenor  #Numenor Submod
+					has_primary_title = title:e_numenor #Numenor Submod
+					has_primary_title = title:h_numenor #Numenor Submod
 					is_gondor = yes
 					has_primary_title = title:h_numenor_in_exile
 					has_primary_title = title:h_reunited_kingdom
@@ -1445,7 +1449,8 @@ decision_search_orthanc = {
 			has_primary_title = title:e_arnor
 			has_primary_title = title:h_numenor_in_exile
 			has_primary_title = title:h_reunited_kingdom
-			has_primary_title = title:e_numenor  #Numenor Submod
+			has_primary_title = title:e_numenor #Numenor Submod
+			has_primary_title = title:h_numenor #Numenor Submod
 		}
 		completely_controls = title:c_isengard
 		NOT = {
@@ -1505,6 +1510,7 @@ decision_emyn_arnen_capital = {
 			has_primary_title = title:h_numenor_in_exile
 			has_primary_title = title:e_numenor_colonies
 			has_primary_title = title:e_numenor #Numenor Submod
+			has_primary_title = title:h_numenor #Numenor Submod
 			AND = {
 				has_primary_title = title:k_ithilien
 				dynasty = {
@@ -2830,7 +2836,7 @@ decision_reunify_numenor_culture = {
 						remove_innovation = innovation_northern_adunai_warfare
 						remove_innovation = innovation_southern_adunai_warfare
 						remove_innovation = innovation_knights_of_kharadune_warfare
-						remove_innovation = innovation_conscripts_warfare
+						#remove_innovation = innovation_conscripts_warfare
 						remove_innovation = innovation_bellakari_warfare
 						remove_innovation = innovation_mardrukan_warfare
 						remove_innovation = innovation_tanturak_rangers_warfare
@@ -3158,7 +3164,7 @@ decision_reunify_numenor_culture = {
 						remove_innovation = innovation_northern_adunai_warfare
 						remove_innovation = innovation_southern_adunai_warfare
 						remove_innovation = innovation_knights_of_kharadune_warfare
-						remove_innovation = innovation_conscripts_warfare
+						#remove_innovation = innovation_conscripts_warfare
 						remove_innovation = innovation_bellakari_warfare
 						remove_innovation = innovation_mardrukan_warfare
 						remove_innovation = innovation_tanturak_rangers_warfare
@@ -3403,6 +3409,7 @@ renovate_special_building_arminalethor = {
 		}
 	}
 
+	# AI
 	ai_check_interval_by_tier = {
 		barony = 0
 		county = 0
@@ -3735,6 +3742,7 @@ decision_numenor_in_exile = {
 		lotr_has_numenorean_culture_trigger = yes # Only a Numenorean culture can claim the mantle of successor to Numenor!
 		highest_held_title_tier >= tier_empire # Only an imperial rank can hope to claim the mantle of successor to Numenor!
 		NOT = { has_title = title:e_numenor } #Numenor Submod
+		NOT = { has_title = title:h_numenor } #Numenor Submod
 		OR = { # Compromise solution
 			# Either own half of the entire region of NIE
 			any_county_in_region = {
@@ -3885,6 +3893,7 @@ decision_numenor_in_exile = {
 		
 		##Quonton
 		add_character_modifier = custom_add_cultural_acceptance_gain_for_nie
+		give_nickname = nick_numenor_restorer
 		custom_tooltip = decision_gain_numenorean_soldiers_innovations
 		hidden_effect = {
 			if = { 
@@ -3907,7 +3916,7 @@ decision_numenor_in_exile = {
 					remove_innovation = innovation_northern_adunai_warfare
 					remove_innovation = innovation_southern_adunai_warfare
 					remove_innovation = innovation_knights_of_kharadune_warfare
-					remove_innovation = innovation_conscripts_warfare
+					#remove_innovation = innovation_conscripts_warfare
 				}
 			}
 		}
@@ -4168,8 +4177,11 @@ decision_new_capital = {
 			}
 			triggered_desc = {
 				trigger = {
-					has_primary_title = title:h_numenor_in_exile
-					has_primary_title = title:e_numenor #Numenor Submod
+					OR = { 
+						has_primary_title = title:h_numenor_in_exile
+						has_primary_title = title:e_numenor #Numenor Submod
+						has_primary_title = title:h_numenor #Numenor Submod
+					}
 				}
 				desc = decision_new_capital.t.nie
 			}
@@ -4226,6 +4238,7 @@ decision_new_capital = {
 				trigger = {
 					has_primary_title = title:h_numenor_in_exile
 					has_primary_title = title:e_numenor #Numenor Submod
+					has_primary_title = title:h_numenor #Numenor Submod
 				}
 				desc = decision_new_capital.desc.nie
 			}
@@ -5960,6 +5973,7 @@ decision_recreate_watch_on_mordor = {
 			has_primary_title = title:e_bellakar
 			has_primary_title = title:e_castamir
 			has_primary_title = title:e_numenor #Numenor Submod
+			has_primary_title = title:h_numenor #Numenor Submod
 			AND = {
 				is_elf = yes
 				highest_held_title_tier >= tier_kingdom
@@ -6024,9 +6038,9 @@ decision_abandon_watch_on_mordor = {
 		barony = 0
 		county = 0
 		duchy = 0
-		kingdom = 50
-		empire = 50
-		hegemony = 50
+		kingdom = 0
+		empire = 0
+		hegemony = 0
 	}
 	ai_potential = {
 		always = no
@@ -6035,7 +6049,7 @@ decision_abandon_watch_on_mordor = {
 		base = 0
 	}
 
-	decision_group_type = realms_in_exile_major
+	decision_group_type = realms_in_exile_minor
 
 	desc = decision_abandon_watch_on_mordor_desc
 	selection_tooltip = decision_abandon_watch_on_mordor_desc_tooltip
@@ -6063,6 +6077,7 @@ decision_abandon_watch_on_mordor = {
 			has_primary_title = title:e_bellakar
 			has_primary_title = title:e_castamir
 			has_primary_title = title:e_numenor #Numenor Submod
+			has_primary_title = title:h_numenor #Numenor Submod
 			AND = {
 				is_elf = yes
 				highest_held_title_tier >= tier_kingdom
@@ -6129,7 +6144,13 @@ decision_restore_defeated_gondor = {
 	is_shown = {
 		#current_year >= 4035 # Is only shown if bookmark is after the two kingdoms split
 		trigger_if = { #Numenor Submod
-			limit = { top_liege = title:e_numenor.holder exists = situation:numenor_situation }
+			limit = { 
+				OR = { 
+					top_liege ?= title:e_numenor.holder 
+					top_liege ?= title:h_numenor.holder 
+				}
+				exists = situation:numenor_situation 
+			}
 			NOT = { situation:numenor_situation ?= { situation_current_phase = numenor_situation_isolation } }
 		}
 		exists = title:e_mordor.holder

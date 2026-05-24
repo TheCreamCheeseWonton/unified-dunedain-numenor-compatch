@@ -41,11 +41,11 @@ innovation_numenorean_heritage = {
 	potential = {
 		OR = {
 			#Numenorean and descendant cultures
-			has_cultural_pillar = heritage_dunedain
 			##Quonton
 			this = culture:ar_adunaim_numenorean
 			has_cultural_pillar = heritage_unified_adunaic
 			##End Quonton
+			has_cultural_pillar = heritage_dunedain
 			this = culture:black_numenorean
 			this = culture:old_umbarean
 			this = culture:gimilarani
@@ -128,6 +128,8 @@ innovation_numenorean_architecture_01 = {
 
 	potential = {
 		OR = {
+			##Quonton
+			has_cultural_pillar = heritage_unified_adunaic
 			this = culture:umbarean
 			this = culture:isengard_dunlending
 			has_cultural_pillar = heritage_northern_adunaic
@@ -135,8 +137,6 @@ innovation_numenorean_architecture_01 = {
 			has_cultural_pillar = heritage_eastern_adunaic
 			has_cultural_pillar = heritage_dunedain
 			has_cultural_pillar = heritage_bellakari
-			##Quonton
-			has_cultural_pillar = heritage_unified_adunaic
 			has_cultural_tradition = tradition_gondorian_legacy
 		}
 	}
@@ -154,14 +154,14 @@ innovation_numenorean_architecture_02 = {
 
 	potential = {
 		OR = {
-			this = culture:black_numenorean
-			this = culture:umbarean
-			this = culture:old_umbarean
-			has_cultural_pillar = heritage_dunedain
 			##Quonton
 			has_cultural_pillar = heritage_unified_adunaic
 			this = culture:ar_adunaim_numenorean
 			this = culture:gimilarani 
+			this = culture:black_numenorean
+			this = culture:umbarean
+			this = culture:old_umbarean
+			has_cultural_pillar = heritage_dunedain
 		}
 	}
 
@@ -178,10 +178,10 @@ innovation_numenorean_architecture_03 = {
 
 	potential = {
 		OR = {
-			this = culture:numenorean
-			this = culture:adunaic 
 			##Quonton
 			has_cultural_tradition = tradition_new_numenor
+			this = culture:adunaic ##Compatch
+			this = culture:numenorean
 			culture_head ?= {
 				has_title = title:h_numenor_in_exile
 			}
