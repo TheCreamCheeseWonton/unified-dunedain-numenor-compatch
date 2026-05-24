@@ -2950,6 +2950,34 @@ numenoreanblood.0001 = {
 			}
 			scope:child ?= { add_trait = blood_of_numenor_7 }
 		}
+		else_if = { #Numenor Sub-mod
+			limit = {
+				scope:mother.location ?= { geographical_region = middleearth_numenor }
+				culture ?= {
+					any_parent_culture_or_above = { this = culture:numenorean }
+				}
+			}
+			scope:child ?= {
+				remove_trait = blood_of_numenor_1
+				remove_trait = blood_of_numenor_2
+				remove_trait = blood_of_numenor_3
+				remove_trait = blood_of_numenor_4
+				remove_trait = blood_of_numenor_5
+				remove_trait = blood_of_numenor_6
+				remove_trait = blood_of_numenor_7
+			}
+			scope:child ?= { 
+				random_list = {
+					50 = { add_trait = blood_of_numenor_7 }
+					30 = { add_trait = blood_of_numenor_6 }
+					10 = { add_trait = blood_of_numenor_5 }
+					7 = { add_trait = blood_of_numenor_4 }
+					1 = { add_trait = blood_of_numenor_3 }
+					1 = { add_trait = blood_of_numenor_2 }
+					1 = { add_trait = blood_of_numenor_1 }
+				}		
+			}
+		} 
 		else_if = {
 			limit = { has_game_rule = default_bon }
 			limit = {
