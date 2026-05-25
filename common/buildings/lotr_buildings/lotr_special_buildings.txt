@@ -7588,7 +7588,7 @@ wonder_abaraglareth = {
 		}
 	}
 	is_enabled = {
-		faith_is_evil = yes
+		is_human = yes
 	}
 	province_modifier = {
 		fort_level = normal_building_fort_level_tier_8
