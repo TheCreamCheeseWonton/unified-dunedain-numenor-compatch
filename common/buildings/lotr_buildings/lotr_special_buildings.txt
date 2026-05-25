@@ -1478,7 +1478,7 @@ wonder_north_undeep_00_original = {
 			OR = {
 				culture = { has_cultural_pillar = heritage_dunedain }
 				culture = { has_cultural_tradition = tradition_new_numenor }
-				this = culture:adunaic
+				culture = { this = culture:adunaic }
 			}
 			##End Quonton
 		}
@@ -1528,7 +1528,7 @@ wonder_north_undeep_02 = {
 				culture = { has_cultural_pillar = heritage_dunedain }
 				has_title = title:h_rhovanion
 				culture = { has_cultural_tradition = tradition_new_numenor }
-				this = culture:adunaic
+				culture = { this = culture:adunaic }
 			}
 			##End Quonton
 		}
@@ -1560,7 +1560,7 @@ wonder_south_undeep_00_original = {
 			OR = {
 				culture = { has_cultural_pillar = heritage_dunedain }
 				culture = { has_cultural_tradition = tradition_new_numenor }
-				this = culture:adunaic
+				culture = { this = culture:adunaic }
 			}
 			##End Quonton
 		}
@@ -1610,7 +1610,7 @@ wonder_south_undeep_02 = {
 				culture = { has_cultural_pillar = heritage_dunedain }
 				has_title = title:h_rhovanion
 				culture = { has_cultural_tradition = tradition_new_numenor }
-				this = culture:adunaic
+				culture = { this = culture:adunaic }
 			}
 			##End Quonton
 		}
@@ -1642,7 +1642,7 @@ wonder_argonath = {
 			OR = {
 				culture = { has_cultural_pillar = heritage_dunedain }
 				culture = { has_cultural_tradition = tradition_new_numenor }
-				this = culture:adunaic
+				culture = { this = culture:adunaic }
 			}
 			##End Quonton
 		}
@@ -1677,7 +1677,7 @@ wonder_amon_hen = {
 			OR = {
 				culture = { has_cultural_pillar = heritage_dunedain }
 				culture = { has_cultural_tradition = tradition_new_numenor }
-				this = culture:adunaic
+				culture = { this = culture:adunaic }
 			}
 		}
 	}
@@ -1691,7 +1691,7 @@ wonder_amon_hen = {
 					OR = {
 						culture = { has_cultural_pillar = heritage_dunedain }
 						culture = { has_cultural_tradition = tradition_new_numenor }
-						this = culture:adunaic
+						culture = { this = culture:adunaic }
 					}
 					##End Quonton
 					any_character_artifact = {
@@ -1737,7 +1737,7 @@ wonder_amon_lhaw = {
 			OR = {
 				culture = { has_cultural_pillar = heritage_dunedain }
 				culture = { has_cultural_tradition = tradition_new_numenor }
-				this = culture:adunaic
+				culture = { this = culture:adunaic }
 			}
 		}
 	}
@@ -1751,7 +1751,7 @@ wonder_amon_lhaw = {
 					OR = {
 						culture = { has_cultural_pillar = heritage_dunedain }
 						culture = { has_cultural_tradition = tradition_new_numenor }
-						this = culture:adunaic
+						culture = { this = culture:adunaic }
 					}
 					##End Quonton
 					any_character_artifact = {
@@ -2045,18 +2045,18 @@ wonder_barmorthil_01 = { #Beacon of Ulond
 	can_construct = {
 		building_requirement_castle_city_church = { LEVEL = 01 }
 		scope:holder ?= {
-				culture = {
-					has_innovation = innovation_hoardings
-					}
-				##Quonton
-				OR = {
-					culture = { has_cultural_pillar = heritage_dunedain }
-					culture = { has_cultural_tradition = tradition_new_numenor }
-					this = culture:adunaic
+			culture = {
+				has_innovation = innovation_hoardings
 				}
-				##End Quonton
+			##Quonton
+			OR = {
+				culture = { has_cultural_pillar = heritage_dunedain }
+				culture = { has_cultural_tradition = tradition_new_numenor }
+				culture = { this = culture:adunaic }
 			}
+			##End Quonton
 		}
+	}
 	character_modifier = {
 		monthly_prestige = 0.1
 	}
@@ -2078,18 +2078,18 @@ wonder_barmorthil_02 = { #Retreat of the Kings
 	can_construct = {
 		building_requirement_castle_city_church = { LEVEL = 01 }
 		scope:holder ?= {
-				culture = {
-					has_innovation = innovation_hoardings
-					}
-				##Quonton
-				OR = {
-					culture = { has_cultural_pillar = heritage_dunedain }
-					culture = { has_cultural_tradition = tradition_new_numenor }
-					this = culture:adunaic
+			culture = {
+				has_innovation = innovation_hoardings
 				}
-				##End Quonton
+			##Quonton
+			OR = {
+				culture = { has_cultural_pillar = heritage_dunedain }
+				culture = { has_cultural_tradition = tradition_new_numenor }
+				culture = { this = culture:adunaic }
 			}
+			##End Quonton
 		}
+	}
 	character_modifier = {
 		monthly_prestige = 0.2
 		stress_loss_mult = 0.1
@@ -2147,7 +2147,7 @@ wonder_tharagrondost_01 = { #Tharagrond
 			OR = {
 				culture = { has_cultural_pillar = heritage_dunedain }
 				culture = { has_cultural_tradition = tradition_new_numenor }
-				this = culture:adunaic
+				culture = { this = culture:adunaic }
 			}
 			##End Quonton
 		}
@@ -2180,7 +2180,7 @@ wonder_tharagrondost_02 = { #Citadel of Tharagrondost
 			OR = {
 				culture = { has_cultural_pillar = heritage_dunedain }
 				culture = { has_cultural_tradition = tradition_new_numenor }
-				this = culture:adunaic
+				culture = { this = culture:adunaic }
 			}
 			##End Quonton
 		}
@@ -2224,7 +2224,7 @@ wonder_tharagrondost_expanded = { #Great City of Tharagrondost
 			OR = {
 				culture = { has_cultural_pillar = heritage_dunedain }
 				culture = { has_cultural_tradition = tradition_new_numenor }
-				this = culture:adunaic
+				culture = { this = culture:adunaic }
 			}
 			##End Quonton
 
@@ -3198,7 +3198,7 @@ wonder_port_of_pelargir_03 = {
 			OR = {
 				culture = { has_cultural_pillar = heritage_dunedain }
 				culture = { has_cultural_tradition = tradition_new_numenor }
-				this = culture:adunaic
+				culture = { this = culture:adunaic }
 			}
 			##End Quonton
 		}
@@ -3395,7 +3395,7 @@ wonder_imrazor_hallow = { #Hallow of Imrazôr and Cove of Uinen
 			OR = {
 				culture = { has_cultural_pillar = heritage_dunedain }
 				culture = { has_cultural_tradition = tradition_new_numenor }
-				this = culture:adunaic
+				culture = { this = culture:adunaic }
 			}
 			##End Quonton
 		}
@@ -3439,7 +3439,7 @@ wonder_serelond = { #City of Serelond
 			OR = {
 				culture = { has_cultural_pillar = heritage_dunedain }
 				culture = { has_cultural_tradition = tradition_new_numenor }
-				this = culture:adunaic
+				culture = { this = culture:adunaic }
 			}
 			##End Quonton
 		}
@@ -3479,7 +3479,7 @@ wonder_serelond_arsenal = { #Arsenal of Serelond
 			OR = {
 				culture = { has_cultural_pillar = heritage_dunedain }
 				culture = { has_cultural_tradition = tradition_new_numenor }
-				this = culture:adunaic
+				culture = { this = culture:adunaic }
 			}
 			##End Quonton
 		}
@@ -3520,7 +3520,7 @@ wonder_annondrun = { #Annon Drúin
 			OR = {
 				culture = { has_cultural_pillar = heritage_dunedain }
 				culture = { has_cultural_tradition = tradition_new_numenor }
-				this = culture:adunaic
+				culture = { this = culture:adunaic }
 			}
 			##End Quonton
 		}
@@ -3555,7 +3555,7 @@ wonder_erech = { #Stone of Erech
 			OR = {
 				culture = { has_cultural_pillar = heritage_dunedain }
 				culture = { has_cultural_tradition = tradition_new_numenor }
-				this = culture:adunaic
+				culture = { this = culture:adunaic }
 			}
 			##End Quonton
 			}
@@ -3664,7 +3664,7 @@ wonder_osgiliath_original = { # Osigiliath pre-Kinstrife
 				OR = {
 					culture = { has_cultural_pillar = heritage_dunedain }
 					culture = { has_cultural_tradition = tradition_new_numenor }
-					this = culture:adunaic
+					culture = { this = culture:adunaic }
 				}
 				##End Quonton
 			}
@@ -3707,7 +3707,7 @@ wonder_henneth_annun = {
 			OR = {
 				culture = { has_cultural_pillar = heritage_dunedain }
 				culture = { has_cultural_tradition = tradition_new_numenor }
-				this = culture:adunaic
+				culture = { this = culture:adunaic }
 			}
 			##End Quonton
 		}
