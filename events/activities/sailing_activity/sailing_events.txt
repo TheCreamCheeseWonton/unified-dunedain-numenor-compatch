@@ -1671,6 +1671,9 @@ sailing.1015 = {
 		animation = obsequious_bow
 		#camera = camera_activity_right
 	}
+	trigger = {
+		is_elf = no # Elves don't really have beggars
+	}
 	immediate = {
 		create_character = {
 			template = tournament_locale_character
@@ -6635,13 +6638,16 @@ sailing.3302 = {
 
 	option = { # Failure - whole crew starves
 		name = sailing.3302.a
-		death = { death_reason = death_starved }
 		scope:activity = {
 			every_attending_character = {
-				limit = { is_ai = yes }
+				limit = {
+					NOT = { this = scope:host }
+					cannot_be_killed = no
+				}
 				death = { death_reason = death_starved }
 			}
 		}
+		death = { death_reason = death_starved }
 	}
 }
 
@@ -6684,7 +6690,7 @@ sailing.3304 = {
 	}
 	right_portrait = {
 		character = scope:mutiny_leader
-		animation = callous
+		animation = personality_callous
 	}
 
 	immediate = {
@@ -7134,18 +7140,18 @@ sailing.3502 = {
 
 	option = { # Failure
 		name = sailing.3502.a
-		death = { death_reason = death_drowned }
 		scope:activity = {
 			every_attending_character = {
 				if = {
 					limit = {
-						is_ai = yes
+						NOT = { this = scope:host }
 						cannot_be_killed = no
 					}
 					death = { death_reason = death_drowned }
 				}
 			}
 		}
+		death = { death_reason = death_drowned }
 	}
 }
 
@@ -8063,7 +8069,6 @@ sailing.4005 = {
 }
 
 ### The Icebay of Forochel ###
-
 sailing.4013 = { # Into the Frozen North
 	type = activity_event
 	content_source = realms_dlc
@@ -8354,7 +8359,8 @@ sailing.4012 = { # The Stranger and the Storm
 	}
 }
 
-# Tol Fuin
+## Tol Fuin 
+# Tol Fuin - Arrival
 sailing.4020 = {
 	type = activity_event
 	content_source = realms_dlc
@@ -10390,7 +10396,6 @@ sailing.5513 = { # Try to slay the Kraken (CURRENT OBJECTIVE: SURVIVE)
 	}
 }
 
-
 ############################
 ## More Coast Exploration
 ## 6000-7999
@@ -10486,9 +10491,9 @@ sailing.6001 = { # Ras Morthil and Druwaith Laur 1/3: Ras Morthil
 	option = { # Sabotage the Beacon (Only Umbar)
 		name = sailing.6001.c
 		trigger = {
-				# culture = { has_cultural_pillar = heritage_northern_adunaic }
-				faith_is_good = no
-				can_raid_across_water = yes
+			# culture = { has_cultural_pillar = heritage_northern_adunaic }
+			faith_is_good = no
+			can_raid_across_water_trigger = yes
 		}
 		send_interface_toast = {
 			left_icon = ROOT
@@ -11947,7 +11952,7 @@ sailing.6200 = { # Entering the bay
 
 	option = { # Try to attack them
 		name = sailing.6200.c
-		trigger = { can_raid_across_water = yes }
+		trigger = { can_raid_across_water_trigger = yes }
 		duel = {
 			skill = martial
 			value = high_skill_rating
@@ -12977,7 +12982,7 @@ sailing.6406 = { # Mistrand
 	desc = sailing.6406.desc
 	theme = sailing_activity
 	override_background = {
-		reference = rhun
+		reference = wilderness_desert_rhun
 	}
 	left_portrait = {
 		character = root
@@ -13245,7 +13250,7 @@ sailing.8001 = { # Mouths of Anduin and The Fisher-folk of Ethir http://tolkieng
 	option = { # Sea Plundering of Fishermen boats. Gold and some fish (https://tolkienlibrary.com/press/images/FishesofMiddleEarth2008Willink.pdf)
 		name = sailing.8001.a
 		trigger = {
-			can_raid_across_water = yes
+			can_raid_across_water_trigger = yes
 			NOT = { faith_is_good = yes }
 		}
 		reverse_add_opinion = {
@@ -13672,7 +13677,7 @@ sailing.8005 = { # Pelargir  https://lotr.fandom.com/wiki/Pelargir
 	option = { # Sabotage the port
 		name = sailing.8005.a
 		trigger = {
-			can_raid_across_water = yes
+			can_raid_across_water_trigger = yes
 			faith_is_good = no
 		}
 		reverse_add_opinion = {
@@ -13802,7 +13807,7 @@ sailing.8005 = { # Pelargir  https://lotr.fandom.com/wiki/Pelargir
 		}
 		trigger = {
 			# culture = { has_cultural_pillar = heritage_northern_adunaic }
-			can_raid_across_water = yes
+			can_raid_across_water_trigger = yes
 		}
 		duel = {
 			skill = intrigue
@@ -13954,7 +13959,7 @@ sailing.8008 = { # Osgiliath https://lotr.fandom.com/wiki/Osgiliath
 		}
 		trigger = {
 			# culture = { has_cultural_pillar = heritage_northern_adunaic }
-			can_raid_across_water = yes
+			can_raid_across_water_trigger = yes
 			faith_is_good = no
 		}
 		duel = {
@@ -14310,10 +14315,27 @@ sailing.8013 = { # Cair Andros: Garrison Control http://tolkiengateway.net/wiki/
 	}
 
 	option = { # The way is shut - we should go back
-		name = sailing.6010.a
+		name = sailing.8013.c
 		trigger_event = { # Come back without experience
 			id = sailing.9002
 			days = 15
+		}
+	}
+	
+	option = { # I'm Gondorian, they will let me pass 
+		name = sailing.8013.d
+		trigger = {
+			OR = {
+				culture ?= culture:gondorian
+				culture ?= culture:belfalathrim
+				culture ?= culture:caledhrim
+				culture ?= culture:orodbedhrim
+			}
+		}
+		custom_tooltip = sailing.8013.d.tt
+		trigger_event = {
+			id = sailing.8014
+			days = 5
 		}
 	}
 }
@@ -15148,7 +15170,7 @@ sailing.8102 = { # Harad Crossroads (Amrun)
 		name = sailing.8102.a
 		trigger = {
 			# culture = { has_cultural_pillar = heritage_northern_adunaic }
-			can_raid_across_water = yes
+			can_raid_across_water_trigger = yes
 		}
 		reverse_add_opinion = {
 			target = title:c_harnen.holder
@@ -15428,7 +15450,7 @@ sailing.8107 = { # The Final Stretch
 	desc = sailing.8107.desc
 	theme = sailing_activity
 	override_background = {
-		reference = rhun
+		reference = wilderness_desert_rhun
 	}
 	left_portrait = {
 		character = root
@@ -15547,7 +15569,7 @@ sailing.8108 = { # Starlurtsa Khand
 	}
 }
 
-sailing.8109 = { # Startlurtsa Khand: Sightseeing
+sailing.8109 = { # Starlurtsa Khand: Sightseeing
 	type = activity_event
 	content_source = realms_dlc
 	title = sailing.8109.t
@@ -17805,7 +17827,15 @@ sailing.5010 = { # Kheledûl
 	type = activity_event
 	content_source = realms_dlc
 	title = sailing.5010.t
-	desc = sailing.5010.desc
+	desc = {
+        first_valid = {
+            triggered_desc = {
+                trigger = { title:c_kheledul.title_province = { has_holding_type = wastelands_holding } }
+                desc = sailing.5010.desc.wilderness
+            }
+            desc = sailing.5010.desc
+		}
+    }
 	theme = sailing_activity
 	override_background = {
 		reference = dwarven_gate
@@ -17823,7 +17853,19 @@ sailing.5010 = { # Kheledûl
 		animation = personality_callous
 	}
 	immediate = {
-		title:c_kheledul.holder = { save_scope_as = kheledullord }
+		if = {
+			limit = { 
+				title:c_kheledul.title_province = { has_holding_type = wastelands_holding }
+			}
+			create_character = {
+				template = random_dwarf_template
+				location = title:c_kheledul.title_province
+				save_scope_as = kheledullord
+			}
+		}
+		else = {
+			title:c_kheledul.holder = { save_scope_as = kheledullord }
+		}
 	}
 	option = { # Learn from the hardy sailors
 		name = sailing.5010.a
@@ -17916,6 +17958,10 @@ sailing.5010 = { # Kheledûl
 		trigger_event = {
 			id = sailing.5011
 			days = 5
+		}
+		if = {
+			limit = { scope:kheledullord = { is_landed = no } }
+			scope:kheledullord = { silent_disappearance_effect = yes }
 		}
 	}
 }
@@ -18423,7 +18469,7 @@ sailing.5207 = { # Border of the Woodland realm - Raft-elves
 		}
 	}
 	trigger = { title:k_lasgalen.holder = { is_elf = yes } }
-	on_trigger_fail = { trigger_event = { id = sailing.9001 days = 15 } }
+	on_trigger_fail = { trigger_event = { id = sailing.9001 days = 15 } } # Aerien note: make an event for this edge case
 	immediate = {
 		hidden_effect = {
 			create_character = {
@@ -18468,7 +18514,7 @@ sailing.5208 = { # An audience with the Elvenking
 	desc = sailing.5208.desc
 	theme = sailing_activity
 	override_background = {
-		reference = throne_room_woodland
+		reference = throne_room_thranduils_halls
 	}
 	left_portrait = {
 		character = root
@@ -19519,7 +19565,7 @@ sailing.9110 = {
 	desc = sailing.9110.desc
 	theme = sailing_activity
 	override_background = {
-		reference = royal_shipyard
+		reference = fp1_beached_longships
 	}
 
 	left_portrait = {

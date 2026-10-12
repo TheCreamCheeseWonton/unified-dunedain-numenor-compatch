@@ -598,11 +598,11 @@ gimilzir_events.074 = { # Arrives at Numenor - Complete
 		get_title = title:d_arandor
 		
 		faith:faith_adunaic_faithful = {
-			activate_holy_site = meneltarma_faithful
-			activate_holy_site = armenelos_faithful
-			activate_holy_site = oromet_faithful
-			activate_holy_site = eldalonde_faithful
-			activate_holy_site = nindamos_faithful
+			activate_holy_site = meneltarma
+			activate_holy_site = armenelos
+			activate_holy_site = oromet
+			activate_holy_site = eldalonde
+			activate_holy_site = nindamos
 		}
 		every_living_character = { 
 			limit = { 

@@ -128,7 +128,6 @@
 			culture:numenorean = { custom_tooltip = numenorean_desc }
 			##Quonton
 			culture:new_numenorean = { custom_tooltip = new_numenorean_desc }
-			culture:new_dunedain = { custom_tooltip = new_dunedain_desc }
 			culture:eothedain = { custom_tooltip = eothedain_desc }
 			##Quonton ENDDDDSSSS
 			culture:dunedain = { custom_tooltip = dunedain_desc }
@@ -141,6 +140,7 @@
 			culture:new_arnorian = { custom_tooltip = new_arnorian_desc }
 			culture:uialedain = { custom_tooltip = uialedain_desc }
 			culture:caledhrim = { custom_tooltip = caledhrim_desc }
+			culture:new_dunedain = { custom_tooltip = new_dunedain_desc }
 			
 			# Adunai
 			##Quonton
@@ -343,6 +343,7 @@
 
 			### Numenor Submod ###
 			culture:adunaic = { custom_tooltip = adunaic_desc }
+			culture:elennahin = { custom_tooltip = elennahin_desc }
 		}
 	}
 }

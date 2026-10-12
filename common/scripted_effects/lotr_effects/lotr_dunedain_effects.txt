@@ -662,7 +662,10 @@ add_blood_of_numenor_effect = {
 		limit = {
 			AND = {
 				culture ?= {
-					any_parent_culture_or_above = { this = culture:numenorean }
+					OR = {
+						this = culture:numenorean
+						any_parent_culture_or_above = { this = culture:numenorean }
+					}
 				}
 				location ?= { geographical_region = middleearth_numenor }
 			}
@@ -2038,13 +2041,20 @@ lotr_grant_gondor_strength_game_rule_buff = {
 				is_alive = yes
 				is_landed = yes
 			}
+			switch = {
+				trigger = has_game_rule
+				weakened_good_strength = { add_character_modifier = gondor_weakened_modifier }
+				strong_good_strength = { add_character_modifier = gondor_strengthened_1_modifier }
+				very_strong_good_strength = { add_character_modifier = gondor_strengthened_2_modifier }
+				apocalyptic_good_strength = { add_character_modifier = gondor_strengthened_4_modifier }
+				apocalyptic_conqueror_good_strength = { add_character_modifier = gondor_strengthened_4_modifier }
+			}
 			if = {
-				limit = { has_game_rule = apocalyptic_gondor_strength }
-				add_character_modifier = gondor_strengthened_4_modifier
-				if = {
-					limit = { is_elf = yes }
-					create_story = story_conqueror
+				limit = {
+					has_game_rule = apocalyptic_conqueror_good_strength
+					is_elf = yes
 				}
+				create_story = story_conqueror
 			}
 		}
 	}

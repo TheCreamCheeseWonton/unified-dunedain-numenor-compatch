@@ -1,0 +1,13 @@
+﻿ccu_startup = { on_actions = { numenor_com_on_game_start } }
+
+numenor_com_on_game_start = {
+	effect = {
+		faith:faith_adunaic_faithful = {
+			deactivate_holy_site = meneltarma
+			deactivate_holy_site = armenelos
+			deactivate_holy_site = oromet
+			deactivate_holy_site = eldalonde
+			deactivate_holy_site = nindamos
+		}
+	}
+}

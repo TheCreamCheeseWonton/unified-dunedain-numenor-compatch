@@ -67,6 +67,7 @@ innovation_numenorean_heritage = {
 }
 
 innovation_daen_shipbuilding = {
+	skill = martial
 	group = culture_group_regional
 	culture_era = culture_era_tribal
 	icon = @lotr_dunlending_boatbuilding
@@ -82,6 +83,26 @@ innovation_daen_shipbuilding = {
 	}
 
 	custom = unlocks_naval_raiding
+	custom = unlocks_sailable_major_rivers
+
+	flag = global_regional
+	flag = tribal_era_regional
+}
+
+innovation_northmen_shipbuilding = {
+	skill = stewardship
+	group = culture_group_regional
+	culture_era = culture_era_tribal
+	region = middleearth_west_rhovanion_tradelands
+	icon = @lotr_dunlending_boatbuilding
+
+	potential = {
+		has_cultural_pillar = heritage_northron	
+	}
+	character_modifier = {
+		embarkation_cost_mult = -0.50
+	}
+
 	custom = unlocks_sailable_major_rivers
 
 	flag = global_regional
@@ -181,6 +202,7 @@ innovation_numenorean_architecture_03 = {
 			##Quonton
 			has_cultural_tradition = tradition_new_numenor
 			this = culture:adunaic ##Compatch
+			this = culture:elennahin ##Compatch
 			this = culture:numenorean
 			culture_head ?= {
 				has_title = title:h_numenor_in_exile
@@ -204,17 +226,15 @@ innovation_lords_of_the_westlands = { # Rewards for a resurgent Dunedain
 	}
 
 	character_modifier = {
-		#army_maintenance_mult = -0.25
-		army_damage_mult = 0.2
-		army_toughness_mult = 0.2
+		army_damage_mult = 0.10
+		army_toughness_mult = 0.10
+		army_pursuit_mult = 0.05
+		army_screen_mult = 0.05
+		health = 0.4
+		knight_effectiveness_mult = 0.1
+		coastal_advantage = 6
 		monthly_lifestyle_xp_gain_mult = 0.075
-		knight_effectiveness_mult = 0.15
-		health = 0.6
-		#men_at_arms_maintenance = -0.25
-	}
-
-	county_modifier = {
-		development_growth_factor = 0.1
+		epidemic_resistance = 10
 	}
 	
 	flag = global_regional
@@ -232,25 +252,23 @@ innovation_lords_of_the_golden_lands = { # Rewards for a resurgent Adunai
 	}
 
 	character_modifier = {
-		#army_maintenance_mult = -0.25
-		army_damage_mult = 0.2
-		army_toughness_mult = 0.2
+		army_damage_mult = 0.10
+		army_toughness_mult = 0.10
+		army_pursuit_mult = 0.05
+		army_screen_mult = 0.05
+		health = 0.4
+		knight_effectiveness_mult = 0.1
+		coastal_advantage = 6
 		monthly_lifestyle_xp_gain_mult = 0.075
-		knight_effectiveness_mult = 0.15
-		health = 0.6
-		#men_at_arms_maintenance = -0.25
+		epidemic_resistance = 10
 	}
 
-	county_modifier = {
-		development_growth_factor = 0.1
-	}
-	
 	flag = global_regional
 	flag = late_medieval_era_regional	
 }
-##End Quonton
 
 innovation_mumakil_domestication = {
+	skill = stewardship
 	group = culture_group_regional
 	culture_era = culture_era_tribal
 	region = special_region_greater_harad
@@ -272,6 +290,7 @@ innovation_mumakil_domestication = {
 }
 
 innovation_war_mumak = {
+	skill = martial
 	group = culture_group_regional
 	culture_era = culture_era_tribal
 	icon = @mumakil
@@ -301,6 +320,7 @@ innovation_war_mumak = {
 }
 
 innovation_scorpion_domestication = {
+	skill = martial
 	group = culture_group_regional
 	culture_era = culture_era_tribal
 	region = middleearth_harad_dunesea
@@ -313,6 +333,7 @@ innovation_scorpion_domestication = {
 }
 
 innovation_elven_bowmaking = { # Duplicate of Crossbows without MAA unlock
+	skill = martial
 	group = culture_group_military
 	culture_era = culture_era_high_medieval
 	icon = @weapons_and_armor_01
@@ -364,6 +385,7 @@ innovation_ventilation = {
 # }
 
 innovation_iron_hills_goat_domestication = {
+	skill = martial
 	group = culture_group_regional
 	culture_era = culture_era_tribal
 	icon = @leadership_2
@@ -384,6 +406,7 @@ innovation_iron_hills_goat_domestication = {
 
 ### PRIMOGENITURE INNOVATIONS
 innovation_elven_law = { # Elvish law, unlocks succession and appointing of heirs
+	skill = diplomacy
 	group = culture_group_regional
 	culture_era = culture_era_tribal
 	icon = @elven_law
@@ -406,6 +429,7 @@ innovation_elven_law = { # Elvish law, unlocks succession and appointing of heir
 	flag = tribal_era_regional
 }
 innovation_dwarven_law = {
+	skill = diplomacy
 	group = culture_group_regional
 	culture_era = culture_era_tribal
 	icon = @dwarven_law
@@ -419,6 +443,7 @@ innovation_dwarven_law = {
 	flag = tribal_era_regional
 }
 innovation_numenorean_law = {
+	skill = diplomacy
 	group = culture_group_regional
 	culture_era = culture_era_tribal
 	icon = @numenorean_law
@@ -442,8 +467,7 @@ innovation_numenorean_law = {
 			has_cultural_pillar = heritage_dunedain
 			has_cultural_pillar = heritage_bellakari
 			has_cultural_pillar = heritage_eriadorim
-
-			this = culture:angmarrim
+			
 			this = culture:breelander
 			this = culture:dalemen
 			this = culture:dorwinionrim
@@ -451,9 +475,6 @@ innovation_numenorean_law = {
 			this = culture:adornaen
 			this = culture:numenorean
 			
-			any_parent_culture_or_above = {
-				this = culture:angmarrim
-			}
 			any_parent_culture_or_above = { # Hobbits after moving into Eriador
 				this = culture:breelander
 			}
@@ -480,6 +501,7 @@ innovation_numenorean_law = {
 
 ### Haradrim ###
 innovation_namalo = {
+	skill = stewardship
 	group = culture_group_regional
 	culture_era = culture_era_high_medieval
 	region = special_region_innovation_namalo
@@ -526,6 +548,39 @@ innovation_namalo = {
 
 	flag = global_regional
 	flag = high_medieval_era_regional
+}
+
+
+innovation_apysan_legacy = {
+	group = culture_group_regional
+	culture_era = culture_era_tribal
+	icon = @nobility_01
+
+	potential = {
+		always = no
+	}
+
+	can_progress = { #Unlocked by decision
+		custom_description = {
+			text = "innovation_unlocked_by_decision_trigger"
+			is_target_in_global_variable_list = {
+				name = unavailable_unique_decisions
+				target = flag:decision_apysan_carving 
+			}
+		}
+	}
+	
+	character_modifier = {
+		diplomatic_range_mult = 0.1
+		learning = 1 
+		monthly_lifestyle_xp_gain_mult = 0.1
+		same_culture_opinion = 10
+	}
+
+	culture_modifier = {
+		cultural_acceptance_gain_mult = 0.1
+		culture_tradition_max_add = 1
+	}
 }
 
 ##Quonton

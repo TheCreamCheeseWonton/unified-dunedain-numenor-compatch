@@ -202,7 +202,7 @@ decision_claim_gondor_kingship = { # Allows native Gondorians to restore the Kin
 				}
 				desc = decision_claim_gondor_kingship_stewards_desc
 			}
-		desc = decision_claim_gondor_kingship_desc
+			desc = decision_claim_gondor_kingship_desc
 		}
 	}
 
@@ -262,11 +262,15 @@ decision_claim_gondor_kingship = { # Allows native Gondorians to restore the Kin
 		has_title = title:e_gondor_steward
 		trigger_if = { # Hidden if fulfilled, to make it less crowded
 			limit = {
-				NOT = {
+				NOR = {
 					government_has_flag = government_is_feudal
+					government_has_flag = government_is_administrative
 				}
 			}
-			government_has_flag = government_is_feudal
+			OR = {
+				government_has_flag = government_is_feudal
+				government_has_flag = government_is_administrative
+			}
 		}
 		trigger_if = { # Hidden if fulfilled, to make it less crowded
 			limit = {
@@ -597,6 +601,7 @@ decision_reclaim_gondor_kingship = {
 		##End Quonton
 		has_title = title:e_castamir
 		NOT = {
+			has_title = title:e_gondor # For people pre-Kin-strife
 			house = house:house_castamir
 			dynasty = dynasty:dynasty_kamal
 			house = { has_house_modifier = heirs_of_castamir_modifier }
@@ -1029,7 +1034,7 @@ decision_destroy_mordor = {
 						is_gondor = yes
 						has_primary_title = title:h_numenor_in_exile
 						has_primary_title = title:h_reunited_kingdom
-						has_primary_title = title:e_numenor  #Numenor Submod
+						has_primary_title = title:e_numenor #Numenor Submod
 						has_primary_title = title:h_numenor #Numenor Submod
 					}
 				}
@@ -1048,8 +1053,14 @@ decision_destroy_mordor = {
 		is_ai = no
 		is_ruler = yes
 		is_landed = yes
-		exists = title:e_mordor.holder
-		title:e_mordor.holder = { is_maiar_fallen = yes }
+		OR = {
+			exists = title:e_mordor.holder
+			exists = title:h_dark_lord.holder
+		}
+		OR = {
+			title:e_mordor.holder ?= { is_sauron = yes }
+			title:h_dark_lord.holder ?= { is_sauron = yes }
+		}
 		OR = {
 			is_gondor = yes
 			has_primary_title = title:h_numenor_in_exile
@@ -1082,7 +1093,18 @@ decision_destroy_mordor = {
 		is_at_war = no
 		gold >= 0
 		NOR = {
-			has_truce = title:e_mordor.holder
+			trigger_if = {
+				limit = {
+					exists = title:e_mordor.holder
+				}
+				has_truce = title:e_mordor.holder
+			}
+			trigger_if = {
+				limit = {
+					exists = title:h_dark_lord.holder
+				}
+				has_truce = title:h_dark_lord.holder
+			}
 		}
 		NOT = {
 			custom_description = {
@@ -1095,7 +1117,7 @@ decision_destroy_mordor = {
 			text = IS_TRIBUTARY_OF_SAURON
 			NAND = {
 				is_tributary = yes
-				suzerain = { is_maiar_fallen = yes }
+				suzerain = { is_sauron = yes }
 			}
 		}
 	}
@@ -1352,8 +1374,14 @@ decision_destroy_mordor_AI = {
 			lotr_has_numenorean_culture_trigger = yes
 			is_maiar = yes
 		}
-		exists = title:e_mordor.holder
-		title:e_mordor.holder = character:lineofsauron
+		OR = {
+			exists = title:e_mordor.holder
+			exists = title:h_dark_lord.holder
+		}
+		OR = {
+			title:e_mordor.holder = { is_sauron = yes }
+			title:h_dark_lord.holder = { is_sauron = yes }
+		}
 		NOR = {
 			is_target_in_global_variable_list = {
 				name = unavailable_unique_decisions
@@ -1366,6 +1394,7 @@ decision_destroy_mordor_AI = {
 		is_at_war = no
 		NOR = {
 			has_truce = title:e_mordor.holder
+			has_truce = title:h_dark_lord.holder
 		}
 		custom_description = {
 			text = faith_is_evil
@@ -1433,7 +1462,7 @@ decision_search_orthanc = {
 	confirm_text = decision_search_orthanc_confirm
 
 	is_shown = {
-		current_year >= 7000
+		game_start_date >= 6884.1.1
 		##Quonton
 		culture = { 
 			OR = { 
@@ -1940,7 +1969,7 @@ decision_invite_elves_edhellond = {
 		}
 		trigger_event = {
 			id = gondor.2800
-			days = 5 # Aerien note: Make idle time shorter to reduce confusion
+			days = 1
 		}
 	}
 
@@ -1956,7 +1985,7 @@ decision_invite_elves_edhellond = {
 
 decision_elevate_edhellond = { # Aragorn decides to elevate Edhellond into a kingdom/sanctuary type thing for the elves
 	picture = {
-		reference = "gfx/interface/illustrations/event_scenes/armenelos.dds"
+		reference = "gfx/interface/illustrations/event_scenes/lotr_armenelos.dds"
 	}
 	title = decision_elevate_edhellond
 	selection_tooltip = decision_elevate_edhellond_tooltip
@@ -2492,6 +2521,16 @@ decision_reunify_dunedain = {
 				target = flag:decision_reunify_dunedain
 			}
 		}
+		OR = { 
+			is_target_in_global_variable_list = {
+				name = unavailable_unique_decisions
+				target = flag:decision_revive_arnorian_culture
+			}
+			is_target_in_global_variable_list = {
+				name = unavailable_unique_decisions
+				target = flag:decision_form_new_arnorian_culture
+			}
+		}
 	}
 
 	# IS_VALID
@@ -2499,7 +2538,7 @@ decision_reunify_dunedain = {
 		prestige_level >= 5
 		piety_level >= 4
 		completely_controls_region = custom_gondorian_heartlands
-		completely_controls_region = middleearth_west_arnor
+		completely_controls_region = custom_arnorian_heartlands
 	}
 	is_valid_showing_failures_only = {
 		is_imprisoned = no
@@ -2528,20 +2567,34 @@ decision_reunify_dunedain = {
 		trigger_event = gondor.3604   # Restore Dunedain Identity flavour
 
 		every_living_character = { 
-			custom = decision_reunify_dunedain_characters_custom
-			limit = { 
+			custom = decision_reunify_dunedain_vassals_custom
+			limit = {
 				culture = { has_cultural_pillar = heritage_dunedain }
-				NOT = { culture = { this = culture:orodbedhrim } }
-			}
+                OR = {
+                    culture = culture:gondorian
+                    culture = { any_parent_culture_or_above = { this = culture:gondorian } }
+                    culture = culture:arnorian
+                    culture = { any_parent_culture_or_above = { this = culture:arnorian } }
+                }
+                NOT = { culture = { this = culture:orodbedhrim } }
+                NOT = { culture = { any_parent_culture_or_above = { this = culture:orodbedhrim } } }
+            }
 			set_culture = culture:new_dunedain
 		}
 
 		#Flip Counties
 		every_county = {
-			custom = decision_reunify_dunedain_counties_custom2
+			custom = decision_reunify_dunedain_counties_custom
 			limit = {
 				culture = { has_cultural_pillar = heritage_dunedain }
+				OR = {
+                    culture = culture:gondorian
+                    culture = { any_parent_culture_or_above = { this = culture:gondorian } }
+                    culture = culture:arnorian
+                    culture = { any_parent_culture_or_above = { this = culture:arnorian } }
+                }
 				NOT = { culture = { this = culture:orodbedhrim } }
+                NOT = { culture = { any_parent_culture_or_above = { this = culture:orodbedhrim } } }
 			}
 			set_county_culture = culture:new_dunedain
 		}
@@ -2556,8 +2609,349 @@ decision_reunify_dunedain = {
 		}
 		lotr_achievement_26_effect = yes
 	}
-	
-	##Quonton
+        ##Commented out till something better is made
+		# set_culture = culture:dunedain
+
+		# if = { #juke note: this code should be refined so it works with multiple spouses, though its unlikely to happen
+			# limit = {
+				# any_spouse = {
+					# is_landed = no
+					# OR = {
+						# culture = culture:gondorian
+						# culture = culture:arnorian
+						# culture = culture:dunedain_ranger
+					# }
+				# }
+			# }
+			# every_spouse = {
+				# limit = {
+					# is_landed = no
+					# OR = {
+						# culture = culture:gondorian
+						# culture = culture:arnorian
+						# culture = culture:dunedain_ranger
+					# }
+				# }
+				# if = {
+					# limit = { is_ai = yes }
+					# set_culture = culture:dunedain
+				# }
+			# }
+		# }
+		# if = {
+			# limit = {
+				# any_close_family_member = {
+					# is_landed = no
+					# NOT = { is_spouse_of = root }
+					# culture = { has_cultural_pillar = heritage_dunedain }
+				# }
+			# }
+			# every_close_family_member = {
+				# limit = {
+					# is_landed = no
+					# NOT = { is_spouse_of = root }
+					# culture = { has_cultural_pillar = heritage_dunedain }
+				# }
+				# custom = all_unlanded_family_members
+				# if = {
+					# limit = { is_ai = yes }
+					# set_culture = culture:dunedain
+				# }
+			# }
+		# }
+		# if = {
+			# limit = {
+				# any_child = {
+					# culture = { has_cultural_pillar = heritage_dunedain }
+				# }
+			# }
+			# every_child = {
+				# limit = {
+					# NOT = {
+						# culture = { has_cultural_pillar = heritage_dunedain }
+					# }
+				# }
+				# custom = all_children_custom
+				# if = {
+					# limit = { is_ai = yes }
+					# set_culture = culture:dunedain
+				# }
+			# }
+		# }
+
+		# #Convert appropriate vassals, and their family
+		# if = {
+			# limit = {
+				# any_vassal_or_below = {
+					# OR = {
+						# culture = culture:gondorian
+						# culture = culture:arnorian
+						# culture = culture:dunedain_ranger
+					# }
+				# }
+			# }
+			# every_vassal_or_below = {
+				# custom = decision_reunify_dunedain_vassals_custom
+				# limit = {
+					# OR = {
+						# culture = culture:gondorian
+						# culture = culture:arnorian
+						# culture = culture:dunedain_ranger
+					# }
+				# }
+				# if = {
+					# limit = { is_ai = yes }
+					# set_culture = culture:dunedain
+				# }
+				# # else = { trigger_event = rohan.0002 }
+				# hidden_effect = {
+					# if = {
+						# limit = {
+							# any_spouse = {
+								# is_landed = no
+								# OR = {
+									# culture = culture:gondorian
+									# culture = culture:arnorian
+									# culture = culture:dunedain_ranger
+								# }
+							# }
+						# }
+						# every_spouse = {
+							# limit = {
+								# is_landed = no
+								# OR = {
+									# culture = culture:gondorian
+									# culture = culture:arnorian
+									# culture = culture:dunedain_ranger
+								# }
+							# }
+							# if = {
+								# limit = { is_ai = yes }
+								# set_culture = culture:dunedain
+							# }
+							# # else = { trigger_event = rohan.0002 }
+						# }
+					# }
+					# if = {
+						# limit = {
+							# any_close_family_member = {
+								# is_landed = no
+								# NOT = { is_spouse_of = prev }
+								# OR = {
+									# culture = culture:gondorian
+									# culture = culture:arnorian
+									# culture = culture:dunedain_ranger
+								# }
+							# }
+						# }
+						# every_close_family_member = {
+							# limit = {
+								# is_landed = no
+								# NOT = { is_spouse_of = prev }
+								# OR = {
+									# culture = culture:gondorian
+									# culture = culture:arnorian
+									# culture = culture:dunedain_ranger
+								# }
+							# }
+							# custom = all_unlanded_family_members
+							# if = {
+								# limit = { is_ai = yes }
+								# set_culture = culture:dunedain
+							# }
+							# # else = { trigger_event = rohan.0002 }
+						# }
+					# }
+					# if = {
+						# limit = {
+							# any_child = {
+								# OR = {
+									# culture = culture:gondorian
+									# culture = culture:arnorian
+									# culture = culture:dunedain_ranger
+								# }
+							# }
+						# }
+						# every_child = {
+							# limit = {
+								# OR = {
+									# culture = culture:gondorian
+									# culture = culture:arnorian
+									# culture = culture:dunedain_ranger
+								# }
+							# }
+							# custom = all_children_custom
+							# if = {
+								# limit = { is_ai = yes }
+								# set_culture = culture:dunedain
+							# }
+							# # else = { trigger_event = rohan.0002 }
+						# }
+					# }
+					# if = {
+						# limit = {
+							# any_vassal_or_below = {
+								# OR = {
+									# culture = culture:gondorian
+									# culture = culture:arnorian
+									# culture = culture:dunedain_ranger
+								# }
+							# }
+						# }
+						# every_vassal_or_below = {
+							# custom = decision_reunify_dunedain_vassals_custom
+							# limit = {
+								# OR = {
+									# culture = culture:gondorian
+									# culture = culture:arnorian
+									# culture = culture:dunedain_ranger
+								# }
+							# }
+							# if = {
+								# limit = { is_ai = yes }
+								# set_culture = culture:dunedain
+							# }
+							# # else = { trigger_event = rohan.0002 }
+							# hidden_effect = {
+								# if = {
+									# limit = {
+										# any_spouse = {
+											# is_landed = no
+											# OR = {
+												# culture = culture:gondorian
+												# culture = culture:arnorian
+												# culture = culture:dunedain_ranger
+											# }
+										# }
+									# }
+									# every_spouse = {
+										# limit = {
+											# is_landed = no
+											# OR = {
+												# culture = culture:gondorian
+												# culture = culture:arnorian
+												# culture = culture:dunedain_ranger
+											# }
+										# }
+										# if = {
+											# limit = { is_ai = yes }
+											# set_culture = culture:dunedain
+										# }
+										# # else = { trigger_event = rohan.0002 }
+									# }
+								# }
+								# if = {
+									# limit = {
+										# any_close_family_member = {
+											# is_landed = no
+											# NOT = { is_spouse_of = prev }
+											# OR = {
+												# culture = culture:gondorian
+												# culture = culture:arnorian
+												# culture = culture:dunedain_ranger
+											# }
+										# }
+									# }
+									# every_close_family_member = {
+										# limit = {
+											# is_landed = no
+											# NOT = { is_spouse_of = prev }
+											# OR = {
+												# culture = culture:gondorian
+												# culture = culture:arnorian
+												# culture = culture:dunedain_ranger
+											# }
+										# }
+										# custom = all_unlanded_family_members
+										# if = {
+											# limit = { is_ai = yes }
+											# set_culture = culture:dunedain
+										# }
+										# # else = { trigger_event = rohan.0002 }
+									# }
+								# }
+								# if = {
+									# limit = {
+										# any_child = {
+											# OR = {
+												# culture = culture:gondorian
+												# culture = culture:arnorian
+												# culture = culture:dunedain_ranger
+											# }
+										# }
+									# }
+									# every_child = {
+										# limit = {
+											# OR = {
+												# culture = culture:gondorian
+												# culture = culture:arnorian
+												# culture = culture:dunedain_ranger
+											# }
+										# }
+										# custom = all_children_custom
+										# if = {
+											# limit = { is_ai = yes }
+											# set_culture = culture:dunedain
+										# }
+										# # else = { trigger_event = rohan.0002 }
+									# }
+								# }
+							# }
+						# }
+					# }
+				# }
+			# }
+		# }
+
+		# hidden_effect = {
+			# every_county_in_region = {
+				# region = custom_gondorian_heartlands
+				# limit = {
+					# OR = {
+						# holder = root
+						# holder.top_liege = root
+					# }
+					# OR = {
+						# culture = culture:gondorian
+						# culture = culture:arnorian
+						# culture = culture:dunedain_ranger
+					# }
+				# }
+				# random = {
+					# chance = 90
+					# set_county_culture = culture:dunedain
+				# }
+			# }
+
+			# #Flip Counties
+			# every_sub_realm_county = {
+				# limit = {
+					# OR = {
+						# holder = root
+						# holder.top_liege = root
+					# }
+					# OR = {
+						# culture = culture:gondorian
+						# culture = culture:arnorian
+						# culture = culture:dunedain_ranger
+					# }
+					# NOT = { title_province = { geographical_region = custom_gondorian_heartlands } }
+
+				# }
+				# random = {
+					# chance = 60
+					# set_county_culture = culture:dunedain
+				# }
+			# }
+		# }
+
+		# culture:dunedain = {
+			# add_innovation = innovation_lords_of_the_westlands
+		# }
+		# culture:dunedain = {
+			# add_culture_tradition = tradition_rk_legacy
+		# }
+
 	cost = { 
 		piety = { value = 750 }
 		prestige = { value = 750 }
@@ -2639,6 +3033,8 @@ decision_reintroduce_steelbows = {
 	}
 
 	cost = { 
+		piety = { value = 750 }
+		prestige = { value = 750 }
 		gold = { value = 500 }
 	}
 
@@ -2799,6 +3195,7 @@ decision_reunify_numenor_culture = {
 				culture:kharadunaim  = { save_temporary_scope_as = kharadunaim_culture }
 				culture:kharatakhori = { save_temporary_scope_as = kharatakhori_culture }
 				culture:tanturaki = { save_temporary_scope_as = tanturaki_culture }
+				culture:gimilarani = { save_temporary_scope_as = gimilarani_culture }
 				culture:pharazaini_culture  = { save_temporary_scope_as = pharazaini_culture_culture }
 				# Needs to be above the 'custom_tooltip'
 				custom_tooltip = decision_reunify_numenor_culture_get_innovations
@@ -2820,6 +3217,7 @@ decision_reunify_numenor_culture = {
 					get_all_innovations_from = culture:pharazaini_culture
 					get_all_innovations_from = culture:kharatakhori
 					get_all_innovations_from = culture:tanturaki
+					get_all_innovations_from = culture:gimilarani
 					culture:new_numenorean = {
 						add_innovation = innovation_lords_of_the_westlands
 						add_innovation = innovation_lords_of_the_golden_lands
@@ -2915,6 +3313,30 @@ decision_reunify_numenor_culture = {
 					else = { 
 						add_trait = blood_of_numenor_10
 					}
+					if = { 
+						limit = { has_trait = clouded_eyes }	
+						remove_trait = clouded_eyes
+					}
+					if = { 
+						limit = { has_trait = withering_mind }	
+						remove_trait = withering_mind
+					}
+					if = { 
+						limit = { has_trait = infirm }	
+						remove_trait = infirm
+					}
+					if = { 
+						limit = { has_trait = faltering_heart }	
+						remove_trait = faltering_heart
+					}
+					if = { 
+						limit = { has_trait = fragile_bones }	
+						remove_trait = fragile_bones
+					}
+					if = { 
+						limit = { has_trait = incapable }	
+						remove_trait = incapable
+					}
 					every_living_character = { 
 						limit = { 
 							OR = { 
@@ -2984,6 +3406,30 @@ decision_reunify_numenor_culture = {
 						}
 						else = { 
 							add_trait = blood_of_numenor_4
+						}
+						if = { 
+							limit = { has_trait = clouded_eyes }	
+							remove_trait = clouded_eyes
+						}
+						if = { 
+							limit = { has_trait = withering_mind }	
+							remove_trait = withering_mind
+						}
+						if = { 
+							limit = { has_trait = infirm }	
+							remove_trait = infirm
+						}
+						if = { 
+							limit = { has_trait = faltering_heart }	
+							remove_trait = faltering_heart
+						}
+						if = { 
+							limit = { has_trait = fragile_bones }	
+							remove_trait = fragile_bones
+						}
+						if = { 
+							limit = { has_trait = incapable }	
+							remove_trait = incapable
 						}
 					}
 				}
@@ -3060,6 +3506,30 @@ decision_reunify_numenor_culture = {
 						}
 						else = { 
 							add_trait = blood_of_numenor_2
+						}
+						if = { 
+							limit = { has_trait = clouded_eyes }	
+							remove_trait = clouded_eyes
+						}
+						if = { 
+							limit = { has_trait = withering_mind }	
+							remove_trait = withering_mind
+						}
+						if = { 
+							limit = { has_trait = infirm }	
+							remove_trait = infirm
+						}
+						if = { 
+							limit = { has_trait = faltering_heart }	
+							remove_trait = faltering_heart
+						}
+						if = { 
+							limit = { has_trait = fragile_bones }	
+							remove_trait = fragile_bones
+						}
+						if = { 
+							limit = { has_trait = incapable }	
+							remove_trait = incapable
 						}
 					}
 				}
@@ -3175,79 +3645,22 @@ decision_reunify_numenor_culture = {
 
 			set_culture = culture:new_numenorean_adunaic
 			custom_tooltip = decision_reunify_numenor_culture_vassals_custom_a
-			custom_tooltip = decision_gain_numenor_blood_culture_self
-			custom_tooltip = decision_gain_numenor_blood_culture
-			hidden_effect = {		
-				if = { 
-					limit = { has_trait = blood_of_numenor_10 }	
-					add_piety = 1000
-				}
-				else_if = { 
-					limit = { has_trait = blood_of_numenor_9 }	
-					remove_trait = blood_of_numenor_9
-					add_trait = blood_of_numenor_10
-				}
-				else_if = { 
-					limit = { has_trait = blood_of_numenor_8 }	
-					remove_trait = blood_of_numenor_8
-					add_trait = blood_of_numenor_10
-				}
-				else_if = { 
-					limit = { has_trait = blood_of_numenor_7 }	
-					remove_trait = blood_of_numenor_7
-					add_trait = blood_of_numenor_10
-				}
-				else_if = { 
-					limit = { has_trait = blood_of_numenor_6 }	
-					remove_trait = blood_of_numenor_6
-					add_trait = blood_of_numenor_10
-				}
-				else_if = { 
-					limit = { has_trait = blood_of_numenor_5 }	
-					remove_trait = blood_of_numenor_5
-					add_trait = blood_of_numenor_10
-				}
-				else_if = { 
-					limit = { has_trait = blood_of_numenor_4 }	
-					remove_trait = blood_of_numenor_4
-					add_trait = blood_of_numenor_10
-				}
-				else_if = { 
-					limit = { has_trait = blood_of_numenor_3 }	
-					remove_trait = blood_of_numenor_3
-					add_trait = blood_of_numenor_10
-				}
-				else_if = { 
-					limit = { has_trait = blood_of_numenor_2 }	
-					remove_trait = blood_of_numenor_2
-					add_trait = blood_of_numenor_10
-				}
-				else_if = { 
-					limit = { has_trait = blood_of_numenor_1 }	
-					remove_trait = blood_of_numenor_1
-					add_trait = blood_of_numenor_10
-				}
-				else = { 
-					add_trait = blood_of_numenor_10
-				}
-				every_living_character = { 
-					limit = { 
-						OR = { 
-							AND = { 
-								culture = { has_cultural_pillar = heritage_dunedain }
-								NOT = { culture = { this = culture:orodbedhrim } }
-							}
-							AND = { 
-								culture = { has_cultural_pillar = heritage_bellakari }
-								NOT = { culture = { this = culture:bellanarud } }
-							}
-							culture = { has_cultural_pillar = heritage_northern_adunaic }
-							culture = { has_cultural_pillar = heritage_southern_adunaic }
-							culture = { has_cultural_pillar = heritage_eastern_adunaic }
-							culture = { has_cultural_pillar = heritage_unified_adunaic }
-						}
-					}
-					set_culture = culture:new_numenorean_adunaic
+			if = { 
+				limit = { has_game_rule = default_bon }
+				custom_tooltip = decision_gain_numenor_blood_culture_self
+				custom_tooltip = decision_gain_numenor_blood_culture
+			}
+			else_if = { 
+				limit = { has_game_rule = half_bon }
+				custom_tooltip = decision_gain_numenor_blood_culture_lesser
+			}
+			else = { 
+				limit = { has_game_rule = lore_accurate_bon }
+				custom_tooltip = decision_gain_numenor_blood_culture_none
+			}
+			if = { 
+				limit = { has_game_rule = default_bon }
+				hidden_effect = {		
 					if = { 
 						limit = { has_trait = blood_of_numenor_10 }	
 						add_piety = 1000
@@ -3275,30 +3688,272 @@ decision_reunify_numenor_culture = {
 					else_if = { 
 						limit = { has_trait = blood_of_numenor_5 }	
 						remove_trait = blood_of_numenor_5
-						add_trait = blood_of_numenor_9
+						add_trait = blood_of_numenor_10
 					}
 					else_if = { 
 						limit = { has_trait = blood_of_numenor_4 }	
 						remove_trait = blood_of_numenor_4
-						add_trait = blood_of_numenor_8
+						add_trait = blood_of_numenor_10
 					}
 					else_if = { 
 						limit = { has_trait = blood_of_numenor_3 }	
 						remove_trait = blood_of_numenor_3
-						add_trait = blood_of_numenor_7
+						add_trait = blood_of_numenor_10
 					}
 					else_if = { 
 						limit = { has_trait = blood_of_numenor_2 }	
 						remove_trait = blood_of_numenor_2
-						add_trait = blood_of_numenor_6
+						add_trait = blood_of_numenor_10
 					}
 					else_if = { 
 						limit = { has_trait = blood_of_numenor_1 }	
 						remove_trait = blood_of_numenor_1
-						add_trait = blood_of_numenor_5
+						add_trait = blood_of_numenor_10
 					}
 					else = { 
-						add_trait = blood_of_numenor_4
+						add_trait = blood_of_numenor_10
+					}
+					if = { 
+						limit = { has_trait = clouded_eyes }	
+						remove_trait = clouded_eyes
+					}
+					if = { 
+						limit = { has_trait = withering_mind }	
+						remove_trait = withering_mind
+					}
+					if = { 
+						limit = { has_trait = infirm }	
+						remove_trait = infirm
+					}
+					if = { 
+						limit = { has_trait = faltering_heart }	
+						remove_trait = faltering_heart
+					}
+					if = { 
+						limit = { has_trait = fragile_bones }	
+						remove_trait = fragile_bones
+					}
+					if = { 
+						limit = { has_trait = incapable }	
+						remove_trait = incapable
+					}
+					every_living_character = { 
+						limit = { 
+							OR = { 
+								AND = { 
+									culture = { has_cultural_pillar = heritage_dunedain }
+									NOT = { culture = { this = culture:orodbedhrim } }
+								}
+								AND = { 
+									culture = { has_cultural_pillar = heritage_bellakari }
+									NOT = { culture = { this = culture:bellanarud } }
+								}
+								culture = { has_cultural_pillar = heritage_northern_adunaic }
+								culture = { has_cultural_pillar = heritage_southern_adunaic }
+								culture = { has_cultural_pillar = heritage_eastern_adunaic }
+								culture = { has_cultural_pillar = heritage_unified_adunaic }
+							}
+						}
+						set_culture = culture:new_numenorean_adunaic
+						if = { 
+							limit = { has_trait = blood_of_numenor_10 }	
+							add_piety = 1000
+						}
+						else_if = { 
+							limit = { has_trait = blood_of_numenor_9 }	
+							remove_trait = blood_of_numenor_9
+							add_trait = blood_of_numenor_10
+						}
+						else_if = { 
+							limit = { has_trait = blood_of_numenor_8 }	
+							remove_trait = blood_of_numenor_8
+							add_trait = blood_of_numenor_10
+						}
+						else_if = { 
+							limit = { has_trait = blood_of_numenor_7 }	
+							remove_trait = blood_of_numenor_7
+							add_trait = blood_of_numenor_10
+						}
+						else_if = { 
+							limit = { has_trait = blood_of_numenor_6 }	
+							remove_trait = blood_of_numenor_6
+							add_trait = blood_of_numenor_10
+						}
+						else_if = { 
+							limit = { has_trait = blood_of_numenor_5 }	
+							remove_trait = blood_of_numenor_5
+							add_trait = blood_of_numenor_9
+						}
+						else_if = { 
+							limit = { has_trait = blood_of_numenor_4 }	
+							remove_trait = blood_of_numenor_4
+							add_trait = blood_of_numenor_8
+						}
+						else_if = { 
+							limit = { has_trait = blood_of_numenor_3 }	
+							remove_trait = blood_of_numenor_3
+							add_trait = blood_of_numenor_7
+						}
+						else_if = { 
+							limit = { has_trait = blood_of_numenor_2 }	
+							remove_trait = blood_of_numenor_2
+							add_trait = blood_of_numenor_6
+						}
+						else_if = { 
+							limit = { has_trait = blood_of_numenor_1 }	
+							remove_trait = blood_of_numenor_1
+							add_trait = blood_of_numenor_5
+						}
+						else = { 
+							add_trait = blood_of_numenor_4
+						}
+						if = { 
+							limit = { has_trait = clouded_eyes }	
+							remove_trait = clouded_eyes
+						}
+						if = { 
+							limit = { has_trait = withering_mind }	
+							remove_trait = withering_mind
+						}
+						if = { 
+							limit = { has_trait = infirm }	
+							remove_trait = infirm
+						}
+						if = { 
+							limit = { has_trait = faltering_heart }	
+							remove_trait = faltering_heart
+						}
+						if = { 
+							limit = { has_trait = fragile_bones }	
+							remove_trait = fragile_bones
+						}
+						if = { 
+							limit = { has_trait = incapable }	
+							remove_trait = incapable
+						}
+					}
+				}
+			}
+			else_if = { 
+				limit = { has_game_rule = half_bon }
+				hidden_effect = {	
+					every_living_character = { 
+						limit = { 
+							OR = { 
+								AND = { 
+									culture = { has_cultural_pillar = heritage_dunedain }
+									NOT = { culture = { this = culture:orodbedhrim } }
+								}
+								AND = { 
+									culture = { has_cultural_pillar = heritage_bellakari }
+									NOT = { culture = { this = culture:bellanarud } }
+								}
+								culture = { has_cultural_pillar = heritage_northern_adunaic }
+								culture = { has_cultural_pillar = heritage_southern_adunaic }
+								culture = { has_cultural_pillar = heritage_eastern_adunaic }
+								culture = { has_cultural_pillar = heritage_unified_adunaic }
+							}
+						}
+						set_culture = culture:new_numenorean_adunaic
+						if = { 
+							limit = { has_trait = blood_of_numenor_10 }	
+							add_piety = 1000
+						}
+						else_if = { 
+							limit = { has_trait = blood_of_numenor_9 }	
+							remove_trait = blood_of_numenor_9
+							add_trait = blood_of_numenor_10
+						}
+						else_if = { 
+							limit = { has_trait = blood_of_numenor_8 }	
+							remove_trait = blood_of_numenor_8
+							add_trait = blood_of_numenor_10
+						}
+						else_if = { 
+							limit = { has_trait = blood_of_numenor_7 }	
+							remove_trait = blood_of_numenor_7
+							add_trait = blood_of_numenor_9
+						}
+						else_if = { 
+							limit = { has_trait = blood_of_numenor_6 }	
+							remove_trait = blood_of_numenor_6
+							add_trait = blood_of_numenor_8
+						}
+						else_if = { 
+							limit = { has_trait = blood_of_numenor_5 }	
+							remove_trait = blood_of_numenor_5
+							add_trait = blood_of_numenor_7
+						}
+						else_if = { 
+							limit = { has_trait = blood_of_numenor_4 }	
+							remove_trait = blood_of_numenor_4
+							add_trait = blood_of_numenor_6
+						}
+						else_if = { 
+							limit = { has_trait = blood_of_numenor_3 }	
+							remove_trait = blood_of_numenor_3
+							add_trait = blood_of_numenor_5
+						}
+						else_if = { 
+							limit = { has_trait = blood_of_numenor_2 }	
+							remove_trait = blood_of_numenor_2
+							add_trait = blood_of_numenor_4
+						}
+						else_if = { 
+							limit = { has_trait = blood_of_numenor_1 }	
+							remove_trait = blood_of_numenor_1
+							add_trait = blood_of_numenor_3
+						}
+						else = { 
+							add_trait = blood_of_numenor_2
+						}
+						if = { 
+							limit = { has_trait = clouded_eyes }	
+							remove_trait = clouded_eyes
+						}
+						if = { 
+							limit = { has_trait = withering_mind }	
+							remove_trait = withering_mind
+						}
+						if = { 
+							limit = { has_trait = infirm }	
+							remove_trait = infirm
+						}
+						if = { 
+							limit = { has_trait = faltering_heart }	
+							remove_trait = faltering_heart
+						}
+						if = { 
+							limit = { has_trait = fragile_bones }	
+							remove_trait = fragile_bones
+						}
+						if = { 
+							limit = { has_trait = incapable }	
+							remove_trait = incapable
+						}
+					}
+				}
+			}
+			else = { 
+				hidden_effect = {	
+					every_living_character = { 
+						limit = { 
+							OR = { 
+								AND = { 
+									culture = { has_cultural_pillar = heritage_dunedain }
+									NOT = { culture = { this = culture:orodbedhrim } }
+								}
+								AND = { 
+									culture = { has_cultural_pillar = heritage_bellakari }
+									NOT = { culture = { this = culture:bellanarud } }
+								}
+								culture = { has_cultural_pillar = heritage_northern_adunaic }
+								culture = { has_cultural_pillar = heritage_southern_adunaic }
+								culture = { has_cultural_pillar = heritage_eastern_adunaic }
+								culture = { has_cultural_pillar = heritage_unified_adunaic }
+							}
+						}
+						set_culture = culture:new_numenorean_adunaic
 					}
 				}
 			}
@@ -3617,7 +4272,7 @@ decision_reclaim_anarion_lineage = {
 				is_ai = no
 			}
 			custom_tooltip = {
-				text = finished_anarion_legend_tt
+				text = finished_anarion_legend_no_points_tt
 				house = { has_house_modifier = heirs_of_anarion_modifier }
 			}
 		}
@@ -3650,10 +4305,8 @@ decision_reclaim_anarion_lineage = {
 			show_as_tooltip = {
 				set_house = house:house_benrodir
 			}
-			hidden_effect = {
-				reclaim_royal_lineage_effect = yes
-			}
 		}
+		trigger_event = gondor.9997 #Effect inside event, avoid lag when decision is opened
 	}
 
 	cost = {
@@ -3707,7 +4360,7 @@ decision_numenor_in_exile = {
 	}
 
 	decision_group_type = realms_in_exile_major
-
+	sort_order = 10000
 	ai_goal = yes
 	ai_potential = {
 		always = yes
@@ -3775,6 +4428,7 @@ decision_numenor_in_exile = {
 			OR = {
 			    has_title = title:h_reunited_kingdom
 				has_title = title:h_pharazain
+				has_title = title:e_adunaim
 			}
 		}
 
@@ -4147,12 +4801,12 @@ decision_numenor_in_exile = {
 
 ## Proclaim New Capital Decision ##
 decision_new_capital = {
-	sort_order = 2000
 	picture = {
 		reference = "gfx/interface/illustrations/decisions/decision_minas_tirith_02.dds"
 	}
 
 	decision_group_type = realms_in_exile_minor
+	sort_order = 2000
 
 	selection_tooltip = decision_new_capital_tooltip
 	title = {
@@ -4291,8 +4945,8 @@ decision_new_capital = {
 			show_nilulonde_capital_trigger = yes
 			show_urezayan_capital_trigger = yes
 			show_korlea_capital_trigger = yes
-			show_tariketh_an_kharat_capital_trigger = yes
 			show_khorsaj_capital_trigger = yes
+			show_tariketh_an_kharat_capital_trigger = yes
 			show_inzilloni_capital_trigger = yes
 			show_mispir_capital_trigger = yes
 			show_uruloni_capital_trigger = yes
@@ -5469,10 +6123,12 @@ decision_restore_gondor_province = {
 			if = {
 				limit = { has_title = title:e_gondor_steward }
 				title:k_umbar = { set_de_jure_liege_title = title:e_gondor_steward }
+				title:k_mardruak = { set_de_jure_liege_title = title:e_bellakar } # Prevents a tiny e_umbar
 			}
 			else_if = {
 				limit = { has_title = title:e_castamir }
 				title:k_umbar = { set_de_jure_liege_title = title:e_castamir }
+				title:k_mardruak = { set_de_jure_liege_title = title:e_bellakar } # Prevents a tiny e_umbar
 			}
 			##Quonton
 			else_if = {
@@ -5481,6 +6137,7 @@ decision_restore_gondor_province = {
 			}
 			else = {
 				title:k_umbar = { set_de_jure_liege_title = title:e_gondor }
+				title:k_mardruak = { set_de_jure_liege_title = title:e_bellakar } # Prevents a tiny e_umbar
 			}
 			add_to_global_variable_list = {
 				name = unavailable_unique_decisions
@@ -5961,19 +6618,13 @@ decision_recreate_watch_on_mordor = {
 			culture = { has_cultural_pillar = heritage_calaquendi }
 			culture = { has_cultural_pillar = heritage_lomiquendi }
 			culture = { has_cultural_pillar = heritage_moriquendi }
+			##End Quonton
+			is_elf = yes
 		}
 		is_landed = yes
 		faith_is_good = yes
 		OR = {
-			has_primary_title = title:e_gondor
-			has_primary_title = title:e_gondor_steward
-			has_primary_title = title:e_arnor
-			has_primary_title = title:h_numenor_in_exile
-			has_primary_title = title:h_reunited_kingdom
-			has_primary_title = title:e_bellakar
-			has_primary_title = title:e_castamir
-			has_primary_title = title:e_numenor #Numenor Submod
-			has_primary_title = title:h_numenor #Numenor Submod
+			highest_held_title_tier >= tier_empire
 			AND = {
 				is_elf = yes
 				highest_held_title_tier >= tier_kingdom
@@ -5999,6 +6650,8 @@ decision_recreate_watch_on_mordor = {
 			culture = { has_cultural_pillar = heritage_calaquendi }
 			culture = { has_cultural_pillar = heritage_lomiquendi }
 			culture = { has_cultural_pillar = heritage_moriquendi }
+			##End Quonton
+			is_elf = yes
 		}
 		completely_controls = title:c_morannon
 		completely_controls = title:c_durthang
@@ -6010,7 +6663,7 @@ decision_recreate_watch_on_mordor = {
 		is_available_adult = yes
 	}
 	cost = {
-		gold = 150
+		gold = 250
 	}
 	effect = {
 		trigger_event = {
@@ -6050,39 +6703,16 @@ decision_abandon_watch_on_mordor = {
 	}
 
 	decision_group_type = realms_in_exile_minor
+	sort_order = 50
 
 	desc = decision_abandon_watch_on_mordor_desc
 	selection_tooltip = decision_abandon_watch_on_mordor_desc_tooltip
 	confirm_text = decision_abandon_watch_on_mordor_confirm
 
 	is_shown = {
-		#current_year >= 3000
-		OR = {
-			culture = { has_cultural_pillar = heritage_dunedain }
-			##Quonton
-			culture = { has_cultural_tradition = tradition_new_numenor }
-			culture = { has_cultural_pillar = heritage_calaquendi }
-			culture = { has_cultural_pillar = heritage_lomiquendi }
-			culture = { has_cultural_pillar = heritage_moriquendi }
-		}
 		is_landed = yes
 		exists = title:d_watch_on_mordor.holder
-		completely_controls = title:c_morannon
-		OR = {
-			has_primary_title = title:e_gondor
-			has_primary_title = title:e_gondor_steward
-			has_primary_title = title:e_arnor
-			has_primary_title = title:h_numenor_in_exile
-			has_primary_title = title:h_reunited_kingdom
-			has_primary_title = title:e_bellakar
-			has_primary_title = title:e_castamir
-			has_primary_title = title:e_numenor #Numenor Submod
-			has_primary_title = title:h_numenor #Numenor Submod
-			AND = {
-				is_elf = yes
-				highest_held_title_tier >= tier_kingdom
-			}
-		}
+		this = title:d_watch_on_mordor.holder.top_liege
 		NOR = {
 			is_target_in_global_variable_list = {
 				name = unavailable_unique_decisions
@@ -6096,20 +6726,36 @@ decision_abandon_watch_on_mordor = {
 	}
 	is_valid = {
 		exists = title:d_watch_on_mordor.holder
-		completely_controls = title:c_morannon # The Commander of the Watch has to be your vassal
-		completely_controls = title:c_durthang # otherwise players could destroy a watch that someone else established
-		completely_controls = title:c_lhingris
+		completely_controls = title:d_udun
 		completely_controls = title:c_cirith_ungol
+		completely_controls = title:c_lhingris
 	}
 	is_valid_showing_failures_only = {
 		is_imprisoned = no
 		is_available_adult = yes
 	}
 	cost = {
-		prestige = 500
+		prestige = 1000
 	}
 	effect = {
 		custom_tooltip = decision_abandon_watch_on_mordor_custom_desc
+		custom_tooltip = decision_abandon_watch_on_modor_effect
+		show_as_tooltip = {
+			spawn_army = { #Get the watchmen as special soldiers
+				uses_supply = no
+				inheritable = yes
+				name = mordor_watchmen
+				men_at_arms = {
+					type = gondorian_footmen
+					stacks = 6
+				}
+				men_at_arms = {
+					type = gondorian_bowmen
+					stacks = 3
+				}
+				location = root.location
+			}
+		}
 		trigger_event = {
 			id = gondor.4002
 		}
@@ -6701,7 +7347,6 @@ decision_invite_northron_settlers = {
 		years = lotr_northron_settlers_cooldown
 	}
 
-
 	desc = {
 		first_valid = {
 			triggered_desc = {
@@ -6716,6 +7361,7 @@ decision_invite_northron_settlers = {
 	selection_tooltip = decision_invite_northron_settlers_tooltip
 
 	decision_group_type = realms_in_exile_minor
+	sort_order = 100
 
 	is_shown = {
 		is_landed = yes
@@ -7117,18 +7763,11 @@ decision_expand_tharagrondost = {
 	desc = decision_expand_tharagrondost_desc
 	confirm_text = decision_expand_tharagrondost_confirm
 
-	decision_group_type = realms_in_exile_minor
+	decision_group_type = realms_in_exile_major
+	sort_order = 10
 
 	is_shown = {
 		completely_controls = title:c_tharagrondost
-		OR = {
-			has_title = title:k_andrast
-			has_title = title:e_gondor_steward
-			has_title = title:e_gondor
-			has_title = title:e_castamir
-			has_title = title:h_reunited_kingdom
-			has_title = title:h_numenor_in_exile
-		}
 		lotr_has_numenorean_culture_trigger = yes
 		NOT = {
 			is_target_in_global_variable_list = {
@@ -7145,6 +7784,7 @@ decision_expand_tharagrondost = {
 	}
 
 	is_valid = {
+		highest_held_title_tier >= tier_kingdom
 		completely_controls = title:c_tharagrondost
 		completely_controls = title:k_andrast
 		title:c_tharagrondost = {
@@ -7168,7 +7808,6 @@ decision_expand_tharagrondost = {
 
 	cost = {
 		gold = 3000
-
 	}
 
 	effect = {
