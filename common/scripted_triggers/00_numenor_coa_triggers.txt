@@ -1,0 +1,16 @@
+﻿### Numenor CoA Triggers ###
+coa_switch_to_faith_adunaben_trigger = {
+	OR = { 
+		holder.faith = faith:faith_adunaic
+		holder.faith = faith:faith_numenorean
+		holder.faith = faith:faith_adunaic_faithful
+	}
+}
+
+coa_switch_to_faith_dairaben_trigger = {
+	faith.religion = religion:adunai_religion
+}
+
+coa_switch_to_faith_melkorite_trigger = {
+	holder.faith = faith:melkorite
+}

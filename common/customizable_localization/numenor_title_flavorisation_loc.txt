@@ -1,0 +1,200 @@
+﻿# Numenor
+count_feudal_male_numenorean = {
+    type = character
+    text = {
+        trigger = {
+            OR = {
+                faith.religion = religion:adunai_religion
+                faith.religion = religion:melkoric_religion
+				faith = faith:faith_adunaic
+				faith = faith:faith_numenorean
+				faith = faith:faith_adunaic_faithful
+            }
+        }
+        localization_key = count_feudal_male_numenor
+    }
+    text = {
+        fallback = yes
+        localization_key = count_administrative_male_gondor
+    }
+}
+
+count_feudal_female_numenorean = {
+    type = character
+    text = {
+        trigger = {
+            OR = {
+                faith.religion = religion:adunai_religion
+                faith.religion = religion:melkoric_religion
+				faith = faith:faith_adunaic
+				faith = faith:faith_numenorean
+				faith = faith:faith_adunaic_faithful
+            }
+        }
+        localization_key = count_feudal_female_numenor
+    }
+    text = {
+        fallback = yes
+        localization_key = count_administrative_female_gondor
+    }
+}
+
+duke_feudal_male_numenorean = {
+    type = character
+    text = {
+        trigger = {
+            OR = {
+                faith.religion = religion:adunai_religion
+                faith.religion = religion:melkoric_religion
+				faith = faith:faith_adunaic
+				faith = faith:faith_numenorean
+				faith = faith:faith_adunaic_faithful
+            }
+        }
+        localization_key = duke_feudal_male_numenor
+    }
+    text = {
+        fallback = yes
+        localization_key = duke_administrative_male_gondor
+    }
+}
+
+duke_feudal_female_numenorean = {
+    type = character
+    text = {
+        trigger = {
+            OR = {
+                faith.religion = religion:adunai_religion
+                faith.religion = religion:melkoric_religion
+				faith = faith:faith_adunaic
+				faith = faith:faith_numenorean
+				faith = faith:faith_adunaic_faithful
+            }
+        }
+        localization_key = duke_feudal_female_numenor
+    }
+    text = {
+        fallback = yes
+        localization_key = duke_administrative_female_gondor
+    }
+}
+
+king_feudal_male_numenorean = {
+    type = character
+    text = {
+        trigger = {
+            OR = {
+                faith.religion = religion:adunai_religion
+                faith.religion = religion:melkoric_religion
+				faith = faith:faith_adunaic
+				faith = faith:faith_numenorean
+				faith = faith:faith_adunaic_faithful
+            }
+        }
+        localization_key = king_feudal_male_numenor
+    }
+    text = {
+        fallback = yes
+        localization_key = king_administrative_male_gondor
+    }
+}
+
+king_feudal_female_numenorean = {
+    type = character
+    text = {
+        trigger = {
+            OR = {
+                faith.religion = religion:adunai_religion
+                faith.religion = religion:melkoric_religion
+				faith = faith:faith_adunaic
+				faith = faith:faith_numenorean
+				faith = faith:faith_adunaic_faithful
+            }
+        }
+        localization_key = king_feudal_female_numenor
+    }
+    text = {
+        fallback = yes
+        localization_key = king_administrative_female_gondor
+    }
+}
+
+emperor_feudal_male_numenorean = {
+    type = character
+    text = {
+        trigger = {
+            OR = {
+                faith.religion = religion:adunai_religion
+                faith.religion = religion:melkoric_religion
+				faith = faith:faith_adunaic
+				faith = faith:faith_numenorean
+				faith = faith:faith_adunaic_faithful
+            }
+        }
+        localization_key = emperor_feudal_male_numenor
+    }
+    text = {
+        fallback = yes
+        localization_key = emperor_feudal_numenorean_tar
+    }
+}
+
+emperor_feudal_female_numenorean = {
+    type = character
+    text = {
+        trigger = {
+            OR = {
+                faith.religion = religion:adunai_religion
+                faith.religion = religion:melkoric_religion
+				faith = faith:faith_adunaic
+				faith = faith:faith_numenorean
+				faith = faith:faith_adunaic_faithful
+            }
+        }
+        localization_key = emperor_feudal_female_numenor
+    }
+    text = {
+        fallback = yes
+        localization_key = emperor_feudal_numenorean_tar
+    }
+}
+
+prince_emperor_feudal_numenor = {
+    type = character
+    text = {
+        trigger = {
+            OR = {
+                faith.religion = religion:adunai_religion
+                faith.religion = religion:melkoric_religion
+				faith = faith:faith_adunaic
+				faith = faith:faith_numenorean
+				faith = faith:faith_adunaic_faithful
+            }
+        }
+        localization_key = prince_emperor_feudal_numenorean
+    }
+    text = {
+        fallback = yes
+        localization_key = prince_emperor_feudal_numenorean_quenya
+    }
+}
+
+princess_emperor_feudal_numenor = {
+    type = character
+    text = {
+        trigger = {
+            OR = {
+                faith.religion = religion:adunai_religion
+                faith.religion = religion:melkoric_religion
+				faith = faith:faith_adunaic
+				faith = faith:faith_numenorean
+				faith = faith:faith_adunaic_faithful
+            }
+        }
+        localization_key = princess_emperor_feudal_numenorean
+    }
+    text = {
+        fallback = yes
+        localization_key = princess_emperor_feudal_numenorean_quenya
+    }
+}
